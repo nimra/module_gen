@@ -1,0 +1,28 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from lm.common.util.Types import Types
+
+from .BaseNode import BaseNode
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class HierNode(BaseNode):
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def __init__(self, title):
+        super().__init__(title)
+        self.children = []
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def xstr(self):
+        Utils.todo("dot.   :)")
+    def xprint(self):
+        Utils.todo("dot.   :)")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def add(self, child):
+        self.children.append(Types.assertType(child, BaseNode))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# eof

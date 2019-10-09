@@ -1,0 +1,10 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from lm.common.object.Object import Object
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class BaseBlock(Object):
+    pass
+
+# eof

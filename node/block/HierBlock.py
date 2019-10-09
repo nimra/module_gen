@@ -1,0 +1,33 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from lm.common.util.Types import Types
+
+from .BaseBlock import BaseBlock
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class HierBlock(BaseBlock):
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def __init__(self):
+        super().__init__()
+        self.children = []
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def xstr(self):
+        Utils.todo("dot.   :)")
+    def xprint(self):
+        Utils.todo("dot.   :)")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def add(self, child):
+        self.children.append(Types.assertType(child, BaseBlock))
+
+    def toNbf(self):
+        cells = []
+        [cells.extend(a.toNbf()) for a in self.children]
+        return cells
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# eof
