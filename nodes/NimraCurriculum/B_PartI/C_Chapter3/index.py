@@ -1,0 +1,106 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+from .A_SettingUp.index import SettingUp as A_SettingUp
+from .B_GCPResources.index import GCPResources as B_GCPResources
+from .C_AccessingCloud.index import AccessingCloud as C_AccessingCloud
+from .D_AccountUsers.index import AccountUsers as D_AccountUsers
+from .E_TheCloud.index import TheCloud as E_TheCloud
+from .F_GoogleCloud.index import GoogleCloud as F_GoogleCloud
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CHAPTER 3
+# 
+# 
+# 
+# The Google Cloud SDK
+# and Web CLI
+# GCP provides a command-line interface (CLI) for interacting with cloud products and
+# services. GCP resources can be accessed via the web-based CLI on GCP or by installing
+# the Google Cloud software development kit (SDK) on your local machine to interact with
+# GCP via the local command-line terminal.
+#     GCP contains shell commands for a wide range of GCP products such as the
+# Compute Engine, Cloud Storage, Cloud ML Engine, BigQuery, and Datalab, to mention
+# just a few. Major tools of the Cloud SDK include
+# 
+#        •    gcloud tool: Responsible for cloud authentication, configuration, and
+#             other interactions on GCP
+# 
+#        •    gsutil tool: Responsible for interacting with Google Cloud Storage
+#             buckets and objects
+# 
+#        •    bq tool: Used for interacting and managing Google BigQuery via the
+#             command line
+# 
+#        •    kubectl tool: Used for managing Kubernetes container clusters on GCP
+# 
+#     The Google Cloud SDK also installs client libraries for developers to
+# programmatically interact with GCP products and services through APIs.1 As of this time
+# of writing, the Go, Java, Node.js, Python, Ruby, PHP, and C# languages are covered. Many
+# more are expected to be added to this list.
+#     This chapter works through setting up an account on GCP, installing the Google
+# Cloud SDK, and then exploring GCP commands using the CLI.
+# 
+# 
+# 1
+#   PIs stands for application programming interfaces, which are packages and tools used in
+#  A
+#  building software applications.
+#                                                                                              11
+# © Ekaba Bisong 2019
+# E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+# https://doi.org/10.1007/978-1-4842-4470-8_3
+# 
+# Chapter 3   The Google Cloud SDK and Web CLI
+# 
+# 
+# Setting Up an Account on Google Cloud Platform
+# This section shows how to set up an account on Google Cloud Platform. A GCP account
+# gives access to all of the platform’s products and services. For a new account, a $300
+# credit is awarded to be spent over a period of 12 months. This offer is great as it gives
+# ample time to explore the different features and services of Google’s cloud offering.
+#     Note that a valid credit card is required to register an account to validate that it is an
+# authentic user, as opposed to a robot. However, the credit card won’t be charged after
+# the trial ends, except Google is authorized to do so:
+# 
+#       1. Go to https://cloud.google.com/ to open an account (see
+#          Figure 3-1).
+# 
+# 
+# 
+# 
+# Figure 3-1. Google Cloud Platform login page
+# 
+#       2. Fill in the necessary identity, address, and credit card details.
+# 
+#       3. Wait a moment while an account is created on the platform (see
+#          Figure 3-2).
+# 
+# 
+# 
+# 12
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Chapter 3: The Google Cloud SDK and Web CLI")
+        self.add(MarkdownBlock("# Chapter 3: The Google Cloud SDK and Web CLI"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Chapter3(HierNode):
+    def __init__(self):
+        super().__init__("Chapter 3: The Google Cloud SDK and Web CLI")
+        self.add(Content())
+        self.add(A_SettingUp())
+        self.add(B_GCPResources())
+        self.add(C_AccessingCloud())
+        self.add(D_AccountUsers())
+        self.add(E_TheCloud())
+        self.add(F_GoogleCloud())
+
+# eof

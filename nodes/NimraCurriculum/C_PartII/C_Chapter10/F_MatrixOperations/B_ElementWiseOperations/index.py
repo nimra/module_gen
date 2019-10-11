@@ -1,0 +1,84 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 10    NumPy
+# 
+# 'Output':
+# array([[2290, 2478, 2240],
+#        [1784, 2072, 1792],
+#        [3040, 3448, 2360]])
+# 
+# 
+# Element-Wise Operations
+# Element-wise matrix operations involve matrices operating on themselves in an
+# element-wise fashion. The action can be an addition, subtraction, division, or
+# multiplication (which is commonly called the Hadamard product). The matrices must be
+# of the same shape. Please note that while a matrix is of shape n × n, a vector is of shape
+# n × 1. These concepts easily apply to vectors as well. See Figure 10-2.
+# 
+# 
+# 
+# 
+# Figure 10-2. Element-wise matrix operations
+#       Let’s have some examples.
+# 
+# # Hadamard multiplication of A and B
+# A * B
+# 'Output':
+# array([[ 570,  928,  528],
+#        [ 160,  690, 1196],
+#        [ 990,  658, 1056]])
+# 102
+# 
+#                                                                      Chapter 10   NumPy
+# 
+# # add A and B
+# A + B
+# 'Output':
+# array([[53, 61, 46],
+#        [37, 53, 72],
+#        [63, 61, 68]])
+# # subtract A from B
+# B - A
+# 'Output':
+# array([[ 23,   3,  -2],
+#        [ 27,   7,  20],
+#        [  3,  33, -20]])
+# # divide A with B
+# A / B
+# 'Output':
+# array([[ 0.39473684,  0.90625   ,  1.09090909],
+#        [ 0.15625   ,  0.76666667,  0.56521739],
+#        [ 0.90909091,  0.29787234,  1.83333333]])
+# 
+# 
+# Scalar Operation
+# A matrix can be acted upon by a scalar (i.e., a single numeric entity) in the same way
+# element-wise fashion. This time the scalar operates upon each element of the matrix or
+# vector. See Figure 10-3.
+# 
+# 
+# 
+# 
+#                                                                                     103
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Element-Wise Operations")
+        self.add(MarkdownBlock("# Element-Wise Operations"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ElementWiseOperations(HierNode):
+    def __init__(self):
+        super().__init__("Element-Wise Operations")
+        self.add(Content())
+
+# eof

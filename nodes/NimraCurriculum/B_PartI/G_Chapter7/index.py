@@ -1,0 +1,59 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+from .A_StartingOut.index import StartingOut as A_StartingOut
+from .B_ChangeRuntime.index import ChangeRuntime as B_ChangeRuntime
+from .C_StoringNotebooks.index import StoringNotebooks as C_StoringNotebooks
+from .D_UploadingNotebooks.index import UploadingNotebooks as D_UploadingNotebooks
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CHAPTER 7
+# 
+# 
+# 
+# Google Colaboratory
+# Google Colaboratory more commonly referred to as “Google Colab” or just simply
+# “Colab” is a research project for prototyping machine learning models on powerful
+# hardware options such as GPUs and TPUs. It provides a serverless Jupyter notebook
+# environment for interactive development. Google Colab is free to use like other G Suite
+# products.
+# 
+# 
+# 
+# Starting Out with Colab
+# The following steps provide a walk-through for launching a Notebook on Google Colab:
+# 
+#        1. Go to https://colab.research.google.com/ and log in using
+#           your existing Google account to access the Colab homepage
+#           (see Figure 7-1).
+# 
+# 
+# 
+# 
+#                                                                                           59
+# © Ekaba Bisong 2019
+# E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+# https://doi.org/10.1007/978-1-4842-4470-8_7
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Chapter 7: Google Colaboratory")
+        self.add(MarkdownBlock("# Chapter 7: Google Colaboratory"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Chapter7(HierNode):
+    def __init__(self):
+        super().__init__("Chapter 7: Google Colaboratory")
+        self.add(Content())
+        self.add(A_StartingOut())
+        self.add(B_ChangeRuntime())
+        self.add(C_StoringNotebooks())
+        self.add(D_UploadingNotebooks())
+
+# eof

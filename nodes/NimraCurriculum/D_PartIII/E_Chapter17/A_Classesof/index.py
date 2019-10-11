@@ -1,0 +1,130 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# CHAPTER 17
+# 
+# 
+# 
+# Learning Algorithms
+# In this section, we introduce a variety of supervised and unsupervised machine learning
+# algorithms. The algorithms presented here provide a foundation for understanding other
+# machine learning methods (e.g., linear and logistic regression), and others like Random
+# forests and Extreme Stochastic Gradient Boosting (XGBoost) are widely used in applied
+# machine learning.
+#     We will survey the various learning algorithms from a conceptual level. In general,
+# the discussion will cut across
+# 
+#        •    What a particular algorithm is all about and how it works.
+# 
+#        •    How we interpret the results of the learning algorithm.
+# 
+#        •    What various ways it can be optimized to improve performance in
+#             certain circumstances.
+# 
+# 
+# 
+# Classes of Supervised Algorithms
+# Supervised machine learning algorithms are broadly classified into
+#        •    Linear
+# 
+#        •    Non-linear
+#        •    Ensemble methods
+# 
+# 
+# 
+# 
+#                                                                                           209
+# © Ekaba Bisong 2019
+# E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+# https://doi.org/10.1007/978-1-4842-4470-8_17
+# 
+# Chapter 17      Learning Algorithms
+# 
+#       Let’s briefly go through them:
+# 
+#         •   Linear methods are also known as parametric methods or
+#             algorithms. Linear methods assume that the underlying structure
+#             of the data is linear, put in another form, that there exists a linear
+#             interaction between the features of the dataset. Examples of linear
+#             algorithms are
+# 
+#             •    Linear regression
+#             •    Logistic regression
+# 
+#             •    Support vector machines
+# 
+#         •   Non-linear methods (also known as non-parametric methods) do
+#             not assume any parametric or structural form of the dataset. Instead,
+#             they attempt to learn the internal relationships or representation
+#             between the features of the dataset. Examples of non-linear
+#             algorithms are
+# 
+#             •    K-nearest neighbors
+# 
+#             •    Classification and regression trees (they form the foundation for
+#                  ensemble methods such as boosting and bagging)
+# 
+#             •    Support vector machines
+# 
+#             •    Neural networks
+# 
+#         •   Ensemble methods combine the output of multiple algorithms to
+#             build a better model estimator that generalizes to unseen examples.
+#             Two major classes of ensemble methods are
+# 
+#             •    Boosting (stochastic gradient boosting)
+# 
+#             •    Bagging (Random forests)
+# 
+#     As we can see from the preceding list, some algorithms can function as both a linear
+# and non-linear model. An example is support vector machine (SVM) which applies the so-
+# called kernel trick to use it as a non-linear classification algorithm (more on this later).
+#     Supervised machine learning algorithms can also be grouped as regression or
+# classification algorithms. As we saw in Chapter 14 on regression vs. classification,
+# regression is when the target variable is real-valued and classification is when the target
+# variable is class labels.
+# 210
+# 
+#                                                          Chapter 17   Learning Algorithms
+# 
+# 
+# Unsupervised Algorithms
+# Examples of unsupervised learning include
+# 
+#       •   Clustering
+# 
+#       •   Principal component analysis
+# 
+#      In the later chapters, we will survey the preceding unsupervised learning algorithms
+# for learning from non-labeled datasets. Clustering is an algorithm for grouping
+# homogeneous samples into partitions called clusters. Principal component analysis
+# is a method for finding low-dimensional feature sub-spaces that capture as much
+# information as possible from the original higher-dimensional features of the dataset.
+#      This chapter provides an overview of the machine learning algorithms that we’ll
+# discuss together with code examples in Part 4 of this book.
+# 
+# 
+# 
+# 
+#                                                                                       211
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Classes of Supervised Algorithms")
+        self.add(MarkdownBlock("# Classes of Supervised Algorithms"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Classesof(HierNode):
+    def __init__(self):
+        super().__init__("Classes of Supervised Algorithms")
+        self.add(Content())
+
+# eof

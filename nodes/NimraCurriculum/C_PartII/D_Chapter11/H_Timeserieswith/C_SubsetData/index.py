@@ -1,0 +1,106 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 11   Pandas
+# 
+#               close       volume        market  close_ratio  spread
+# date
+# 2018-01-01  13657.2  10291200000  236725000000       0.5248   957.5
+# 2018-01-02  14982.1  16846600000  228579000000       0.7972  2281.0
+# 2018-01-03  15201.0  16871900000  251312000000       0.4895   728.3
+# 2018-01-04  15599.2  21783200000  256250000000       0.8846  1217.5
+# 2018-01-05  17429.5  23840900000  259748000000       0.8898  2502.4
+# 
+# Select a Year
+# Let’s select a particular year from a DataFrame.
+# 
+# # select a particular year
+# data['2018'].head()
+# 'Output':
+#                slug symbol     name  ranknow     open     high low  \
+# date
+# 2018-01-01  bitcoin    BTC  Bitcoin        1  14112.2  14112.2  13154.7
+# 2018-01-02  bitcoin    BTC  Bitcoin        1  13625.0  15444.6  13163.6
+# 2018-01-03  bitcoin    BTC  Bitcoin        1  14978.2  15572.8  14844.5
+# 2018-01-04  bitcoin    BTC  Bitcoin        1  15270.7  15739.7  14522.2
+# 2018-01-05  bitcoin    BTC  Bitcoin        1  15477.2  17705.2  15202.8
+# 
+#               close       volume        market  close_ratio  spread
+# date
+# 2018-01-01  13657.2  10291200000  236725000000       0.5248   957.5
+# 2018-01-02  14982.1  16846600000  228579000000       0.7972  2281.0
+# 2018-01-03  15201.0  16871900000  251312000000       0.4895   728.3
+# 2018-01-04  15599.2  21783200000  256250000000       0.8846  1217.5
+# 2018-01-05  17429.5  23840900000  259748000000       0.8898  2502.4
+# 
+# 
+# Subset Data Columns and Find Summaries
+# Get the closing prices of Bitcoin stocks for the month of January.
+# 
+# 
+# 
+# 
+# 144
+# 
+#                                                                   Chapter 11   Pandas
+# 
+# data.loc[data.slug == 'bitcoin', 'close']['2018-01']
+# 'Output':
+# date
+# 2018-01-01    13657.2
+# 2018-01-02    14982.1
+# 2018-01-03    15201.0
+# 2018-01-04    15599.2
+# 2018-01-05    17429.5
+# 2018-01-06    17527.0
+# 2018-01-07    16477.6
+# 2018-01-08    15170.1
+# 2018-01-09    14595.4
+# 2018-01-10    14973.3
+# 
+#    Find the mean market value of Ethereum for the month of January.
+# 
+# data.loc[data.slug == 'ethereum', 'market']['2018-01'].mean()
+# 'Output':
+# 96739480000.0
+# 
+# 
+# Resampling Datetime Objects
+# A Pandas DataFrame with an index of DatetimeIndex, PeriodIndex, or TimedeltaIndex
+# can be resampled to any of the date time frequencies from seconds, to minutes, to
+# months. Let’s see some examples.
+#    Let’s get the average monthly closing values for Litecoin.
+# 
+# data.loc[data.slug == 'bitcoin', 'close'].resample('M').mean().head()
+# 'Output':
+# date
+# 2013-04-30    139.250000
+# 2013-05-31    119.993226
+# 2013-06-30    107.761333
+# 2013-07-31     90.512258
+# 2013-08-31    113.905161
+# Freq: M, Name: close, dtype: float64
+# 
+# 
+#                                                                                  145
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Subset Data Columns and Find Summaries")
+        self.add(MarkdownBlock("# Subset Data Columns and Find Summaries"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class SubsetData(HierNode):
+    def __init__(self):
+        super().__init__("Subset Data Columns and Find Summaries")
+        self.add(Content())
+
+# eof

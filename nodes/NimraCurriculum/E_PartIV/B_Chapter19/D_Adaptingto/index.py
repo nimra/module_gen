@@ -1,0 +1,87 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                                                             Chapter 19   Linear Regression
+# 
+#      In the preceding code, using the train_test_split() function, the dataset is split
+# into training and testing sets. The linear regression algorithm is applied to the training
+# dataset to find the optimal values that parameterize the weights of the model. The model
+# is evaluated by calling the .predict() function on the test set.
+#      The error of the model is evaluated using the RMSE error metric (discussed in
+# Chapter 14).
+# 
+# 
+# 
+# A
+#  dapting to Non-linearity
+# Although linear regression has the premise that the underlying structure of the
+# dataset features is linear, this is, however, not the case for most datasets. It is
+# nevertheless possible to adapt linear regression to fit or build a model for non-linear
+# datasets. This process of adding non-linearity to linear models is called polynomial
+# regression.
+#     Polynomial regression fits a non-linear relationship to the data by adding higher-­
+# order polynomial terms of existing data features as new features in the dataset. More of
+# this is visualized in Figure 19-5.
+# 
+# 
+# 
+# 
+# Figure 19-5. Adding polynomial features to the dataset
+# 
+# 
+# 
+# 
+#                                                                                       237
+# 
+# Chapter 19     Linear Regression
+# 
+#     It is important to note that from a statistical point of view, when approximating the
+# optimal values of the weights to minimize the model, the underlying assumption of
+# the interactions of the parameters is linear. Non-linear regression models may tend to
+# overfit the data, but this can be mitigated by adding regularization to the model. Here is
+# a formal example of the polynomial regression model.
+# 
+#                        ŷ = q 0 + q1 x1 + q 2 x12 + q 3 x 2 + q 4 x 22 +¼+ qn xn + qn xn2
+# 
+#       An illustration of polynomial regression is shown in Figure 19-6.
+# 
+# 
+# 
+# 
+# Figure 19-6. Fitting a non-linear model with polynomial regression
+# 
+# 
+# Higher-Order Linear Regression with Scikit-learn
+# In this example, we will create higher-order polynomials from the dataset features in
+# hope of fitting a more flexible model that may better capture the variance in the dataset.
+# As seen in Chapter 18, we will use the PolynomialFeatures method to create these
+# higher-order polynomial and interaction features. The following code example is similar
+# to the previous code example except where it extends the feature matrix with higher-­
+# order features.
+# 
+# # import packages
+# from sklearn.linear_model import LinearRegression
+# from sklearn import datasets
+# 
+# 238
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Adapting to Non-linearity")
+        self.add(MarkdownBlock("# Adapting to Non-linearity"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Adaptingto(HierNode):
+    def __init__(self):
+        super().__init__("Adapting to Non-linearity")
+        self.add(Content())
+
+# eof

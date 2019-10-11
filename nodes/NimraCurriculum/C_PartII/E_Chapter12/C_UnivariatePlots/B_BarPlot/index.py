@@ -1,0 +1,76 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 12   Matplotlib and Seaborn
+# 
+# B
+#  ar Plot
+# Let’s create a simple bar plot using the bar method. The output with matplotlib is shown
+# in Figure 12-3, and the output with seaborn is shown in Figure 12-4.
+# 
+# states = ["Cross River", "Lagos", "Rivers", "Kano"]
+# population = [3737517, 17552940, 5198716, 11058300]
+# # create barplot using matplotlib
+# plt.bar(states, population)
+# plt.show()
+# # create barplot using seaborn
+# sns.barplot(x=states, y=population)
+# plt.show()
+# 
+# 
+# 
+# 
+# Figure 12-3. Barplot with Matplotlib
+# 
+# 
+# 
+# 
+# 154
+# 
+#                                                        Chapter 12   Matplotlib and Seaborn
+# 
+# 
+# 
+# 
+# Figure 12-4. Barplot with seaborn
+# 
+# 
+# H
+#  istogram/Density Plots
+# Histogram and density plots are essential for examining the statistical distribution of
+# a variable. For a simple histogram, we’ll create a set of 100,000 points from the normal
+# distribution. The outputs with matplotlib and seaborn are shown in Figure 12-5 and
+# Figure 12-6, respectively.
+# 
+# # create 100000 data points from the normal distributions
+# data = np.random.randn(100000)
+# # create a histogram plot
+# plt.hist(data)
+# plt.show()
+# # crate a density plot using seaborn
+# my_fig = sns.distplot(data, hist=False)
+# plt.show()
+# 
+# 
+#                                                                                        155
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Bar Plot")
+        self.add(MarkdownBlock("# Bar Plot"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class BarPlot(HierNode):
+    def __init__(self):
+        super().__init__("Bar Plot")
+        self.add(Content())
+
+# eof

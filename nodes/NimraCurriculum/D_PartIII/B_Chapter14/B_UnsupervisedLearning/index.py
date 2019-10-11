@@ -1,0 +1,87 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 14   Principles of Learning
+# 
+# 
+# U
+#  nsupervised Learning
+# In unsupervised learning, the goal is to build a model that captures the underlying
+# distribution of the dataset. The dataset has no given targets for the input features (see
+# Figure 14-17). So, it is not possible to learn a function that maps a relationship between
+# the input features and the targets as we do in supervised learning.
+# 
+# 
+# 
+# 
+# Figure 14-17. Unsupervised dataset
+# 
+#     Rather, unsupervised learning algorithms attempt to determine the unknown
+# structure of the dataset by grouping similar samples together.
+#     Assume we have a dataset of patients with heart diseases; using unsupervised
+# machine learning algorithms, we can find some hidden sub-groups of patients to help
+# understand more about the disease patterns. This is known as clustering.
+#     Also, we can use algorithms like principal component analysis (PCA) to compress
+# a large number of features into principal components (that summarizes all the other
+# features) for easy visualization. We will talk more about clustering and principal
+# component analysis in later chapters.
+# 
+# 
+# 
+# 
+# 196
+# 
+#                                                            Chapter 14   Principles of Learning
+# 
+# 
+# R
+#  einforcement Learning
+# Reinforcement learning presents an approach to learning that is quite different from
+# what we have seen so far in supervised and unsupervised machine learning techniques.
+# In reinforcement learning, an agent interacts with an environment in a feedback
+# configuration and updates its strategy for choosing an action based on the responses it
+# gets from the environment. An illustration of this scenario is shown in Figure 14-18.
+# 
+# 
+# 
+# 
+# Figure 14-18. Reinforcement learning model
+# 
+#     This book will not cover reinforcement learning techniques as it presents a different
+# approach to the problem of learning from random environments that is distinct from the
+# approach used in supervised and unsupervised learning problems.
+#     In this chapter, we covered the three main components of machine learning, which
+# are supervised, unsupervised, and reinforcement learning. The chapter largely focused
+# on the principles for performing supervised machine learning such as framing a
+# problem as a regression or classification task; splitting the dataset into training, test, and
+# validation sets; understanding the bias/variance trade-off and consequently issues of
+# overfitting and underfitting; and the evaluation metrics for assessing the performance of
+# a learning model.
+#     In the next chapter, we will briefly look at the differences between batch and online
+# learning.
+# 
+# 
+# 
+# 
+#                                                                                           197
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Unsupervised Learning")
+        self.add(MarkdownBlock("# Unsupervised Learning"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class UnsupervisedLearning(HierNode):
+    def __init__(self):
+        super().__init__("Unsupervised Learning")
+        self.add(Content())
+
+# eof

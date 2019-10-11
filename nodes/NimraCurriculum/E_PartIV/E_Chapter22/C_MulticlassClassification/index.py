@@ -1,0 +1,62 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+from .A_OnevsOneOVO.index import OnevsOneOVO as A_OnevsOneOVO
+from .B_OnevsAllOVA.index import OnevsAllOVA as B_OnevsAllOVA
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 22   Support Vector Machines
+# 
+# 
+# 
+# 
+# Figure 22-7. Left: Higher values of C result in wider margins with more tolerance.
+# Right: Lower values of C result in narrower margins with less tolerance
+# 
+# 
+# M
+#  ulti-class Classification
+# Previously, we have used the SVC to build a discriminant classifier for binary classes.
+# What happens when we have more than two classes of outputs in the dataset, which is
+# often the case in practice? The SVM can be extended for classifying k classes within a
+# dataset, where k > 2. This extension is, however, not trivial with the SVM. There exist two
+# standard approaches for addressing this problem. The first is the one-vs.-one (OVO)
+# multi-class classification, while the other is the one-vs.-all (OVA) or one-vs.rest (OVR)
+# multi-class classification technique.
+# 
+# 
+# O
+#  ne-vs.-One (OVO)
+# In the one-vs.-one approach, when the number of classes, k, is greater than 2, the
+#                                              ækö
+# algorithm constructs “k combination 2”, ç ÷ classifiers, where each classifier is for a pair
+#                                              è2ø
+# of classes. So if we have 10 classes in our dataset, a total of 45 classifiers is constructed or
+# trained for every pair of classes. This is illustrated with four classes in Figure 22-8.
+#     After training, the classifiers are evaluated by comparing examples from the test set
+#                       ækö
+# against each of the ç ÷ classifiers. The predicted class is then determined by choosing
+#                       è2ø
+# the highest number of times an example is assigned to a particular class.
+# 260
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__("Multi-class Classification")
+        self.add(MarkdownBlock("# Multi-class Classification"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class MulticlassClassification(HierNode):
+    def __init__(self):
+        super().__init__("Multi-class Classification")
+        self.add(Content())
+        self.add(A_OnevsOneOVO())
+        self.add(B_OnevsAllOVA())
+
+# eof
