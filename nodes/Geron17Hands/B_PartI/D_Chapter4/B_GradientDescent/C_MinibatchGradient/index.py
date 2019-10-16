@@ -1,0 +1,145 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                   Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 4-10. Stochastic Gradient Descent first 10 steps
+# 
+# Note that since instances are picked randomly, some instances may be picked several
+# times per epoch while others may not be picked at all. If you want to be sure that the
+# algorithm goes through every instance at each epoch, another approach is to shuffle
+# the training set, then go through it instance by instance, then shuffle it again, and so
+# on. However, this generally converges more slowly.
+# To perform Linear Regression using SGD with Scikit-Learn, you can use the SGDRe
+# gressor class, which defaults to optimizing the squared error cost function. The fol‐
+# lowing code runs 50 epochs, starting with a learning rate of 0.1 (eta0=0.1), using the
+# default learning schedule (different from the preceding one), and it does not use any
+# regularization (penalty=None; more details on this shortly):
+#     from sklearn.linear_model import SGDRegressor
+#     sgd_reg = SGDRegressor(n_iter=50, penalty=None, eta0=0.1)
+#     sgd_reg.fit(X, y.ravel())
+# Once again, you find a solution very close to the one returned by the Normal Equa‐
+# tion:
+#     >>> sgd_reg.intercept_, sgd_reg.coef_
+#     (array([ 4.18380366]), array([ 2.74205299]))
+# 
+# 
+# Mini-batch Gradient Descent
+# The last Gradient Descent algorithm we will look at is called Mini-batch Gradient
+# Descent. It is quite simple to understand once you know Batch and Stochastic Gradi‐
+# ent Descent: at each step, instead of computing the gradients based on the full train‐
+# ing set (as in Batch GD) or based on just one instance (as in Stochastic GD), Mini-
+# 
+# 
+#                                                                     Gradient Descent   |   119
+# 
+#                 Download from finelybook www.finelybook.com
+# batch GD computes the gradients on small random sets of instances called mini-
+# batches. The main advantage of Mini-batch GD over Stochastic GD is that you can
+# get a performance boost from hardware optimization of matrix operations, especially
+# when using GPUs.
+# The algorithm’s progress in parameter space is less erratic than with SGD, especially
+# with fairly large mini-batches. As a result, Mini-batch GD will end up walking
+# around a bit closer to the minimum than SGD. But, on the other hand, it may be
+# harder for it to escape from local minima (in the case of problems that suffer from
+# local minima, unlike Linear Regression as we saw earlier). Figure 4-11 shows the
+# paths taken by the three Gradient Descent algorithms in parameter space during
+# training. They all end up near the minimum, but Batch GD’s path actually stops at the
+# minimum, while both Stochastic GD and Mini-batch GD continue to walk around.
+# However, don’t forget that Batch GD takes a lot of time to take each step, and Stochas‐
+# tic GD and Mini-batch GD would also reach the minimum if you used a good learn‐
+# ing schedule.
+# 
+# 
+# 
+# 
+# Figure 4-11. Gradient Descent paths in parameter space
+# 
+# Let’s compare the algorithms we’ve discussed so far for Linear Regression8 (recall that
+# m is the number of training instances and n is the number of features); see Table 4-1.
+# 
+# Table 4-1. Comparison of algorithms for Linear Regression
+# Algorithm       Large m Out-of-core support Large n Hyperparams Scaling required Scikit-Learn
+# Normal Equation Fast    No                  Slow    0           No               LinearRegression
+# Batch GD           Slow       No                Fast   2            Yes             n/a
+# 
+# 
+# 
+# 8 While the Normal Equation can only perform Linear Regression, the Gradient Descent algorithms can be
+#   used to train many other models, as we will see.
+# 
+# 
+# 
+# 120   |    Chapter 4: Training Models
+# 
+#                         Download from finelybook www.finelybook.com
+# Algorithm        Large m Out-of-core support Large n Hyperparams Scaling required Scikit-Learn
+# Stochastic GD    Fast    Yes                 Fast    ≥2          Yes              SGDRegressor
+# Mini-batch GD    Fast      Yes                  Fast      ≥2    Yes             n/a
+# 
+# 
+#                     There is almost no difference after training: all these algorithms
+#                     end up with very similar models and make predictions in exactly
+#                     the same way.
+# 
+# 
+# 
+# 
+# Polynomial Regression
+# What if your data is actually more complex than a simple straight line? Surprisingly,
+# you can actually use a linear model to fit nonlinear data. A simple way to do this is to
+# add powers of each feature as new features, then train a linear model on this extended
+# set of features. This technique is called Polynomial Regression.
+# Let’s look at an example. First, let’s generate some nonlinear data, based on a simple
+# quadratic equation9 (plus some noise; see Figure 4-12):
+#      m = 100
+#      X = 6 * np.random.rand(m, 1) - 3
+#      y = 0.5 * X**2 + X + 2 + np.random.randn(m, 1)
+# 
+# 
+# 
+# 
+# Figure 4-12. Generated nonlinear and noisy dataset
+# 
+# 
+# 
+# 
+# 9 A quadratic equation is of the form y = ax2 + bx + c.
+# 
+# 
+# 
+#                                                                          Polynomial Regression   |   121
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Mini-batch Gradient Descent",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Mini-batch Gradient Descent"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class MinibatchGradient(HierNode):
+    def __init__(self):
+        super().__init__("Mini-batch Gradient Descent")
+        self.add(Content())
+
+# eof

@@ -1,0 +1,217 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                   Download from finelybook www.finelybook.com
+# 
+# 
+#                                                                             CHAPTER 7
+#        Ensemble Learning and Random Forests
+# 
+# 
+# 
+# 
+# Suppose you ask a complex question to thousands of random people, then aggregate
+# their answers. In many cases you will find that this aggregated answer is better than
+# an expert’s answer. This is called the wisdom of the crowd. Similarly, if you aggregate
+# the predictions of a group of predictors (such as classifiers or regressors), you will
+# often get better predictions than with the best individual predictor. A group of pre‐
+# dictors is called an ensemble; thus, this technique is called Ensemble Learning, and an
+# Ensemble Learning algorithm is called an Ensemble method.
+# For example, you can train a group of Decision Tree classifiers, each on a different
+# random subset of the training set. To make predictions, you just obtain the predic‐
+# tions of all individual trees, then predict the class that gets the most votes (see the last
+# exercise in Chapter 6). Such an ensemble of Decision Trees is called a Random Forest,
+# and despite its simplicity, this is one of the most powerful Machine Learning algo‐
+# rithms available today.
+# Moreover, as we discussed in Chapter 2, you will often use Ensemble methods near
+# the end of a project, once you have already built a few good predictors, to combine
+# them into an even better predictor. In fact, the winning solutions in Machine Learn‐
+# ing competitions often involve several Ensemble methods (most famously in the Net‐
+# flix Prize competition).
+# In this chapter we will discuss the most popular Ensemble methods, including bag‐
+# ging, boosting, stacking, and a few others. We will also explore Random Forests.
+# 
+# Voting Classifiers
+# Suppose you have trained a few classifiers, each one achieving about 80% accuracy.
+# You may have a Logistic Regression classifier, an SVM classifier, a Random Forest
+# classifier, a K-Nearest Neighbors classifier, and perhaps a few more (see Figure 7-1).
+# 
+# 
+#                                                                                          181
+# 
+#                        Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 7-1. Training diverse classifiers
+# 
+# A very simple way to create an even better classifier is to aggregate the predictions of
+# each classifier and predict the class that gets the most votes. This majority-vote classi‐
+# fier is called a hard voting classifier (see Figure 7-2).
+# 
+# 
+# 
+# 
+# Figure 7-2. Hard voting classifier predictions
+# 
+# Somewhat surprisingly, this voting classifier often achieves a higher accuracy than the
+# best classifier in the ensemble. In fact, even if each classifier is a weak learner (mean‐
+# ing it does only slightly better than random guessing), the ensemble can still be a
+# strong learner (achieving high accuracy), provided there are a sufficient number of
+# weak learners and they are sufficiently diverse.
+# 
+# 
+# 
+# 182   |   Chapter 7: Ensemble Learning and Random Forests
+# 
+#                     Download from finelybook www.finelybook.com
+# How is this possible? The following analogy can help shed some light on this mystery.
+# Suppose you have a slightly biased coin that has a 51% chance of coming up heads,
+# and 49% chance of coming up tails. If you toss it 1,000 times, you will generally get
+# more or less 510 heads and 490 tails, and hence a majority of heads. If you do the
+# math, you will find that the probability of obtaining a majority of heads after 1,000
+# tosses is close to 75%. The more you toss the coin, the higher the probability (e.g.,
+# with 10,000 tosses, the probability climbs over 97%). This is due to the law of large
+# numbers: as you keep tossing the coin, the ratio of heads gets closer and closer to the
+# probability of heads (51%). Figure 7-3 shows 10 series of biased coin tosses. You can
+# see that as the number of tosses increases, the ratio of heads approaches 51%. Eventu‐
+# ally all 10 series end up so close to 51% that they are consistently above 50%.
+# 
+# 
+# 
+# 
+# Figure 7-3. The law of large numbers
+# 
+# Similarly, suppose you build an ensemble containing 1,000 classifiers that are individ‐
+# ually correct only 51% of the time (barely better than random guessing). If you pre‐
+# dict the majority voted class, you can hope for up to 75% accuracy! However, this is
+# only true if all classifiers are perfectly independent, making uncorrelated errors,
+# which is clearly not the case since they are trained on the same data. They are likely to
+# make the same types of errors, so there will be many majority votes for the wrong
+# class, reducing the ensemble’s accuracy.
+# 
+#                 Ensemble methods work best when the predictors are as independ‐
+#                 ent from one another as possible. One way to get diverse classifiers
+#                 is to train them using very different algorithms. This increases the
+#                 chance that they will make very different types of errors, improving
+#                 the ensemble’s accuracy.
+# 
+# 
+# 
+# 
+#                                                                         Voting Classifiers   |   183
+# 
+#                  Download from finelybook www.finelybook.com
+# The following code creates and trains a voting classifier in Scikit-Learn, composed of
+# three diverse classifiers (the training set is the moons dataset, introduced in Chap‐
+# ter 5):
+#       from   sklearn.ensemble import RandomForestClassifier
+#       from   sklearn.ensemble import VotingClassifier
+#       from   sklearn.linear_model import LogisticRegression
+#       from   sklearn.svm import SVC
+# 
+#       log_clf = LogisticRegression()
+#       rnd_clf = RandomForestClassifier()
+#       svm_clf = SVC()
+# 
+#       voting_clf = VotingClassifier(
+#               estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)],
+#               voting='hard'
+#           )
+#       voting_clf.fit(X_train, y_train)
+# Let’s look at each classifier’s accuracy on the test set:
+#       >>> from sklearn.metrics import accuracy_score
+#       >>> for clf in (log_clf, rnd_clf, svm_clf, voting_clf):
+#       >>>     clf.fit(X_train, y_train)
+#       >>>     y_pred = clf.predict(X_test)
+#       >>>     print(clf.__class__.__name__, accuracy_score(y_test, y_pred))
+#       LogisticRegression 0.864
+#       RandomForestClassifier 0.872
+#       SVC 0.888
+#       VotingClassifier 0.896
+# There you have it! The voting classifier slightly outperforms all the individual classifi‐
+# ers.
+# If all classifiers are able to estimate class probabilities (i.e., they have a pre
+# dict_proba() method), then you can tell Scikit-Learn to predict the class with the
+# highest class probability, averaged over all the individual classifiers. This is called soft
+# voting. It often achieves higher performance than hard voting because it gives more
+# weight to highly confident votes. All you need to do is replace voting="hard" with
+# voting="soft" and ensure that all classifiers can estimate class probabilities. This is
+# not the case of the SVC class by default, so you need to set its probability hyperpara‐
+# meter to True (this will make the SVC class use cross-validation to estimate class prob‐
+# abilities, slowing down training, and it will add a predict_proba() method). If you
+# modify the preceding code to use soft voting, you will find that the voting classifier
+# achieves over 91% accuracy!
+# 
+# 
+# 
+# 
+# 184   |   Chapter 7: Ensemble Learning and Random Forests
+# 
+#                        Download from finelybook www.finelybook.com
+# Bagging and Pasting
+# One way to get a diverse set of classifiers is to use very different training algorithms,
+# as just discussed. Another approach is to use the same training algorithm for every
+# predictor, but to train them on different random subsets of the training set. When
+# sampling is performed with replacement, this method is called bagging1 (short for
+# bootstrap aggregating2). When sampling is performed without replacement, it is called
+# pasting.3
+# In other words, both bagging and pasting allow training instances to be sampled sev‐
+# eral times across multiple predictors, but only bagging allows training instances to be
+# sampled several times for the same predictor. This sampling and training process is
+# represented in Figure 7-4.
+# 
+# 
+# 
+# 
+# Figure 7-4. Pasting/bagging training set sampling and training
+# 
+# Once all predictors are trained, the ensemble can make a prediction for a new
+# instance by simply aggregating the predictions of all predictors. The aggregation
+# function is typically the statistical mode (i.e., the most frequent prediction, just like a
+# hard voting classifier) for classification, or the average for regression. Each individual
+# predictor has a higher bias than if it were trained on the original training set, but
+# aggregation reduces both bias and variance.4 Generally, the net result is that the
+# 
+# 
+# 
+# 1 “Bagging Predictors,” L. Breiman (1996).
+# 2 In statistics, resampling with replacement is called bootstrapping.
+# 3 “Pasting small votes for classification in large databases and on-line,” L. Breiman (1999).
+# 4 Bias and variance were introduced in Chapter 4.
+# 
+# 
+# 
+#                                                                                       Bagging and Pasting   |   185
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Voting Classifiers",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Voting Classifiers"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class VotingClassifiers(HierNode):
+    def __init__(self):
+        super().__init__("Voting Classifiers")
+        self.add(Content())
+
+# eof

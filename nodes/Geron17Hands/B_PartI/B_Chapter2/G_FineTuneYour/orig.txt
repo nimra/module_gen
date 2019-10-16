@@ -1,0 +1,96 @@
+                  Download from finelybook www.finelybook.com
+    >>> from sklearn.ensemble import RandomForestRegressor
+    >>> forest_reg = RandomForestRegressor()
+    >>> forest_reg.fit(housing_prepared, housing_labels)
+    >>> [...]
+    >>> forest_rmse
+    22542.396440343684
+    >>> display_scores(forest_rmse_scores)
+    Scores: [ 53789.2879722   50256.19806622 52521.55342602        53237.44937943
+              52428.82176158 55854.61222549 52158.02291609         50093.66125649
+              53240.80406125 52761.50852822]
+    Mean: 52634.1919593
+    Standard deviation: 1576.20472269
+Wow, this is much better: Random Forests look very promising. However, note that
+the score on the training set is still much lower than on the validation sets, meaning
+that the model is still overfitting the training set. Possible solutions for overfitting are
+to simplify the model, constrain it (i.e., regularize it), or get a lot more training data.
+However, before you dive much deeper in Random Forests, you should try out many
+other models from various categories of Machine Learning algorithms (several Sup‐
+port Vector Machines with different kernels, possibly a neural network, etc.), without
+spending too much time tweaking the hyperparameters. The goal is to shortlist a few
+(two to five) promising models.
+
+                You should save every model you experiment with, so you can
+                come back easily to any model you want. Make sure you save both
+                the hyperparameters and the trained parameters, as well as the
+                cross-validation scores and perhaps the actual predictions as well.
+                This will allow you to easily compare scores across model types,
+                and compare the types of errors they make. You can easily save
+                Scikit-Learn models by using Python’s pickle module, or using
+                sklearn.externals.joblib, which is more efficient at serializing
+                large NumPy arrays:
+                    from sklearn.externals import joblib
+
+                    joblib.dump(my_model, "my_model.pkl")
+                    # and later...
+                    my_model_loaded = joblib.load("my_model.pkl")
+
+
+Fine-Tune Your Model
+Let’s assume that you now have a shortlist of promising models. You now need to
+fine-tune them. Let’s look at a few ways you can do that.
+
+
+
+
+                                                                    Fine-Tune Your Model   |   71
+                       Download from finelybook www.finelybook.com
+Grid Search
+One way to do that would be to fiddle with the hyperparameters manually, until you
+find a great combination of hyperparameter values. This would be very tedious work,
+and you may not have time to explore many combinations.
+Instead you should get Scikit-Learn’s GridSearchCV to search for you. All you need to
+do is tell it which hyperparameters you want it to experiment with, and what values to
+try out, and it will evaluate all the possible combinations of hyperparameter values,
+using cross-validation. For example, the following code searches for the best combi‐
+nation of hyperparameter values for the RandomForestRegressor:
+     from sklearn.model_selection import GridSearchCV
+
+     param_grid = [
+         {'n_estimators': [3, 10, 30], 'max_features': [2, 4, 6, 8]},
+         {'bootstrap': [False], 'n_estimators': [3, 10], 'max_features': [2, 3, 4]},
+       ]
+
+     forest_reg = RandomForestRegressor()
+
+     grid_search = GridSearchCV(forest_reg, param_grid, cv=5,
+                                scoring='neg_mean_squared_error')
+
+     grid_search.fit(housing_prepared, housing_labels)
+
+                     When you have no idea what value a hyperparameter should have,
+                     a simple approach is to try out consecutive powers of 10 (or a
+                     smaller number if you want a more fine-grained search, as shown
+                     in this example with the n_estimators hyperparameter).
+
+
+This param_grid tells Scikit-Learn to first evaluate all 3 × 4 = 12 combinations of
+n_estimators and max_features hyperparameter values specified in the first dict
+(don’t worry about what these hyperparameters mean for now; they will be explained
+in Chapter 7), then try all 2 × 3 = 6 combinations of hyperparameter values in the
+second dict, but this time with the bootstrap hyperparameter set to False instead of
+True (which is the default value for this hyperparameter).
+All in all, the grid search will explore 12 + 6 = 18 combinations of RandomForestRe
+gressor hyperparameter values, and it will train each model five times (since we are
+using five-fold cross validation). In other words, all in all, there will be 18 × 5 = 90
+rounds of training! It may take quite a long time, but when it is done you can get the
+best combination of parameters like this:
+     >>> grid_search.best_params_
+     {'max_features': 6, 'n_estimators': 30}
+
+
+
+
+72   |   Chapter 2: End-to-End Machine Learning Project
+

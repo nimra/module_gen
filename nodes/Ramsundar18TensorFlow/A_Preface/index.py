@@ -1,0 +1,202 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                                                                        Preface
+# 
+# 
+# 
+# 
+# This book will introduce you to the fundamentals of machine learning through Ten‐
+# sorFlow. TensorFlow is Google’s new software library for deep learning that makes it
+# straightforward for engineers to design and deploy sophisticated deep learning archi‐
+# tectures. You will learn how to use TensorFlow to build systems capable of detecting
+# objects in images, understanding human text, and predicting the properties of poten‐
+# tial medicines. Furthermore, you will gain an intuitive understanding of TensorFlow’s
+# potential as a system for performing tensor calculus and will learn how to use Tensor‐
+# Flow for tasks outside the traditional purview of machine learning.
+# Importantly, TensorFlow for Deep Learning is one of the first deep learning books
+# written for practitioners. It teaches fundamental concepts through practical examples
+# and builds understanding of machine learning foundations from the ground up. The
+# target audience for this book is practicing developers, who are comfortable with
+# designing software systems, but not necessarily with creating learning systems. At
+# times we use some basic linear algebra and calculus, but we will review all necessary
+# fundamentals. We also anticipate that our book will prove useful for scientists and
+# other professionals who are comfortable with scripting, but not necessarily with
+# designing learning algorithms.
+# 
+# Conventions Used in This Book
+# The following typographical conventions are used in this book:
+# Italic
+#      Indicates new terms, URLs, email addresses, filenames, and file extensions.
+# Constant width
+#     Used for program listings, as well as within paragraphs to refer to program ele‐
+#     ments such as variable or function names, databases, data types, environment
+#     variables, statements, and keywords.
+# 
+# 
+# 
+#                                                                                     ix
+# 
+# Constant width bold
+#         Shows commands or other text that should be typed literally by the user.
+# Constant width italic
+#         Shows text that should be replaced with user-supplied values or by values deter‐
+#         mined by context.
+# 
+#                    This element signifies a tip or suggestion.
+# 
+# 
+# 
+# 
+#                    This element signifies a general note.
+# 
+# 
+# 
+# 
+#                    This element indicates a warning or caution.
+# 
+# 
+# 
+# 
+# Using Code Examples
+# Supplemental material (code examples, exercises, etc.) is available for download at
+# https://github.com/matroid/dlwithtf.
+# This book is here to help you get your job done. In general, if example code is offered
+# with this book, you may use it in your programs and documentation. You do not
+# need to contact us for permission unless you’re reproducing a significant portion of
+# the code. For example, writing a program that uses several chunks of code from this
+# book does not require permission. Selling or distributing a CD-ROM of examples
+# from O’Reilly books does require permission. Answering a question by citing this
+# book and quoting example code does not require permission. Incorporating a signifi‐
+# cant amount of example code from this book into your product’s documentation does
+# require permission.
+# We appreciate, but do not require, attribution. An attribution usually includes the
+# title, author, publisher, and ISBN. For example: “TensorFlow for Deep Learning by
+# Bharath Ramsundar and Reza Bosagh Zadeh (O’Reilly). Copyright 2018 Reza Zadeh,
+# Bharath Ramsundar, 978-1-491-98045-3.”
+# 
+# 
+# 
+# 
+# x   |    Preface
+# 
+# If you feel your use of code examples falls outside fair use or the permission given
+# above, feel free to contact us at permissions@oreilly.com.
+# 
+# O’Reilly Safari
+#                         Safari (formerly Safari Books Online) is a membership-based
+#                         training and reference platform for enterprise, government,
+#                         educators, and individuals.
+# 
+# Members have access to thousands of books, training videos, Learning Paths, interac‐
+# tive tutorials, and curated playlists from over 250 publishers, including O’Reilly
+# Media, Harvard Business Review, Prentice Hall Professional, Addison-Wesley Profes‐
+# sional, Microsoft Press, Sams, Que, Peachpit Press, Adobe, Focal Press, Cisco Press,
+# John Wiley & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe
+# Press, FT Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, and
+# Course Technology, among others.
+# For more information, please visit http://oreilly.com/safari.
+# 
+# How to Contact Us
+# Please address comments and questions concerning this book to the publisher:
+# 
+#     O’Reilly Media, Inc.
+#     1005 Gravenstein Highway North
+#     Sebastopol, CA 95472
+#     800-998-9938 (in the United States or Canada)
+#     707-829-0515 (international or local)
+#     707-829-0104 (fax)
+# 
+# We have a web page for this book, where we list errata, examples, and any additional
+# information. You can access this page at http://bit.ly/tensorflowForDeepLearning.
+# To comment or ask technical questions about this book, send email to bookques‐
+# tions@oreilly.com.
+# For more information about our books, courses, conferences, and news, see our web‐
+# site at http://www.oreilly.com.
+# Find us on Facebook: http://facebook.com/oreilly
+# Follow us on Twitter: http://twitter.com/oreillymedia
+# Watch us on YouTube: http://www.youtube.com/oreillymedia
+# 
+# 
+# 
+#                                                                         Preface   |   xi
+# 
+# Acknowledgments
+# Bharath is thankful to his PhD advisor for letting him work on this book during his
+# nights and weekends, and especially thankful to his family for their unstinting sup‐
+# port during the entire process.
+# Reza is thankful to the open source communities on which much of software and
+# computer science is based. Open source software is one of the largest concentrations
+# of human knowledge ever created, and this book would have been impossible without
+# the entire community behind it.
+# 
+# 
+# 
+# 
+# xii   |   Preface
+# 
+#                                                                          CHAPTER 1
+#                           Introduction to Deep Learning
+# 
+# 
+# 
+# 
+# Deep learning has revolutionized the technology industry. Modern machine transla‐
+# tion, search engines, and computer assistants are all powered by deep learning. This
+# trend will only continue as deep learning expands its reach into robotics, pharma‐
+# ceuticals, energy, and all other fields of contemporary technology. It is rapidly becom‐
+# ing essential for the modern software professional to develop a working knowledge of
+# the principles of deep learning.
+# In this chapter, we will introduce you to the history of deep learning, and to the
+# broader impact deep learning has had on the research and commercial communities.
+# We will next cover some of the most famous applications of deep learning. This will
+# include both prominent machine learning architectures and fundamental deep learn‐
+# ing primitives. We will end by giving a brief perspective of where deep learning is
+# heading over the next few years before we dive into TensorFlow in the next few
+# chapters.
+# 
+# Machine Learning Eats Computer Science
+# Until recently, software engineers went to school to learn a number of basic algo‐
+# rithms (graph search, sorting, database queries, and so on). After school, these engi‐
+# neers would go out into the real world to apply these algorithms to systems. Most of
+# today’s digital economy is built on intricate chains of basic algorithms laboriously
+# glued together by generations of engineers. Most of these systems are not capable of
+# adapting. All configurations and reconfigurations have to be performed by highly
+# trained engineers, rendering systems brittle.
+# Machine learning promises to change the field of software development by enabling
+# systems to adapt dynamically. Deployed machine learning systems are capable of
+# learning desired behaviors from databases of examples. Furthermore, such systems
+# 
+# 
+#                                                                                        1
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Preface",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Preface"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Preface(HierNode):
+    def __init__(self):
+        super().__init__("Preface")
+        self.add(Content())
+
+# eof

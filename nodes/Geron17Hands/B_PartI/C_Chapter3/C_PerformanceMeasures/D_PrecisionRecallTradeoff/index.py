@@ -1,0 +1,219 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                 Download from finelybook www.finelybook.com
+# To compute the F1 score, simply call the f1_score() function:
+#     >>> from sklearn.metrics import f1_score
+#     >>> f1_score(y_train_5, y_pred)
+#     0.78468208092485547
+# The F1 score favors classifiers that have similar precision and recall. This is not always
+# what you want: in some contexts you mostly care about precision, and in other con‐
+# texts you really care about recall. For example, if you trained a classifier to detect vid‐
+# eos that are safe for kids, you would probably prefer a classifier that rejects many
+# good videos (low recall) but keeps only safe ones (high precision), rather than a clas‐
+# sifier that has a much higher recall but lets a few really bad videos show up in your
+# product (in such cases, you may even want to add a human pipeline to check the clas‐
+# sifier’s video selection). On the other hand, suppose you train a classifier to detect
+# shoplifters on surveillance images: it is probably fine if your classifier has only 30%
+# precision as long as it has 99% recall (sure, the security guards will get a few false
+# alerts, but almost all shoplifters will get caught).
+# Unfortunately, you can’t have it both ways: increasing precision reduces recall, and
+# vice versa. This is called the precision/recall tradeoff.
+# 
+# Precision/Recall Tradeoff
+# To understand this tradeoff, let’s look at how the SGDClassifier makes its classifica‐
+# tion decisions. For each instance, it computes a score based on a decision function,
+# and if that score is greater than a threshold, it assigns the instance to the positive
+# class, or else it assigns it to the negative class. Figure 3-3 shows a few digits positioned
+# from the lowest score on the left to the highest score on the right. Suppose the deci‐
+# sion threshold is positioned at the central arrow (between the two 5s): you will find 4
+# true positives (actual 5s) on the right of that threshold, and one false positive (actually
+# a 6). Therefore, with that threshold, the precision is 80% (4 out of 5). But out of 6
+# actual 5s, the classifier only detects 4, so the recall is 67% (4 out of 6). Now if you
+# raise the threshold (move it to the arrow on the right), the false positive (the 6)
+# becomes a true negative, thereby increasing precision (up to 100% in this case), but
+# one true positive becomes a false negative, decreasing recall down to 50%. Conversely,
+# lowering the threshold increases recall and reduces precision.
+# 
+# 
+# 
+# 
+#                                                                    Performance Measures   |   87
+# 
+#                          Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 3-3. Decision threshold and precision/recall tradeoff
+# 
+# Scikit-Learn does not let you set the threshold directly, but it does give you access to
+# the decision scores that it uses to make predictions. Instead of calling the classifier’s
+# predict() method, you can call its decision_function() method, which returns a
+# score for each instance, and then make predictions based on those scores using any
+# threshold you want:
+#      >>> y_scores = sgd_clf.decision_function([some_digit])
+#      >>> y_scores
+#      array([ 161855.74572176])
+#      >>> threshold = 0
+#      >>> y_some_digit_pred = (y_scores > threshold)
+#      array([ True], dtype=bool)
+# 
+# The SGDClassifier uses a threshold equal to 0, so the previous code returns the same
+# result as the predict() method (i.e., True). Let’s raise the threshold:
+#      >>> threshold = 200000
+#      >>> y_some_digit_pred = (y_scores > threshold)
+#      >>> y_some_digit_pred
+#      array([False], dtype=bool)
+# This confirms that raising the threshold decreases recall. The image actually repre‐
+# sents a 5, and the classifier detects it when the threshold is 0, but it misses it when the
+# threshold is increased to 200,000.
+# So how can you decide which threshold to use? For this you will first need to get the
+# scores of all instances in the training set using the cross_val_predict() function
+# again, but this time specifying that you want it to return decision scores instead of
+# predictions:
+#      y_scores = cross_val_predict(sgd_clf, X_train, y_train_5, cv=3,
+#                                   method="decision_function")
+# Now with these scores you can compute precision and recall for all possible thresh‐
+# olds using the precision_recall_curve() function:
+# 
+# 
+# 
+# 
+# 88   |   Chapter 3: Classification
+# 
+#                   Download from finelybook www.finelybook.com
+#     from sklearn.metrics import precision_recall_curve
+# 
+#     precisions, recalls, thresholds = precision_recall_curve(y_train_5, y_scores)
+# Finally, you can plot precision and recall as functions of the threshold value using
+# Matplotlib (Figure 3-4):
+#     def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
+#         plt.plot(thresholds, precisions[:-1], "b--", label="Precision")
+#         plt.plot(thresholds, recalls[:-1], "g-", label="Recall")
+#         plt.xlabel("Threshold")
+#         plt.legend(loc="upper left")
+#         plt.ylim([0, 1])
+# 
+#     plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
+#     plt.show()
+# 
+# 
+# 
+# 
+# Figure 3-4. Precision and recall versus the decision threshold
+# 
+#                 You may wonder why the precision curve is bumpier than the recall
+#                 curve in Figure 3-4. The reason is that precision may sometimes go
+#                 down when you raise the threshold (although in general it will go
+#                 up). To understand why, look back at Figure 3-3 and notice what
+#                 happens when you start from the central threshold and move it just
+#                 one digit to the right: precision goes from 4/5 (80%) down to 3/4
+#                 (75%). On the other hand, recall can only go down when the thres‐
+#                 hold is increased, which explains why its curve looks smooth.
+# 
+# Now you can simply select the threshold value that gives you the best precision/recall
+# tradeoff for your task. Another way to select a good precision/recall tradeoff is to plot
+# precision directly against recall, as shown in Figure 3-5.
+# 
+# 
+# 
+#                                                                    Performance Measures   |   89
+# 
+#                          Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 3-5. Precision versus recall
+# 
+# You can see that precision really starts to fall sharply around 80% recall. You will
+# probably want to select a precision/recall tradeoff just before that drop—for example,
+# at around 60% recall. But of course the choice depends on your project.
+# So let’s suppose you decide to aim for 90% precision. You look up the first plot
+# (zooming in a bit) and find that you need to use a threshold of about 70,000. To make
+# predictions (on the training set for now), instead of calling the classifier’s predict()
+# method, you can just run this code:
+#      y_train_pred_90 = (y_scores > 70000)
+# Let’s check these predictions’ precision and recall:
+#      >>> precision_score(y_train_5, y_train_pred_90)
+#      0.8998702983138781
+#      >>> recall_score(y_train_5, y_train_pred_90)
+#      0.63991883416343853
+# Great, you have a 90% precision classifier (or close enough)! As you can see, it is
+# fairly easy to create a classifier with virtually any precision you want: just set a high
+# enough threshold, and you’re done. Hmm, not so fast. A high-precision classifier is
+# not very useful if its recall is too low!
+# 
+#                       If someone says “let’s reach 99% precision,” you should ask, “at
+#                       what recall?”
+# 
+# 
+# 
+# 
+# 90   |   Chapter 3: Classification
+# 
+#                   Download from finelybook www.finelybook.com
+# The ROC Curve
+# The receiver operating characteristic (ROC) curve is another common tool used with
+# binary classifiers. It is very similar to the precision/recall curve, but instead of plot‐
+# ting precision versus recall, the ROC curve plots the true positive rate (another name
+# for recall) against the false positive rate. The FPR is the ratio of negative instances that
+# are incorrectly classified as positive. It is equal to one minus the true negative rate,
+# which is the ratio of negative instances that are correctly classified as negative. The
+# TNR is also called specificity. Hence the ROC curve plots sensitivity (recall) versus
+# 1 – specificity.
+# To plot the ROC curve, you first need to compute the TPR and FPR for various thres‐
+# hold values, using the roc_curve() function:
+#     from sklearn.metrics import roc_curve
+# 
+#     fpr, tpr, thresholds = roc_curve(y_train_5, y_scores)
+# Then you can plot the FPR against the TPR using Matplotlib. This code produces the
+# plot in Figure 3-6:
+#     def plot_roc_curve(fpr, tpr, label=None):
+#         plt.plot(fpr, tpr, linewidth=2, label=label)
+#         plt.plot([0, 1], [0, 1], 'k--')
+#         plt.axis([0, 1, 0, 1])
+#         plt.xlabel('False Positive Rate')
+#         plt.ylabel('True Positive Rate')
+# 
+#     plot_roc_curve(fpr, tpr)
+#     plt.show()
+# 
+# 
+# 
+# 
+# Figure 3-6. ROC curve
+# 
+#                                                                    Performance Measures   |   91
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Precision/Recall Tradeoff",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Precision/Recall Tradeoff"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class PrecisionRecallTradeoff(HierNode):
+    def __init__(self):
+        super().__init__("Precision/Recall Tradeoff")
+        self.add(Content())
+
+# eof

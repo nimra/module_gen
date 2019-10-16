@@ -1,0 +1,90 @@
+                     Download from finelybook www.finelybook.com
+
+
+
+
+Figure 7-5. A single Decision Tree versus a bagging ensemble of 500 trees
+
+Bootstrapping introduces a bit more diversity in the subsets that each predictor is
+trained on, so bagging ends up with a slightly higher bias than pasting, but this also
+means that predictors end up being less correlated so the ensemble’s variance is
+reduced. Overall, bagging often results in better models, which explains why it is gen‐
+erally preferred. However, if you have spare time and CPU power you can use cross-
+validation to evaluate both bagging and pasting and select the one that works best.
+
+Out-of-Bag Evaluation
+With bagging, some instances may be sampled several times for any given predictor,
+while others may not be sampled at all. By default a BaggingClassifier samples m
+training instances with replacement (bootstrap=True), where m is the size of the
+training set. This means that only about 63% of the training instances are sampled on
+average for each predictor.6 The remaining 37% of the training instances that are not
+sampled are called out-of-bag (oob) instances. Note that they are not the same 37%
+for all predictors.
+Since a predictor never sees the oob instances during training, it can be evaluated on
+these instances, without the need for a separate validation set or cross-validation. You
+can evaluate the ensemble itself by averaging out the oob evaluations of each predic‐
+tor.
+In Scikit-Learn, you can set oob_score=True when creating a BaggingClassifier to
+request an automatic oob evaluation after training. The following code demonstrates
+this. The resulting evaluation score is available through the oob_score_ variable:
+    >>> bag_clf = BaggingClassifier(
+    >>>         DecisionTreeClassifier(), n_estimators=500,
+    >>>         bootstrap=True, n_jobs=-1, oob_score=True)
+
+
+
+6 As m grows, this ratio approaches 1 – exp(–1) ≈ 63.212%.
+
+
+
+                                                                  Bagging and Pasting   |   187
+                       Download from finelybook www.finelybook.com
+      >>> bag_clf.fit(X_train, y_train)
+      >>> bag_clf.oob_score_
+      0.93066666666666664
+
+According to this oob evaluation, this BaggingClassifier is likely to achieve about
+93.1% accuracy on the test set. Let’s verify this:
+      >>> from sklearn.metrics import accuracy_score
+      >>> y_pred = bag_clf.predict(X_test)
+      >>> accuracy_score(y_test, y_pred)
+      0.93600000000000005
+We get 93.6% accuracy on the test set—close enough!
+The oob decision function for each training instance is also available through the
+oob_decision_function_ variable. In this case (since the base estimator has a pre
+dict_proba() method) the decision function returns the class probabilities for each
+training instance. For example, the oob evaluation estimates that the second training
+instance has a 60.6% probability of belonging to the positive class (and 39.4% of
+belonging to the positive class):
+      >>> bag_clf.oob_decision_function_
+      array([[ 0.        , 1.         ],
+             [ 0.60588235, 0.39411765],
+             [ 1.        , 0.         ],
+             ...
+             [ 1.        , 0.         ],
+             [ 0.        , 1.         ],
+             [ 0.48958333, 0.51041667]])
+
+
+Random Patches and Random Subspaces
+The BaggingClassifier class supports sampling the features as well. This is con‐
+trolled by two hyperparameters: max_features and bootstrap_features. They work
+the same way as max_samples and bootstrap, but for feature sampling instead of
+instance sampling. Thus, each predictor will be trained on a random subset of the
+input features.
+This is particularly useful when you are dealing with high-dimensional inputs (such
+as images). Sampling both training instances and features is called the Random
+Patches method.7 Keeping all training instances (i.e., bootstrap=False and max_sam
+ples=1.0) but sampling features (i.e., bootstrap_features=True and/or max_fea
+tures smaller than 1.0) is called the Random Subspaces method.8
+
+
+
+
+7 “Ensembles on Random Patches,” G. Louppe and P. Geurts (2012).
+8 “The random subspace method for constructing decision forests,” Tin Kam Ho (1998).
+
+
+
+188   |   Chapter 7: Ensemble Learning and Random Forests
+

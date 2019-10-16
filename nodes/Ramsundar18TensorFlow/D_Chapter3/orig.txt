@@ -1,0 +1,35 @@
+                                                                       CHAPTER 3
+                          Linear and Logistic Regression
+                                       with TensorFlow
+
+
+
+
+This chapter will show you how to build simple, but nontrivial, examples of learning
+systems in TensorFlow. The first part of this chapter reviews the mathematical foun‐
+dations for building learning systems and in particular will cover functions, continu‐
+ity, and differentiability. We introduce the idea of loss functions, then discuss how
+machine learning boils down to the ability to find the minimal points of complicated
+loss functions. We then cover the notion of gradient descent, and explain how it can
+be used to minimize loss functions. We end the first section by briefly discussing the
+algorithmic idea of automatic differentiation. The second section focuses on intro‐
+ducing the TensorFlow concepts underpinned by these mathematical ideas. These
+concepts include placeholders, scopes, optimizers, and TensorBoard, and enable the
+practical construction and analysis of learning systems. The final section provides
+case studies of how to train linear and logistic regression models in TensorFlow.
+This chapter is long and introduces many new ideas. It’s OK if you don’t grasp all the
+subtleties of these ideas in a first reading. We recommend moving forward and com‐
+ing back to refer to the concepts here as needed later. We will repeatedly use these
+fundamentals in the remainder of the book in order to let these ideas sink in
+gradually.
+
+Mathematical Review
+This first section reviews the mathematical tools needed to conceptually understand
+machine learning. We attempt to minimize the number of Greek symbols required,
+and focus instead on building conceptual understanding rather than technical
+manipulations.
+
+
+
+                                                                                    43
+

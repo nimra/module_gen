@@ -1,0 +1,113 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                   Download from finelybook www.finelybook.com
+# Equation 14-3 summarizes how to compute the cell’s long-term state, its short-term
+# state, and its output at each time step for a single instance (the equations for a whole
+# mini-batch are very similar).
+# 
+#     Equation 14-3. LSTM computations
+#                    T               T
+#     � t = σ �xi · � t + �hi · � t − 1 + �i
+#                     T               T
+#     � t = σ �x f · � t + �h f · � t − 1 + � f
+#                     T               T
+#     � t = σ �xo · � t + �ho · � t − 1 + �o
+#                          T                T
+#     � t = tanh �xg · � t + �hg · � t − 1 + � g
+#     � t = � t ⊗� t−1 + � t ⊗� t
+#     � t = � t = � t ⊗ tanh � t
+# 
+# 
+#   • Wxi, Wxf, Wxo, Wxg are the weight matrices of each of the four layers for their con‐
+#     nection to the input vector x(t).
+#   • Whi, Whf, Who, and Whg are the weight matrices of each of the four layers for their
+#     connection to the previous short-term state h(t–1).
+#   • bi, bf, bo, and bg are the bias terms for each of the four layers. Note that Tensor‐
+#     Flow initializes bf to a vector full of 1s instead of 0s. This prevents forgetting
+#     everything at the beginning of training.
+# 
+# 
+# Peephole Connections
+# In a basic LSTM cell, the gate controllers can look only at the input x(t) and the previ‐
+# ous short-term state h(t–1). It may be a good idea to give them a bit more context by
+# letting them peek at the long-term state as well. This idea was proposed by Felix Gers
+# and Jürgen Schmidhuber in 2000.6 They proposed an LSTM variant with extra con‐
+# nections called peephole connections: the previous long-term state c(t–1) is added as an
+# input to the controllers of the forget gate and the input gate, and the current long-
+# term state c(t) is added as input to the controller of the output gate.
+# To implement peephole connections in TensorFlow, you must use the LSTMCell
+# instead of the BasicLSTMCell and set use_peepholes=True:
+#     lstm_cell = tf.contrib.rnn.LSTMCell(num_units=n_neurons, use_peepholes=True)
+# 
+# 
+# 
+# 
+# 6 “Recurrent Nets that Time and Count,” F. Gers and J. Schmidhuber (2000).
+# 
+# 
+# 
+#                                                                              LSTM Cell   |   403
+# 
+#                 Download from finelybook www.finelybook.com
+# There are many other variants of the LSTM cell. One particularly popular variant is
+# the GRU cell, which we will look at now.
+# 
+# GRU Cell
+# The Gated Recurrent Unit (GRU) cell (see Figure 14-14) was proposed by Kyunghyun
+# Cho et al. in a 2014 paper7 that also introduced the Encoder–Decoder network we
+# mentioned earlier.
+# 
+# 
+# 
+# 
+# Figure 14-14. GRU cell
+# 
+# The GRU cell is a simplified version of the LSTM cell, and it seems to perform just as
+# well8 (which explains its growing popularity). The main simplifications are:
+# 
+#   • Both state vectors are merged into a single vector h(t).
+#   • A single gate controller controls both the forget gate and the input gate. If the
+#     gate controller outputs a 1, the input gate is open and the forget gate is closed. If
+# 
+# 
+# 
+# 7 “Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation,” K. Cho
+#   et al. (2014).
+# 8 A 2015 paper by Klaus Greff et al., “LSTM: A Search Space Odyssey,” seems to show that all LSTM variants
+#   perform roughly the same.
+# 
+# 
+# 
+# 404   |   Chapter 14: Recurrent Neural Networks
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Peephole Connections",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Peephole Connections"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class PeepholeConnections(HierNode):
+    def __init__(self):
+        super().__init__("Peephole Connections")
+        self.add(Content())
+
+# eof

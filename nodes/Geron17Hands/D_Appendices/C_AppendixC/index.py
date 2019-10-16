@@ -1,0 +1,226 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                   Download from finelybook www.finelybook.com
+# 
+# 
+#                                                                             APPENDIX C
+#                                                        SVM Dual Problem
+# 
+# 
+# 
+# 
+# To understand duality, you first need to understand the Lagrange multipliers method.
+# The general idea is to transform a constrained optimization objective into an uncon‐
+# strained one, by moving the constraints into the objective function. Let’s look at a
+# simple example. Suppose you want to find the values of x and y that minimize the
+# function f(x,y) = x2 + 2y, subject to an equality constraint: 3x + 2y + 1 = 0. Using the
+# Lagrange multipliers method, we start by defining a new function called the Lagran‐
+# gian (or Lagrange function): g(x, y, α) = f(x, y) – α(3x + 2y + 1). Each constraint (in
+# this case just one) is subtracted from the original objective, multiplied by a new vari‐
+# able called a Lagrange multiplier.
+# Joseph-Louis Lagrange showed that if x, y is a solution to the constrained optimiza‐
+# tion problem, then there must exist an α such that x, y, α is a stationary point of the
+# Lagrangian (a stationary point is a point where all partial derivatives are equal to
+# zero). In other words, we can compute the partial derivatives of g(x, y, α) with regards
+# to x, y, and α; we can find the points where these derivatives are all equal to zero; and
+# the solutions to the constrained optimization problem (if they exist) must be among
+# these stationary points.
+#                                                ∂
+#                                                ∂x
+#                                                   g   x, y, α = 2x − 3α
+#                                                ∂
+# In this example the partial derivatives are:   ∂y
+#                                                   g   x, y, α = 2 − 2α
+#                                                 ∂
+#                                                ∂α
+#                                                   g   x, y, α = − 3x − 2y − 1
+# 
+# When all these partial derivatives are equal to 0, we find that
+#                                                                              3
+# 2x − 3α = 2 − 2α = − 3x − 2y − 1 = 0, from which we can easily find that x = 2 ,
+#        11
+# y = − 4 , and α = 1. This is the only stationary point, and as it respects the con‐
+# straint, it must be the solution to the constrained optimization problem.
+# 
+# 
+#                                                                                       503
+# 
+#                    Download from finelybook www.finelybook.com
+# However, this method applies only to equality constraints. Fortunately, under some
+# regularity conditions (which are respected by the SVM objectives), this method can
+# be generalized to inequality constraints as well (e.g., 3x + 2y + 1 ≥ 0). The generalized
+# Lagrangian for the hard margin problem is given by Equation C-1, where the α(i) vari‐
+# ables are called the Karush–Kuhn–Tucker (KKT) multipliers, and they must be greater
+# or equal to zero.
+# 
+#       Equation C-1. Generalized Lagrangian for the hard margin problem
+#                           m
+#                  1 T
+#       ℒ �, b, α = � · � − ∑ α i t              i    T     i
+#                                                    � ·� +b −1
+#                  2       i=1
+# 
+#                              with α i ≥ 0          for i = 1, 2, ⋯, m
+# 
+# Just like with the Lagrange multipliers method, you can compute the partial deriva‐
+# tives and locate the stationary points. If there is a solution, it will necessarily be
+# among the stationary points �, b, α that respect the KKT conditions:
+# 
+#                                                               T
+#   • Respect the problem’s constraints: t i �                      ·�i +b ≥1   for i = 1, 2, ⋯, m,
+#   • Verify α i ≥ 0          for i = 1, 2, ⋯, m,
+#                   i
+#   • Either α = 0 or the ith constraint must be an active constraint, meaning it must
+#     hold by equality: t i � T · � i + b = 1. This condition is called the complemen‐
+#       tary slackness condition. It implies that either α i = 0 or the ith instance lies on the
+#       boundary (it is a support vector).
+# 
+# Note that the KKT conditions are necessary conditions for a stationary point to be a
+# solution of the constrained optimization problem. Under some conditions, they are
+# also sufficient conditions. Luckily, the SVM optimization problem happens to meet
+# these conditions, so any stationary point that meets the KKT conditions is guaranteed
+# to be a solution to the constrained optimization problem.
+# We can compute the partial derivatives of the generalized Lagrangian with regards to
+# w and b with Equation C-2.
+# 
+#       Equation C-2. Partial derivatives of the generalized Lagrangian
+#                                  m
+#       ∇�ℒ �, b, α = � −          ∑
+#                                 i=1
+#                                     αiti�
+#                                           i
+# 
+# 
+#                               m
+#              ∂
+#                 ℒ �, b, α = − ∑ α i t      i
+#              ∂b              i=1
+# 
+# 
+# 
+# 
+# 504    |   Appendix C: SVM Dual Problem
+# 
+#                 Download from finelybook www.finelybook.com
+# When these partial derivatives are equal to 0, we have Equation C-3.
+# 
+#    Equation C-3. Properties of the stationary points
+#          m
+#    �=    ∑ αiti�i
+#         i=1
+#          m
+#          ∑ αiti
+#         i=1
+#                         =0
+# 
+# 
+# If we plug these results into the definition of the generalized Lagrangian, some terms
+# disappear and we find Equation C-4.
+# 
+#    Equation C-4. Dual form of the SVM problem
+# 
+#                         1 m m i j i j iT                         m
+# 
+#                         2i∑  ∑ α α t t � ·�            j
+#    ℒ �, b, α =
+#                           =1j=1
+#                                                            −     ∑ αi
+#                                                                 i=1
+# 
+#                                        with α i ≥ 0   for i = 1, 2, ⋯, m
+# 
+# The goal is now to find the vector α that minimizes this function, with α i ≥ 0 for all
+# instances. This constrained optimization problem is the dual problem we were look‐
+# ing for.
+# Once you find the optimal α , you can compute � using the first line of Equation C-3.
+# To compute b , you can use the fact that a support vector verifies t(i)(wT · x(i) + b) = 1,
+# so if the kth instance is a support vector (i.e., αk > 0), you can use it to compute
+# b = 1 − t k �T · � k . However, it is often prefered to compute the average over all
+# support vectors to get a more stable and precise value, as in Equation C-5.
+# 
+#    Equation C-5. Bias term estimation using the dual form
+#                  m
+#         1
+#    b=
+#         ns        ∑
+#                  i=1
+#                         1−t   i    T
+#                                   � ·�
+#                                          i
+# 
+#                  i >0
+#              α
+# 
+# 
+# 
+# 
+#                                                                            SVM Dual Problem   |   505
+# 
+# Download from finelybook www.finelybook.com
+# 
+#                    Download from finelybook www.finelybook.com
+# 
+# 
+#                                                                        APPENDIX D
+#                                                                        Autodiff
+# 
+# 
+# 
+# 
+# This appendix explains how TensorFlow’s autodiff feature works, and how it com‐
+# pares to other solutions.
+# Suppose you define a function f(x,y) = x2y + y + 2, and you need its partial derivatives
+# ∂f      ∂f
+# ∂x
+#     and ∂y , typically to perform Gradient Descent (or some other optimization algo‐
+# rithm). Your main options are manual differentiation, symbolic differentiation,
+# numerical differentiation, forward-mode autodiff, and finally reverse-mode autodiff.
+# TensorFlow implements this last option. Let’s go through each of these options.
+# 
+# Manual Differentiation
+# The first approach is to pick up a pencil and a piece of paper and use your calculus
+# knowledge to derive the partial derivatives manually. For the function f(x,y) just
+# defined, it is not too hard; you just need to use five rules:
+# 
+#   • The derivative of a constant is 0.
+#   • The derivative of λx is λ (where λ is a constant).
+#   • The derivative of xλ is λxλ – 1, so the derivative of x2 is 2x.
+#   • The derivative of a sum of functions is the sum of these functions’ derivatives.
+#   • The derivative of λ times a function is λ times its derivative.
+# 
+# 
+# 
+# 
+#                                                                                        507
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Appendix C. SVM Dual Problem",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Appendix C. SVM Dual Problem"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class AppendixC(HierNode):
+    def __init__(self):
+        super().__init__("Appendix C. SVM Dual Problem")
+        self.add(Content())
+
+# eof

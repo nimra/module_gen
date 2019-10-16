@@ -1,0 +1,83 @@
+                 Download from finelybook www.finelybook.com
+
+
+
+
+Figure 15-2. PCA performed by an undercomplete linear autoencoder
+
+Stacked Autoencoders
+Just like other neural networks we have discussed, autoencoders can have multiple
+hidden layers. In this case they are called stacked autoencoders (or deep autoencoders).
+Adding more layers helps the autoencoder learn more complex codings. However,
+one must be careful not to make the autoencoder too powerful. Imagine an encoder
+so powerful that it just learns to map each input to a single arbitrary number (and the
+decoder learns the reverse mapping). Obviously such an autoencoder will reconstruct
+the training data perfectly, but it will not have learned any useful data representation
+in the process (and it is unlikely to generalize well to new instances).
+The architecture of a stacked autoencoder is typically symmetrical with regards to the
+central hidden layer (the coding layer). To put it simply, it looks like a sandwich. For
+example, an autoencoder for MNIST (introduced in Chapter 3) may have 784 inputs,
+followed by a hidden layer with 300 neurons, then a central hidden layer of 150 neu‐
+rons, then another hidden layer with 300 neurons, and an output layer with 784 neu‐
+rons. This stacked autoencoder is represented in Figure 15-3.
+
+
+
+
+Figure 15-3. Stacked autoencoder
+
+                                                                Stacked Autoencoders   |   415
+                       Download from finelybook www.finelybook.com
+TensorFlow Implementation
+You can implement a stacked autoencoder very much like a regular deep MLP. In par‐
+ticular, the same techniques we used in Chapter 11 for training deep nets can be
+applied. For example, the following code builds a stacked autoencoder for MNIST,
+using He initialization, the ELU activation function, and ℓ2 regularization. The code
+should look very familiar, except that there are no labels (no y):
+      n_inputs = 28 * 28 # for MNIST
+      n_hidden1 = 300
+      n_hidden2 = 150 # codings
+      n_hidden3 = n_hidden1
+      n_outputs = n_inputs
+
+      learning_rate = 0.01
+      l2_reg = 0.001
+
+      X = tf.placeholder(tf.float32, shape=[None, n_inputs])
+      with tf.contrib.framework.arg_scope(
+              [fully_connected],
+              activation_fn=tf.nn.elu,
+              weights_initializer=tf.contrib.layers.variance_scaling_initializer(),
+              weights_regularizer=tf.contrib.layers.l2_regularizer(l2_reg)):
+          hidden1 = fully_connected(X, n_hidden1)
+          hidden2 = fully_connected(hidden1, n_hidden2) # codings
+          hidden3 = fully_connected(hidden2, n_hidden3)
+          outputs = fully_connected(hidden3, n_outputs, activation_fn=None)
+
+      reconstruction_loss = tf.reduce_mean(tf.square(outputs - X))   # MSE
+
+      reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
+      loss = tf.add_n([reconstruction_loss] + reg_losses)
+
+      optimizer = tf.train.AdamOptimizer(learning_rate)
+      training_op = optimizer.minimize(loss)
+
+      init = tf.global_variables_initializer()
+
+You can then train the model normally. Note that the digit labels (y_batch) are
+unused:
+      n_epochs = 5
+      batch_size = 150
+
+      with tf.Session() as sess:
+          init.run()
+          for epoch in range(n_epochs):
+              n_batches = mnist.train.num_examples // batch_size
+              for iteration in range(n_batches):
+                  X_batch, y_batch = mnist.train.next_batch(batch_size)
+                  sess.run(training_op, feed_dict={X: X_batch})
+
+
+
+416   |   Chapter 15: Autoencoders
+

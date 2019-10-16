@@ -1,0 +1,27 @@
+Figure 6-16. The CycleGAN is capable of performing complex image transformations,
+such as transforming images of horses into those of zebras (and vice versa).
+
+Unfortunately, generative adversarial networks are still challenging to train in prac‐
+tice. Making generators and discriminators learn reasonable functions requires a
+deep bag of tricks. As a result, while there have been many exciting GAN demonstra‐
+tions, GANs have not yet matured into a state where they can be widely deployed in
+industrial applications.
+
+Training a Convolutional Network in TensorFlow
+In this section we consider a code sample for training a simple convolutional neural
+network. In particular, our code sample will demonstrate how to train a LeNet-5 con‐
+volutional architecture on the MNIST dataset using TensorFlow. As always, we rec‐
+ommend that you follow along by running the full code sample from the GitHub
+repo associated with the book.
+
+The MNIST Dataset
+The MNIST dataset consists of images of handwritten digits. The machine learning
+challenge associated with MNIST consists of creating a model trained on the training
+set of digits that generalizes to the validation set. Figure 6-17 shows some images
+drawn from the MNIST dataset.
+
+
+
+
+134   |   Chapter 6: Convolutional Neural Networks
+

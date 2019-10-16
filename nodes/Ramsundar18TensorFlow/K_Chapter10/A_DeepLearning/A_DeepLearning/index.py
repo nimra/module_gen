@@ -1,0 +1,122 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Deep Learning Outside the Tech Industry
+# Technological companies such as Google, Facebook, Microsoft, and others have made
+# heavy investments in deep learning infrastructure. Most of these companies were
+# already familiar with machine learning systems, likely from past experiences with
+# machine learning such as with ad prediction systems or search engines. As a result,
+# shifting to deep learning from older machine learning systems took only a small con‐
+# ceptual shift. Also, the success of past machine learning applications has made tech
+# management quite open to the argument that deep learning could be more widely
+# applied within companies. For these reasons, software companies are likely to remain
+# the most prominent users of deep learning for the near future. If you intend to find a
+# job using deep learning within the next couple years, it’s likely that you will end up at
+# a tech company.
+# However, at the same time, there is a broader shift brewing in which deep learning is
+# beginning to infiltrate industries that historically have not used much machine learn‐
+# ing. Unlike simpler machine learning methods, deep learning reduces the need for
+# sophisticated feature preprocessing and allows for direct input of perceptual, textual,
+# and molecular data. As a result, a number of industries are taking note, and large-
+# scale efforts to overhaul these industries have already begun in many innovative start‐
+# ups. We will now briefly discuss some of the changes happening in nearby industries
+# and note that many new job opportunities for deep learning experts may become
+# available in the near future.
+# 
+#                      Applications Are Synergistic
+#                      You will soon learn about a number of deep learning applications
+#                      in different industries. The striking fact about these applications is
+#                      that all of them use the same fundamental deep learning algo‐
+#                      rithms. Techniques you’ve seen such as fully connected networks,
+#                      convolutional networks, recurrent networks, and reinforcement
+#                      learning are broadly applicable to any of these fields. In particular,
+#                      that means core improvements in convolutional network design
+#                      will yield fruit in pharmaceutical, agricultural, and robotics appli‐
+#                      cations. In reverse, deep learning innovations discovered by roboti‐
+#                      cists will filter back and strengthen the foundations of deep
+#                      learning. This virtuous cycle of fundamentals driving application
+#                      driving fundamentals means that deep learning is a force that’s here
+#                      to stay.
+# 
+# 
+# Deep Learning in the Pharmaceutical Industry
+# Deep learning is showing signs of taking off in a big way in drug discovery. Drug dis‐
+# covery is broken down into multiple phases. There’s the preclinical discovery phase,
+# 
+# 
+# 
+# 226   |   Chapter 10: The Future of Deep Learning
+# 
+# where the effects of potential drugs are tested indirectly in test tubes and in animals,
+# followed by the clinical phase where therapeutics are tested directly in human volun‐
+# teers. Medicine that passes both nonhuman and human testing is approved for sale to
+# consumers.
+# Researchers have begun to construct models that optimize each part of the drug dis‐
+# covery process. For example, molecular deep learning has been applied to problems
+# such as predicting the potential toxicity of putative medications and to chemical
+# problems involved in the synthesis and design of drug-like molecules. Other
+# researchers and companies are using deep convolutional networks to design new
+# experiments that closely track cellular behavior on massive scales to obtain stronger
+# understanding of novel biology. These applications have had some impact on the
+# pharmaceutical world, but nothing dramatic yet since it isn’t possible to build one
+# drug discovery model that “designs” a novel drug. However, as more data gathering
+# efforts continue and more biological and chemical deep learning models are
+# designed, this state of affairs could change drastically in the next few years.
+# 
+# Deep Learning in Law
+# The legal industry relies heavily on precedent in the legal literature to make argu‐
+# ments about the legality or illegality of new cases. Traditionally, legions of paralegal
+# researchers have been employed by large law firms to perform the needed lookups
+# into the legal literature. In more recent years, legal search engines have become stan‐
+# dard fare for most sophisticated firms.
+# Such search algorithms are still relatively immature, and it’s likely that deep learning
+# systems for neurolinguistic processing (NLP) can offer significant improvements. For
+# example, a number of startups are working on building deep NLP systems that offer
+# better querying of legal precedent. Other startups are working on predictive methods
+# that use machine learning to predict the outcome of litigation, while a few are even
+# experimenting with methods for automated generation of legal arguments.
+# In general, these sophisticated applications of deep models will take time to mature,
+# but the groundswell of legal AI innovation likely heralds a dramatic shift in the legal
+# profession.
+# 
+# Deep Learning for Robotics
+# The robotics industry has traditionally avoided deploying machine learning since it’s
+# not easy to prove that machine-learned systems are safe to deploy. This lack of safety
+# guarantees can become a major liability when building systems that need to be safe
+# for deployment around human operators.
+# In recent years, though, it’s become clear that deep reinforcement learning systems,
+# combined with low data learning techniques, can offer dramatic improvements in
+# 
+# 
+#                                                    Deep Learning Outside the Tech Industry   |   227
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Deep Learning in the Pharmaceutical Industry",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Deep Learning in the Pharmaceutical Industry"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class DeepLearning(HierNode):
+    def __init__(self):
+        super().__init__("Deep Learning in the Pharmaceutical Industry")
+        self.add(Content())
+
+# eof

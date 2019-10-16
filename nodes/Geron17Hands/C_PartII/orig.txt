@@ -1,0 +1,38 @@
+    Download from finelybook www.finelybook.com
+
+
+
+                                                  PART II
+Neural Networks and Deep Learning
+Download from finelybook www.finelybook.com
+                Download from finelybook www.finelybook.com
+
+
+                                                                      CHAPTER 9
+                   Up and Running with TensorFlow
+
+
+
+
+TensorFlow is a powerful open source software library for numerical computation,
+particularly well suited and fine-tuned for large-scale Machine Learning. Its basic
+principle is simple: you first define in Python a graph of computations to perform
+(for example, the one in Figure 9-1), and then TensorFlow takes that graph and runs
+it efficiently using optimized C++ code.
+
+
+
+
+Figure 9-1. A simple computation graph
+
+Most importantly, it is possible to break up the graph into several chunks and run
+them in parallel across multiple CPUs or GPUs (as shown in Figure 9-2). TensorFlow
+also supports distributed computing, so you can train colossal neural networks on
+humongous training sets in a reasonable amount of time by splitting the computa‐
+tions across hundreds of servers (see Chapter 12). TensorFlow can train a network
+with millions of parameters on a training set composed of billions of instances with
+millions of features each. This should come as no surprise, since TensorFlow was
+
+
+                                                                                 229
+

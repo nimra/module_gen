@@ -1,0 +1,102 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                        Download from finelybook www.finelybook.com
+# Manifold Learning
+# The Swiss roll is an example of a 2D manifold. Put simply, a 2D manifold is a 2D
+# shape that can be bent and twisted in a higher-dimensional space. More generally, a
+# d-dimensional manifold is a part of an n-dimensional space (where d < n) that locally
+# resembles a d-dimensional hyperplane. In the case of the Swiss roll, d = 2 and n = 3: it
+# locally resembles a 2D plane, but it is rolled in the third dimension.
+# Many dimensionality reduction algorithms work by modeling the manifold on which
+# the training instances lie; this is called Manifold Learning. It relies on the manifold
+# assumption, also called the manifold hypothesis, which holds that most real-world
+# high-dimensional datasets lie close to a much lower-dimensional manifold. This
+# assumption is very often empirically observed.
+# Once again, think about the MNIST dataset: all handwritten digit images have some
+# similarities. They are made of connected lines, the borders are white, they are more
+# or less centered, and so on. If you randomly generated images, only a ridiculously
+# tiny fraction of them would look like handwritten digits. In other words, the degrees
+# of freedom available to you if you try to create a digit image are dramatically lower
+# than the degrees of freedom you would have if you were allowed to generate any
+# image you wanted. These constraints tend to squeeze the dataset into a lower-
+# dimensional manifold.
+# The manifold assumption is often accompanied by another implicit assumption: that
+# the task at hand (e.g., classification or regression) will be simpler if expressed in the
+# lower-dimensional space of the manifold. For example, in the top row of Figure 8-6
+# the Swiss roll is split into two classes: in the 3D space (on the left), the decision
+# boundary would be fairly complex, but in the 2D unrolled manifold space (on the
+# right), the decision boundary is a simple straight line.
+# However, this assumption does not always hold. For example, in the bottom row of
+# Figure 8-6, the decision boundary is located at x1 = 5. This decision boundary looks
+# very simple in the original 3D space (a vertical plane), but it looks more complex in
+# the unrolled manifold (a collection of four independent line segments).
+# In short, if you reduce the dimensionality of your training set before training a
+# model, it will definitely speed up training, but it may not always lead to a better or
+# simpler solution; it all depends on the dataset.
+# Hopefully you now have a good sense of what the curse of dimensionality is and how
+# dimensionality reduction algorithms can fight it, especially when the manifold
+# assumption holds. The rest of this chapter will go through some of the most popular
+# algorithms.
+# 
+# 
+# 
+# 
+# 210   |   Chapter 8: Dimensionality Reduction
+# 
+#                   Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 8-6. The decision boundary may not always be simpler with lower dimensions
+# 
+# PCA
+# Principal Component Analysis (PCA) is by far the most popular dimensionality reduc‐
+# tion algorithm. First it identifies the hyperplane that lies closest to the data, and then
+# it projects the data onto it.
+# 
+# Preserving the Variance
+# Before you can project the training set onto a lower-dimensional hyperplane, you
+# first need to choose the right hyperplane. For example, a simple 2D dataset is repre‐
+# sented on the left of Figure 8-7, along with three different axes (i.e., one-dimensional
+# hyperplanes). On the right is the result of the projection of the dataset onto each of
+# these axes. As you can see, the projection onto the solid line preserves the maximum
+# variance, while the projection onto the dotted line preserves very little variance, and
+# the projection onto the dashed line preserves an intermediate amount of variance.
+# 
+# 
+# 
+# 
+#                                                                                PCA   |   211
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Manifold Learning",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Manifold Learning"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ManifoldLearning(HierNode):
+    def __init__(self):
+        super().__init__("Manifold Learning")
+        self.add(Content())
+
+# eof

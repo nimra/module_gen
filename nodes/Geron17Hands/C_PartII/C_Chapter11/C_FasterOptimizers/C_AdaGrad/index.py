@@ -1,0 +1,148 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                    Download from finelybook www.finelybook.com
+# slightly closer to the optimum. After a while, these small improvements add up and
+# NAG ends up being significantly faster than regular Momentum optimization. More‐
+# over, note that when the momentum pushes the weights across a valley, ∇1 continues
+# to push further across the valley, while ∇2 pushes back toward the bottom of the val‐
+# ley. This helps reduce oscillations and thus converges faster.
+# 
+# 
+# 
+# 
+# Figure 11-6. Regular versus Nesterov Momentum optimization
+# 
+# NAG will almost always speed up training compared to regular Momentum optimi‐
+# zation. To use it, simply set use_nesterov=True when creating the MomentumOptim
+# izer:
+#       optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,
+#                                              momentum=0.9, use_nesterov=True)
+# 
+# 
+# AdaGrad
+# Consider the elongated bowl problem again: Gradient Descent starts by quickly going
+# down the steepest slope, then slowly goes down the bottom of the valley. It would be
+# nice if the algorithm could detect this early on and correct its direction to point a bit
+# more toward the global optimum.
+# 
+# 
+# 
+# 
+# 296   |   Chapter 11: Training Deep Neural Nets
+# 
+#                  Download from finelybook www.finelybook.com
+# The AdaGrad algorithm13 achieves this by scaling down the gradient vector along the
+# steepest dimensions (see Equation 11-6):
+# 
+#      Equation 11-6. AdaGrad algorithm
+#      1.     �     � + ∇θJ θ ⊗ ∇θJ θ
+#      2.     θ     θ − η ∇θJ θ ⊘ � + �
+# 
+# The first step accumulates the square of the gradients into the vector s (the ⊗ symbol
+# represents the element-wise multiplication). This vectorized form is equivalent to
+# computing si ← si + (∂ / ∂ θi J(θ))2 for each element si of the vector s; in other words,
+# each si accumulates the squares of the partial derivative of the cost function with
+# regards to parameter θi. If the cost function is steep along the ith dimension, then si
+# will get larger and larger at each iteration.
+# The second step is almost identical to Gradient Descent, but with one big difference:
+# the gradient vector is scaled down by a factor of � + � (the ⊘ symbol represents the
+# element-wise division, and ϵ is a smoothing term to avoid division by zero, typically
+# set to 10–10). This vectorized form is equivalent to computing
+# θi θi − η ∂/∂θi J θ / si + � for all parameters θi (simultaneously).
+# In short, this algorithm decays the learning rate, but it does so faster for steep dimen‐
+# sions than for dimensions with gentler slopes. This is called an adaptive learning rate.
+# It helps point the resulting updates more directly toward the global optimum (see
+# Figure 11-7). One additional benefit is that it requires much less tuning of the learn‐
+# ing rate hyperparameter η.
+# 
+# 
+# 
+# 
+# Figure 11-7. AdaGrad versus Gradient Descent
+# 
+# 
+# 
+# 
+# 13 “Adaptive Subgradient Methods for Online Learning and Stochastic Optimization,” J. Duchi et al. (2011).
+# 
+# 
+# 
+#                                                                                       Faster Optimizers   |   297
+# 
+#                    Download from finelybook www.finelybook.com
+# AdaGrad often performs well for simple quadratic problems, but unfortunately it
+# often stops too early when training neural networks. The learning rate gets scaled
+# down so much that the algorithm ends up stopping entirely before reaching the
+# global optimum. So even though TensorFlow has an AdagradOptimizer, you should
+# not use it to train deep neural networks (it may be efficient for simpler tasks such as
+# Linear Regression, though).
+# 
+# RMSProp
+# Although AdaGrad slows down a bit too fast and ends up never converging to the
+# global optimum, the RMSProp algorithm14 fixes this by accumulating only the gradi‐
+# ents from the most recent iterations (as opposed to all the gradients since the begin‐
+# ning of training). It does so by using exponential decay in the first step (see Equation
+# 11-7).
+# 
+#       Equation 11-7. RMSProp algorithm
+#       1.     �     β� + 1 − β ∇θJ θ ⊗ ∇θJ θ
+#       2.     θ      θ − η ∇θ J θ ⊘ � + �
+# 
+# The decay rate β is typically set to 0.9. Yes, it is once again a new hyperparameter, but
+# this default value often works well, so you may not need to tune it at all.
+# As you might expect, TensorFlow has an RMSPropOptimizer class:
+#       optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate,
+#                                             momentum=0.9, decay=0.9, epsilon=1e-10)
+# Except on very simple problems, this optimizer almost always performs much better
+# than AdaGrad. It also generally performs better than Momentum optimization and
+# Nesterov Accelerated Gradients. In fact, it was the preferred optimization algorithm
+# of many researchers until Adam optimization came around.
+# 
+# Adam Optimization
+# Adam,15 which stands for adaptive moment estimation, combines the ideas of Momen‐
+# tum optimization and RMSProp: just like Momentum optimization it keeps track of
+# an exponentially decaying average of past gradients, and just like RMSProp it keeps
+# 
+# 
+# 
+# 14 This algorithm was created by Tijmen Tieleman and Geoffrey Hinton in 2012, and presented by Geoffrey
+#    Hinton in his Coursera class on neural networks (slides: http://goo.gl/RsQeis; video: https://goo.gl/XUbIyJ).
+#    Amusingly, since the authors have not written a paper to describe it, researchers often cite “slide 29 in lecture
+#    6” in their papers.
+# 15 “Adam: A Method for Stochastic Optimization,” D. Kingma, J. Ba (2015).
+# 
+# 
+# 
+# 298    |   Chapter 11: Training Deep Neural Nets
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "AdaGrad",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# AdaGrad"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class AdaGrad(HierNode):
+    def __init__(self):
+        super().__init__("AdaGrad")
+        self.add(Content())
+
+# eof

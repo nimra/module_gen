@@ -1,0 +1,115 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                         Download from finelybook www.finelybook.com
+# 
+# 
+# 
+# 
+# Figure 1-23. Regularization reduces the risk of overfitting
+# 
+# The amount of regularization to apply during learning can be controlled by a hyper‐
+# parameter. A hyperparameter is a parameter of a learning algorithm (not of the
+# model). As such, it is not affected by the learning algorithm itself; it must be set prior
+# to training and remains constant during training. If you set the regularization hyper‐
+# parameter to a very large value, you will get an almost flat model (a slope close to
+# zero); the learning algorithm will almost certainly not overfit the training data, but it
+# will be less likely to find a good solution. Tuning hyperparameters is an important
+# part of building a Machine Learning system (you will see a detailed example in the
+# next chapter).
+# 
+# Underfitting the Training Data
+# As you might guess, underfitting is the opposite of overfitting: it occurs when your
+# model is too simple to learn the underlying structure of the data. For example, a lin‐
+# ear model of life satisfaction is prone to underfit; reality is just more complex than
+# the model, so its predictions are bound to be inaccurate, even on the training exam‐
+# ples.
+# The main options to fix this problem are:
+# 
+#      • Selecting a more powerful model, with more parameters
+#      • Feeding better features to the learning algorithm (feature engineering)
+#      • Reducing the constraints on the model (e.g., reducing the regularization hyper‐
+#        parameter)
+# 
+# 
+# Stepping Back
+# By now you already know a lot about Machine Learning. However, we went through
+# so many concepts that you may be feeling a little lost, so let’s step back and look at the
+# big picture:
+# 
+# 
+# 28    |   Chapter 1: The Machine Learning Landscape
+# 
+#                  Download from finelybook www.finelybook.com
+#   • Machine Learning is about making machines get better at some task by learning
+#     from data, instead of having to explicitly code rules.
+#   • There are many different types of ML systems: supervised or not, batch or online,
+#     instance-based or model-based, and so on.
+#   • In a ML project you gather data in a training set, and you feed the training set to
+#     a learning algorithm. If the algorithm is model-based it tunes some parameters to
+#     fit the model to the training set (i.e., to make good predictions on the training set
+#     itself), and then hopefully it will be able to make good predictions on new cases
+#     as well. If the algorithm is instance-based, it just learns the examples by heart and
+#     uses a similarity measure to generalize to new instances.
+#   • The system will not perform well if your training set is too small, or if the data is
+#     not representative, noisy, or polluted with irrelevant features (garbage in, garbage
+#     out). Lastly, your model needs to be neither too simple (in which case it will
+#     underfit) nor too complex (in which case it will overfit).
+# 
+# There’s just one last important topic to cover: once you have trained a model, you
+# don’t want to just “hope” it generalizes to new cases. You want to evaluate it, and fine-
+# tune it if necessary. Let’s see how.
+# 
+# Testing and Validating
+# The only way to know how well a model will generalize to new cases is to actually try
+# it out on new cases. One way to do that is to put your model in production and moni‐
+# tor how well it performs. This works well, but if your model is horribly bad, your
+# users will complain—not the best idea.
+# A better option is to split your data into two sets: the training set and the test set. As
+# these names imply, you train your model using the training set, and you test it using
+# the test set. The error rate on new cases is called the generalization error (or out-of-
+# sample error), and by evaluating your model on the test set, you get an estimation of
+# this error. This value tells you how well your model will perform on instances it has
+# never seen before.
+# If the training error is low (i.e., your model makes few mistakes on the training set)
+# but the generalization error is high, it means that your model is overfitting the train‐
+# ing data.
+# 
+#                 It is common to use 80% of the data for training and hold out 20%
+#                 for testing.
+# 
+# 
+# 
+# 
+#                                                                   Testing and Validating   |   29
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Stepping Back",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Stepping Back"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class SteppingBack(HierNode):
+    def __init__(self):
+        super().__init__("Stepping Back")
+        self.add(Content())
+
+# eof

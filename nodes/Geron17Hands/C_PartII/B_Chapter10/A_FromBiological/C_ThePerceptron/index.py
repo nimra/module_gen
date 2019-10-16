@@ -1,0 +1,241 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                  Download from finelybook www.finelybook.com
+#   • The first network on the left is simply the identity function: if neuron A is activa‐
+#     ted, then neuron C gets activated as well (since it receives two input signals from
+#     neuron A), but if neuron A is off, then neuron C is off as well.
+#   • The second network performs a logical AND: neuron C is activated only when
+#     both neurons A and B are activated (a single input signal is not enough to acti‐
+#     vate neuron C).
+#   • The third network performs a logical OR: neuron C gets activated if either neu‐
+#     ron A or neuron B is activated (or both).
+#   • Finally, if we suppose that an input connection can inhibit the neuron’s activity
+#     (which is the case with biological neurons), then the fourth network computes a
+#     slightly more complex logical proposition: neuron C is activated only if neuron A
+#     is active and if neuron B is off. If neuron A is active all the time, then you get a
+#     logical NOT: neuron C is active when neuron B is off, and vice versa.
+# 
+# You can easily imagine how these networks can be combined to compute complex
+# logical expressions (see the exercises at the end of the chapter).
+# 
+# The Perceptron
+# The Perceptron is one of the simplest ANN architectures, invented in 1957 by Frank
+# Rosenblatt. It is based on a slightly different artificial neuron (see Figure 10-4) called
+# a linear threshold unit (LTU): the inputs and output are now numbers (instead of
+# binary on/off values) and each input connection is associated with a weight. The LTU
+# computes a weighted sum of its inputs (z = w1 x1 + w2 x2 + ⋯ + wn xn = wT · x), then
+# applies a step function to that sum and outputs the result: hw(x) = step (z) = step (wT ·
+# x).
+# 
+# 
+# 
+# 
+# Figure 10-4. Linear threshold unit
+# 
+# The most common step function used in Perceptrons is the Heaviside step function
+# (see Equation 10-1). Sometimes the sign function is used instead.
+# 
+# 
+# 
+# 
+#                                                        From Biological to Artificial Neurons   |   257
+# 
+#                    Download from finelybook www.finelybook.com
+#       Equation 10-1. Common step functions used in Perceptrons
+#                                                            −1 if z < 0
+#                     0 if z < 0
+#       heaviside z =                                sgn z = 0 if z = 0
+#                     1 if z ≥ 0
+#                                                            +1 if z > 0
+# 
+# A single LTU can be used for simple linear binary classification. It computes a linear
+# combination of the inputs and if the result exceeds a threshold, it outputs the positive
+# class or else outputs the negative class (just like a Logistic Regression classifier or a
+# linear SVM). For example, you could use a single LTU to classify iris flowers based on
+# the petal length and width (also adding an extra bias feature x0 = 1, just like we did in
+# previous chapters). Training an LTU means finding the right values for w0, w1, and w2
+# (the training algorithm is discussed shortly).
+# A Perceptron is simply composed of a single layer of LTUs,6 with each neuron con‐
+# nected to all the inputs. These connections are often represented using special pass‐
+# through neurons called input neurons: they just output whatever input they are fed.
+# Moreover, an extra bias feature is generally added (x0 = 1). This bias feature is typi‐
+# cally represented using a special type of neuron called a bias neuron, which just out‐
+# puts 1 all the time.
+# A Perceptron with two inputs and three outputs is represented in Figure 10-5. This
+# Perceptron can classify instances simultaneously into three different binary classes,
+# which makes it a multioutput classifier.
+# 
+# 
+# 
+# 
+# Figure 10-5. Perceptron diagram
+# 
+# So how is a Perceptron trained? The Perceptron training algorithm proposed by
+# Frank Rosenblatt was largely inspired by Hebb’s rule. In his book The Organization of
+# Behavior, published in 1949, Donald Hebb suggested that when a biological neuron
+# 
+# 
+# 
+# 6 The name Perceptron is sometimes used to mean a tiny network with a single LTU.
+# 
+# 
+# 
+# 258    |   Chapter 10: Introduction to Artificial Neural Networks
+# 
+#                    Download from finelybook www.finelybook.com
+# often triggers another neuron, the connection between these two neurons grows
+# stronger. This idea was later summarized by Siegrid Löwel in this catchy phrase:
+# “Cells that fire together, wire together.” This rule later became known as Hebb’s rule
+# (or Hebbian learning); that is, the connection weight between two neurons is
+# increased whenever they have the same output. Perceptrons are trained using a var‐
+# iant of this rule that takes into account the error made by the network; it does not
+# reinforce connections that lead to the wrong output. More specifically, the Perceptron
+# is fed one training instance at a time, and for each instance it makes its predictions.
+# For every output neuron that produced a wrong prediction, it reinforces the connec‐
+# tion weights from the inputs that would have contributed to the correct prediction.
+# The rule is shown in Equation 10-2.
+# 
+#     Equation 10-2. Perceptron learning rule (weight update)
+#     wi, j next   step
+#                         = wi, j + η y j − y j xi
+# 
+# 
+#   • wi, j is the connection weight between the ith input neuron and the jth output neu‐
+#     ron.
+#   • xi is the ith input value of the current training instance.
+#   • y j is the output of the jth output neuron for the current training instance.
+#   • yj is the target output of the jth output neuron for the current training instance.
+#   • η is the learning rate.
+# 
+# The decision boundary of each output neuron is linear, so Perceptrons are incapable
+# of learning complex patterns (just like Logistic Regression classifiers). However, if the
+# training instances are linearly separable, Rosenblatt demonstrated that this algorithm
+# would converge to a solution.7 This is called the Perceptron convergence theorem.
+# Scikit-Learn provides a Perceptron class that implements a single LTU network. It
+# can be used pretty much as you would expect—for example, on the iris dataset (intro‐
+# duced in Chapter 4):
+#      import numpy as np
+#      from sklearn.datasets import load_iris
+#      from sklearn.linear_model import Perceptron
+# 
+#      iris = load_iris()
+#      X = iris.data[:, (2, 3)] # petal length, petal width
+#      y = (iris.target == 0).astype(np.int) # Iris Setosa?
+# 
+# 
+# 
+# 
+# 7 Note that this solution is generally not unique: in general when the data are linearly separable, there is an
+#   infinity of hyperplanes that can separate them.
+# 
+# 
+# 
+#                                                                         From Biological to Artificial Neurons   |   259
+# 
+#                         Download from finelybook www.finelybook.com
+#       per_clf = Perceptron(random_state=42)
+#       per_clf.fit(X, y)
+# 
+#       y_pred = per_clf.predict([[2, 0.5]])
+# You may have recognized that the Perceptron learning algorithm strongly resembles
+# Stochastic Gradient Descent. In fact, Scikit-Learn’s Perceptron class is equivalent to
+# using an SGDClassifier with the following hyperparameters: loss="perceptron",
+# learning_rate="constant", eta0=1 (the learning rate), and penalty=None (no regu‐
+# larization).
+# Note that contrary to Logistic Regression classifiers, Perceptrons do not output a class
+# probability; rather, they just make predictions based on a hard threshold. This is one
+# of the good reasons to prefer Logistic Regression over Perceptrons.
+# In their 1969 monograph titled Perceptrons, Marvin Minsky and Seymour Papert
+# highlighted a number of serious weaknesses of Perceptrons, in particular the fact that
+# they are incapable of solving some trivial problems (e.g., the Exclusive OR (XOR)
+# classification problem; see the left side of Figure 10-6). Of course this is true of any
+# other linear classification model as well (such as Logistic Regression classifiers), but
+# researchers had expected much more from Perceptrons, and their disappointment
+# was great: as a result, many researchers dropped connectionism altogether (i.e., the
+# study of neural networks) in favor of higher-level problems such as logic, problem
+# solving, and search.
+# However, it turns out that some of the limitations of Perceptrons can be eliminated by
+# stacking multiple Perceptrons. The resulting ANN is called a Multi-Layer Perceptron
+# (MLP). In particular, an MLP can solve the XOR problem, as you can verify by com‐
+# puting the output of the MLP represented on the right of Figure 10-6, for each com‐
+# bination of inputs: with inputs (0, 0) or (1, 1) the network outputs 0, and with inputs
+# (0, 1) or (1, 0) it outputs 1.
+# 
+# 
+# 
+# 
+# Figure 10-6. XOR classification problem and an MLP that solves it
+# 
+# 
+# 
+# 260   |   Chapter 10: Introduction to Artificial Neural Networks
+# 
+#                        Download from finelybook www.finelybook.com
+# Multi-Layer Perceptron and Backpropagation
+# An MLP is composed of one (passthrough) input layer, one or more layers of LTUs,
+# called hidden layers, and one final layer of LTUs called the output layer (see
+# Figure 10-7). Every layer except the output layer includes a bias neuron and is fully
+# connected to the next layer. When an ANN has two or more hidden layers, it is called
+# a deep neural network (DNN).
+# 
+# 
+# 
+# 
+# Figure 10-7. Multi-Layer Perceptron
+# 
+# For many years researchers struggled to find a way to train MLPs, without success.
+# But in 1986, D. E. Rumelhart et al. published a groundbreaking article8 introducing
+# the backpropagation training algorithm.9 Today we would describe it as Gradient
+# Descent using reverse-mode autodiff (Gradient Descent was introduced in Chapter 4,
+# and autodiff was discussed in Chapter 9).
+# For each training instance, the algorithm feeds it to the network and computes the
+# output of every neuron in each consecutive layer (this is the forward pass, just like
+# when making predictions). Then it measures the network’s output error (i.e., the dif‐
+# ference between the desired output and the actual output of the network), and it
+# computes how much each neuron in the last hidden layer contributed to each output
+# neuron’s error. It then proceeds to measure how much of these error contributions
+# came from each neuron in the previous hidden layer—and so on until the algorithm
+# reaches the input layer. This reverse pass efficiently measures the error gradient
+# across all the connection weights in the network by propagating the error gradient
+# backward in the network (hence the name of the algorithm). If you check out the
+# 
+# 
+# 8 “Learning Internal Representations by Error Propagation,” D. Rumelhart, G. Hinton, R. Williams (1986).
+# 9 This algorithm was actually invented several times by various researchers in different fields, starting with
+#   P. Werbos in 1974.
+# 
+# 
+# 
+#                                                                        From Biological to Artificial Neurons   |   261
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "The Perceptron",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# The Perceptron"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ThePerceptron(HierNode):
+    def __init__(self):
+        super().__init__("The Perceptron")
+        self.add(Content())
+
+# eof

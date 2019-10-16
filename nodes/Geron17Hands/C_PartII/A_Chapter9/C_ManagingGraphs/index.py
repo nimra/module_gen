@@ -1,0 +1,125 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                 Download from finelybook www.finelybook.com
+# with block (but you do need to close the session manually when you are done with
+# it):
+#        >>>   sess = tf.InteractiveSession()
+#        >>>   init.run()
+#        >>>   result = f.eval()
+#        >>>   print(result)
+#        42
+#        >>>   sess.close()
+# A TensorFlow program is typically split into two parts: the first part builds a compu‐
+# tation graph (this is called the construction phase), and the second part runs it (this is
+# the execution phase). The construction phase typically builds a computation graph
+# representing the ML model and the computations required to train it. The execution
+# phase generally runs a loop that evaluates a training step repeatedly (for example, one
+# step per mini-batch), gradually improving the model parameters. We will go through
+# an example shortly.
+# 
+# Managing Graphs
+# Any node you create is automatically added to the default graph:
+#        >>> x1 = tf.Variable(1)
+#        >>> x1.graph is tf.get_default_graph()
+#        True
+# In most cases this is fine, but sometimes you may want to manage multiple independ‐
+# ent graphs. You can do this by creating a new Graph and temporarily making it the
+# default graph inside a with block, like so:
+#        >>> graph = tf.Graph()
+#        >>> with graph.as_default():
+#        ...     x2 = tf.Variable(2)
+#        ...
+#        >>> x2.graph is graph
+#        True
+#        >>> x2.graph is tf.get_default_graph()
+#        False
+# 
+#                        In Jupyter (or in a Python shell), it is common to run the same
+#                        commands more than once while you are experimenting. As a
+#                        result, you may end up with a default graph containing many
+#                        duplicate nodes. One solution is to restart the Jupyter kernel (or
+#                        the Python shell), but a more convenient solution is to just reset the
+#                        default graph by running tf.reset_default_graph().
+# 
+# 
+# 
+# 
+# 234    |     Chapter 9: Up and Running with TensorFlow
+# 
+#                      Download from finelybook www.finelybook.com
+# Lifecycle of a Node Value
+# When you evaluate a node, TensorFlow automatically determines the set of nodes
+# that it depends on and it evaluates these nodes first. For example, consider the follow‐
+# ing code:
+#     w   =   tf.constant(3)
+#     x   =   w + 2
+#     y   =   x + 5
+#     z   =   x * 3
+# 
+#     with tf.Session() as sess:
+#         print(y.eval()) # 10
+#         print(z.eval()) # 15
+# First, this code defines a very simple graph. Then it starts a session and runs the
+# graph to evaluate y: TensorFlow automatically detects that y depends on w, which
+# depends on x, so it first evaluates w, then x, then y, and returns the value of y. Finally,
+# the code runs the graph to evaluate z. Once again, TensorFlow detects that it must
+# first evaluate w and x. It is important to note that it will not reuse the result of the
+# previous evaluation of w and x. In short, the preceding code evaluates w and x twice.
+# All node values are dropped between graph runs, except variable values, which are
+# maintained by the session across graph runs (queues and readers also maintain some
+# state, as we will see in Chapter 12). A variable starts its life when its initializer is run,
+# and it ends when the session is closed.
+# If you want to evaluate y and z efficiently, without evaluating w and x twice as in the
+# previous code, you must ask TensorFlow to evaluate both y and z in just one graph
+# run, as shown in the following code:
+#     with tf.Session() as sess:
+#         y_val, z_val = sess.run([y, z])
+#         print(y_val) # 10
+#         print(z_val) # 15
+# 
+#                    In single-process TensorFlow, multiple sessions do not share any
+#                    state, even if they reuse the same graph (each session would have its
+#                    own copy of every variable). In distributed TensorFlow (see Chap‐
+#                    ter 12), variable state is stored on the servers, not in the sessions, so
+#                    multiple sessions can share the same variables.
+# 
+# 
+# Linear Regression with TensorFlow
+# TensorFlow operations (also called ops for short) can take any number of inputs and
+# produce any number of outputs. For example, the addition and multiplication ops
+# each take two inputs and produce one output. Constants and variables take no input
+# 
+# 
+#                                                                         Lifecycle of a Node Value   |   235
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Managing Graphs",
+            # Stage.CROP_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Managing Graphs"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ManagingGraphs(HierNode):
+    def __init__(self):
+        super().__init__("Managing Graphs")
+        self.add(Content())
+
+# eof

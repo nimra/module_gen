@@ -1,0 +1,36 @@
+                                                                       Preface
+
+
+
+
+This book will introduce you to the fundamentals of machine learning through Ten‐
+sorFlow. TensorFlow is Google’s new software library for deep learning that makes it
+straightforward for engineers to design and deploy sophisticated deep learning archi‐
+tectures. You will learn how to use TensorFlow to build systems capable of detecting
+objects in images, understanding human text, and predicting the properties of poten‐
+tial medicines. Furthermore, you will gain an intuitive understanding of TensorFlow’s
+potential as a system for performing tensor calculus and will learn how to use Tensor‐
+Flow for tasks outside the traditional purview of machine learning.
+Importantly, TensorFlow for Deep Learning is one of the first deep learning books
+written for practitioners. It teaches fundamental concepts through practical examples
+and builds understanding of machine learning foundations from the ground up. The
+target audience for this book is practicing developers, who are comfortable with
+designing software systems, but not necessarily with creating learning systems. At
+times we use some basic linear algebra and calculus, but we will review all necessary
+fundamentals. We also anticipate that our book will prove useful for scientists and
+other professionals who are comfortable with scripting, but not necessarily with
+designing learning algorithms.
+
+Conventions Used in This Book
+The following typographical conventions are used in this book:
+Italic
+     Indicates new terms, URLs, email addresses, filenames, and file extensions.
+Constant width
+    Used for program listings, as well as within paragraphs to refer to program ele‐
+    ments such as variable or function names, databases, data types, environment
+    variables, statements, and keywords.
+
+
+
+                                                                                    ix
+
