@@ -1,0 +1,32 @@
+CHAPTER 6
+
+
+
+JupyterLab Notebooks
+Google deep learning virtual machines (VMs) are a part of GCP AI Platform. It provisions
+a Compute Engine instance that comes pre-configured with the relevant software
+packages for carrying out analytics and modeling tasks. It also makes available high-­
+performance computing TPU and GPU processing capabilities at a single click. These
+VMs expose a JupyterLab notebook environment for analyzing data and designing
+machine learning models.
+    In this chapter, we’ll launch a JupyterLab notebook instance using the web-based
+console and the command line.
+
+
+
+Provisioning a Notebook Instance
+The following steps provide a walk-through for deploying a Notebook instance on a deep
+learning VM:
+
+       1. In the group named ‘ARTIFICIAL INTELLIGENCE’ on the GCP
+          resources drawer, click the arrow beside ‘AI Platform’ and select
+          ‘Notebooks’ as shown in Figure 6-1.
+
+
+
+
+                                                                                          49
+© Ekaba Bisong 2019
+E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+https://doi.org/10.1007/978-1-4842-4470-8_6
+

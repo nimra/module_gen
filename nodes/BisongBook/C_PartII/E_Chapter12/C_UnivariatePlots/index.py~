@@ -1,0 +1,85 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+from .A_LinePlot.index import LinePlot as A_LinePlot
+from .B_BarPlot.index import BarPlot as B_BarPlot
+from .C_HistogramDensityPlots.index import HistogramDensityPlots as C_HistogramDensityPlots
+from .D_Boxand.index import Boxand as D_Boxand
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 12    Matplotlib and Seaborn
+# 
+#     There are many options and properties for working with matplotlib, seaborn,
+# and pandas.plotting functions for data visualization, but as is the theme of
+# this material, the goal is to keep it simple and give the reader just enough to be
+# dangerous. Deep competency comes with experience and continuous usage. These
+# cannot really be taught.
+#     To begin, we will load Matplotlib by importing the pyplot module from the
+# matplotlib package and the seaborn package.
+# 
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# 
+#       We’ll also import the numpy and pandas packages to create our datasets.
+# 
+# import pandas as pd
+# import numpy as np
+# 
+# 
+# 
+# U
+#  nivariate Plots
+# Some common and essential univariate plots are line plots, bar plots, histograms and
+# density plots, and the box and whisker plot, to mention just a few.
+# 
+# 
+# L ine Plot
+# Let’s plot a sine graph of 100 points from the negative to positive exponential range. The
+# plot method allows us to plot lines or markers to the figure. The outputs of the sine and
+# cosine line plot are shown in Figure 12-1 and Figure 12-2, respectively.
+# 
+# data = np.linspace(-np.e, np.e, 100, endpoint=True)
+# # plot a line plot of the sine wave
+# plt.plot(np.sin(data))
+# plt.show()
+# # plot a red cosine wave with dash and dot markers
+# plt.plot(np.cos(data), 'r-.')
+# plt.show()
+# 
+# 
+# 
+# 
+# 152
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Univariate Plots",
+            # Stage.CLEAN_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Univariate Plots"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class UnivariatePlots(HierNode):
+    def __init__(self):
+        super().__init__("Univariate Plots")
+        self.add(Content())
+        self.add(A_LinePlot())
+        self.add(B_BarPlot())
+        self.add(C_HistogramDensityPlots())
+        self.add(D_Boxand())
+
+# eof

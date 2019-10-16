@@ -1,0 +1,31 @@
+                Chapter 44   Model to Predict the Critical Temperature of Superconductors
+
+
+
+
+Figure 44-1. Modeling architecture on GCP
+
+
+Stage Raw Data in GCS
+Retrieve the raw data from the book code repository for modeling:
+
+      •   Create a GCS bucket.
+
+          gsutil mb gs://superconductor
+
+      •   Navigate to the chapter folder and transfer the raw data to GCS.
+
+          gsutil cp train.csv gs://superconductor/raw-data/
+
+
+
+Load Data into BigQuery for Analytics
+Move the dataset from Google Cloud Storage to BigQuery:
+
+      •   Create a Dataset in BigQuery.
+
+          bq mk superconductor
+
+
+                                                                                     615
+

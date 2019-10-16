@@ -1,0 +1,68 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                                                                       Chapter 25   Clustering
+# 
+# C
+#  onsiderations for Selecting K
+# There’s really no way of telling the number of clusters in a dataset from the onset. The
+# best way of selecting k is to try out different values of K to see what works best in creating
+# distinct clusters.
+#      Another strategy, which is widely employed in practice, is to compute the average
+# distance of the points in the cluster to the cluster centroid for all clusters. This estimate
+# is plotted on a graph as we progressively increase the value of K. We observe that as K
+# increases, the distance of points from the centroid of its cluster gradually reduces, and
+# the generated curve resembles the elbow of an arm. From practice, we choose the value
+# of K just after the elbow as the best K value for that dataset. This method is called the
+# elbow method for selecting K as is illustrated in Figure 25-3.
+# 
+# 
+# 
+# 
+# Figure 25-3. The elbow method for choosing the best value of k
+# 
+# 
+# Considerations for Assigning the Initial K Points
+# The points that determine the initial value of K are important in finding a good set
+# of clusters. By selecting the point for K at random, two or more points may reside in
+# the same cluster, and this will invariably lead to sub-par results. To mitigate this from
+# occurring, we can employ more sophisticated approaches to selecting the value of K. A
+# common strategy is to randomly select the first K point and then select the next point
+# as the point that is farthest from the first chosen point. This strategy is repeated until
+# all K points have been selected. Another approach is to run hierarchical clustering on a
+# sub-sample of the dataset (this is because hierarchical clustering is a computationally
+# expensive algorithm) and use the number of clusters after cutting off the dendrogram as
+# the value of K.
+# 
+#                                                                                           311
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Considerations for Selecting K",
+            # Stage.CLEAN_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Considerations for Selecting K"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Considerationsfor(HierNode):
+    def __init__(self):
+        super().__init__("Considerations for Selecting K")
+        self.add(Content())
+
+# eof

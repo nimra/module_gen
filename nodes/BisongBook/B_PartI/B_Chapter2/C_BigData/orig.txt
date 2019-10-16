@@ -1,0 +1,63 @@
+                                Chapter 2   An Overview of Google Cloud Platform Services
+
+
+
+
+Figure 2-2. Cloud storage products
+
+
+Big Data and Analytics
+Google Cloud Platform offers a range of serverless big data and analytics solutions for
+data warehousing, stream, and batch analytics, cloud-managed Hadoop ecosystems,
+cloud-based messaging systems, and data exploration. These services provide multiple
+perspectives to mining/generating real-time intelligence from big data.
+    Examples of big data services shown in Figure 2-3 include Cloud BigQuery
+(serverless analytics/data warehousing platform), Cloud Dataproc (fully managed
+Hadoop/Apache Spark infrastructure), Cloud Dataflow (Batch/Stream data
+transformation/processing), Cloud Dataprep (serverless infrastructure for cleaning
+unstructured/structured data for analytics), Cloud Datastudio (data visualization/report
+dashboards), Cloud Datalab (managed Jupyter notebook for machine learning/data
+analytics), and Cloud Pub/Sub (serverless messaging infrastructure).
+
+
+
+
+Figure 2-3. Big data/analytics serverless platforms
+
+
+                                                                                       9
+Chapter 2   An Overview of Google Cloud Platform Services
+
+
+Cloud Artificial Intelligence (AI)
+Google Cloud AI offers cloud services for businesses and individuals to leverage pre-­
+trained models for custom artificial intelligence tasks through the use of REST APIs.
+It also exposes services for developing custom models for domain use cases such as
+AutoML Vision for image classification and object detection tasks and AutoML tables to
+deploy AI models on structured data.
+     Google Cloud AI services in Figure 2-4 include Cloud AutoML (train custom
+machine learning models leveraging transfer learning), Cloud Machine Learning Engine
+(for large-scale distributed training and deployment of machine learning models),
+Cloud TPU (to quickly train large-scale models), Video Intelligence (train custom video
+models), Cloud Natural Language API (extract/analyze text from documents), Cloud
+Speech API (transcribe audio to text), Cloud Vision API (classification/segmentation of
+images), Cloud Translate API (translate from one language to another), and Cloud Video
+Intelligence API (extract metadata from video files).
+
+
+
+
+Figure 2-4. Cloud AI services
+
+     This chapter provides a high-level overview of the products and services offered on
+Google Cloud Platform.
+     The next chapter will introduce the Google Cloud software development kit (SDK)
+for interacting with cloud resources from the command line on the local machine
+and the cloud command-line interface (CLI) for doing the same via the cloud console
+interface on GCP.
+
+
+
+
+10
+

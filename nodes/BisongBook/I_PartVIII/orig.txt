@@ -1,0 +1,32 @@
+PART VIII
+
+Productionalizing
+Machine Learning
+Solutions on GCP
+CHAPTER 45
+
+
+
+Containers and Google
+Kubernetes Engine
+The microservice architecture is an approach for developing and deploying enterprise
+cloud-native software applications that involve separating the core business capabilities
+of the application into decoupled components. Each business capability represents
+some functionality that the application provides as services to the end user. The idea
+of microservices is in contrast to the monolithic architecture which involves building
+applications as a composite of its “individual” capabilities. See an illustration in
+Figure 45-1.
+
+
+
+
+Figure 45-1. Microservice applications (right) vs. monolithic applications (left)
+
+
+
+
+                                                                                          655
+© Ekaba Bisong 2019
+E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+https://doi.org/10.1007/978-1-4842-4470-8_45
+

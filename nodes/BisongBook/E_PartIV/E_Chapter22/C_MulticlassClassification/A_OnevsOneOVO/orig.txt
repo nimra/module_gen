@@ -1,0 +1,60 @@
+Chapter 22   Support Vector Machines
+
+
+
+
+Figure 22-7. Left: Higher values of C result in wider margins with more tolerance.
+Right: Lower values of C result in narrower margins with less tolerance
+
+
+M
+ ulti-class Classification
+Previously, we have used the SVC to build a discriminant classifier for binary classes.
+What happens when we have more than two classes of outputs in the dataset, which is
+often the case in practice? The SVM can be extended for classifying k classes within a
+dataset, where k > 2. This extension is, however, not trivial with the SVM. There exist two
+standard approaches for addressing this problem. The first is the one-vs.-one (OVO)
+multi-class classification, while the other is the one-vs.-all (OVA) or one-vs.rest (OVR)
+multi-class classification technique.
+
+
+O
+ ne-vs.-One (OVO)
+In the one-vs.-one approach, when the number of classes, k, is greater than 2, the
+                                             ækö
+algorithm constructs “k combination 2”, ç ÷ classifiers, where each classifier is for a pair
+                                             è2ø
+of classes. So if we have 10 classes in our dataset, a total of 45 classifiers is constructed or
+trained for every pair of classes. This is illustrated with four classes in Figure 22-8.
+    After training, the classifiers are evaluated by comparing examples from the test set
+                      ækö
+against each of the ç ÷ classifiers. The predicted class is then determined by choosing
+                      è2ø
+the highest number of times an example is assigned to a particular class.
+260
+                                                     Chapter 22   Support Vector Machines
+
+    The one-vs.-one multi-class technique can potentially lead to a large number of
+constructed classifiers and hence can result in slower processing time. Conversely, the
+classifiers are more robust to class imbalances when training each classifier.
+
+
+
+
+Figure 22-8. Suppose we have four classes in the dataset labeled A to D, this will
+result in six different classifiers
+
+
+O
+ ne-vs.-All (OVA)
+The one-vs.-all method for fitting an SVM to a multi-classification problem where
+the number of classes k is greater than 2 consists of fitting each k class against the
+remaining k – 1 classes. Suppose we have ten classes, each of the classes will be
+classified against the remaining nine classes. This example is illustrated with four
+classes in Figure 22-9.
+
+
+
+
+                                                                                         261
+

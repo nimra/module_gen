@@ -9,55 +9,58 @@ import sys
 COMMON_PYTHON_PATH = os.environ["COMMON_PYTHON_PATH"]
 sys.path.insert(0, COMMON_PYTHON_PATH)
 
-import nbformat as nbf
-
 from lm.common.object.Object import Object
 from lm.common.util.PrintAligner import PrintAligner as pa
+from lm.common.util.Types import Types
 from lm.common.util.Utils import Utils
 
-from modules.node.HierNode import HierNode
-from modules.nodes.RootNode import RootNode
+from .node.LeafNode import LeafNode
+from .node.Path import Path
+from .node.Stage import Stage
+from .nodes.BisongBook.index import BisongBook
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Main:
 
     @classmethod
+    def listUncroppedText(cls, node):
+
+        # ~~~~~~~~ paths ~~~~~~~~
+        leaf_paths = list(filter(
+            lambda a : Types.isType(a.getLeaf(), LeafNode),
+            node.getPaths(Path()),
+        ))
+        uncropped_paths = list(filter(
+            # lambda a : not a.getLeaf().containsStage(Stage.REMOVE_EXTRANEOUS),
+            lambda a : not a.getLeaf().containsStage(Stage.ORIG_BLOCKS),
+            leaf_paths,
+        ))
+        # leaf_nodes = [a.getLeaf() for a in leaf_paths]
+        # uncropped_nodes = list(filter(
+        #     lambda a : not a.containsStage(Stage.CROP_TEXT),
+        #     leaf_nodes,
+        # ))
+
+        pa().addx("uncropped_paths", uncropped_paths[:10]).pprint()
+        pa().add(
+            "leaf_paths", leaf_paths,
+            "uncropped_paths", uncropped_paths,
+        ).ppprint()
+
+
+
+    @classmethod
     def run(cls):
 
-        # nb = nbformat.read(
-        #     "/home/lcmcafee/Dropbox/Code/nimra/data/modules/test.ipynb",
-        #     as_version = 4,
-        # )
+        root_node = BisongBook()
 
-        root_node = RootNode()
-        root_node.toNbf("/home/lcmcafee/Dropbox/Code/nimra/data/modules", "")
+        # ~~~~~~~~ create jupyter notebooks ~~~~~~~~
+        root_node.toNbf("/home/lcmcafee/Dropbox/Code/nimra/data/modules", None)
 
-        text = """
-# Lawrence McAfee
+        # ~~~~~~~~ list uncropped text ~~~~~~~~
+        cls.listUncroppedText(root_node)
 
-I was here.
-
-I created.
-        """
-
-        code = """
-# Lawrence McAfee
-
-print("2 + 2 = " + (2 + 2))
-
-# eof
-        """
-
-        nb = nbf.v4.new_notebook()
-        nb["cells"] = [
-            nbf.v4.new_markdown_cell(text),
-            nbf.v4.new_code_cell(code),
-        ]
-
-        nbf.write(nb, "/home/lcmcafee/Dropbox/Code/nimra/data/modules/test.ipynb")
-
-        pa().add("nb", nb).ppprint()
-
+        # pa().addx("root_node", root_node).ppprint()
         Utils.todo("dot.   :)")
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

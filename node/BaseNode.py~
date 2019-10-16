@@ -18,22 +18,44 @@ class BaseNode(Object):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def xstr(self):
-        Utils.todo("dot.   :)")
+        return "'%s'" % self.title
     def xprint(self):
-        Utils.todo("dot.   :)")
+        return pa().add("title", self.title)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    def getTitlePathname(self):
+    # def getTitlePathname(self):
+    #     pattern = re.compile('[\W_]+')
+    #     pathname = pattern.sub('', self.title)
+    #     # pa().add(
+    #     #     "title", self.title,
+    #     #     "pathname", pathname,
+    #     # ).ppprint()
+    #     return pathname
+    def getPathname(self):
+        # short_title = " ".join(self.title.split()[:2])
+        short_title = self.title
         pattern = re.compile('[\W_]+')
-        pathname = pattern.sub('', self.title)
-        # pa().add(
-        #     "title", self.title,
-        #     "pathname", pathname,
-        # ).ppprint()
+        pathname = pattern.sub('', short_title)
+        # if len(self.title.split()) > 2:
+        #     pa().add(
+        #         "title", self.title,
+        #         "short_title", short_title,
+        #         "pathname", pathname,
+        #     ).ppprint()
         return pathname
+
+    def getPrefixname(self, prefix_index):
+        Types.assertType(prefix_index, [int, Types.NoneType])
+        return (
+            self.getPathname()
+            if prefix_index is None
+            # else "%s_%s" % (ascii_uppercase[prefix_index], self.getPathname())
+            else "%d_%s" % (prefix_index, self.getPathname())
+        )
+
     
     @abc.abstractmethod
-    def toNbf(self, dir_name):
+    def toNbf(self, top_dirname, sub_prefix):
         pass
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,0 +1,26 @@
+Chapter 12   Matplotlib and Seaborn
+
+
+
+
+Figure 12-8. Boxplot with seaborn
+
+
+M
+ ultivariate Plots
+Common multivariate visualizations include the scatter plot and its extension the
+pairwise plot, parallel coordinate plots, and the covariance matrix plot.
+
+
+S
+ catter Plot
+Scatter plot exposes the relationships between two variables in a dataset. The outputs
+with matplotlib and seaborn are shown in Figure 12-9 and Figure 12-10, respectively.
+
+#   create the dataset
+x   = np.random.sample(100)
+y   = 0.9 * np.asarray(x) + 1 + np.random.uniform(0,0.8, size=(100,))
+#   scatter plot with matplotlib
+
+158
+

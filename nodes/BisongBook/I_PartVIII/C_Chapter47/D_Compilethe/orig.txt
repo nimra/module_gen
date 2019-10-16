@@ -1,0 +1,62 @@
+       Chapter 47   Deploying an End-to-­End Machine Learning Solution on Kubeflow Pipelines
+
+
+ uild Containers Before Uploading to Kubeflow
+B
+Pipelines
+Before uploading the pipeline to Kubeflow Pipelines, be sure to build the component
+containers so that the latest version of the code is packaged and uploaded as images to
+the container registry. The code provides a handy bash script to build all containers.
+
+
+
+ ompile the Pipeline Using the Kubeflow
+C
+Pipelines DSL Language
+The pipeline code contains a specification on how the components interact with one
+another. Each component has an output that serves as an input to the next component
+in the pipeline. The Kubeflow pipeline DSL language dsl-compile from the Kubeflow
+Pipelines SDK is used to compile the pipeline code in Python for upload to Kubeflow
+Pipelines.
+    Ensure the Kubeflow Pipelines SDK is installed on the local machine by running
+
+# install kubeflow pipeline sdk
+pip install https://storage.googleapis.com/ml-pipeline/release/0.1.12/kfp.
+tar.gz --upgrade
+
+# verify the install
+which dsl-compile
+
+   Compile the pipeline by running
+
+# compile the pipeline
+python3 [path/to/python/file.py] [path/to/output/tar.gz]
+
+   For the sample code, we used
+
+python3 crypto_pipeline.py crypto_pipeline.tar.gz
+
+
+
+
+                                                                                        689
+Chapter 47   Deploying an End-to-­End Machine Learning Solution on Kubeflow Pipelines
+
+
+ pload and Execute the Pipeline to Kubeflow
+U
+Pipelines
+The following steps upload and execute the compiled pipeline on Kubeflow Pipelines:
+
+      1. Upload the pipeline to Kubeflow Pipelines (Figure 47-1).
+
+
+
+
+Figure 47-1. Upload the compiled pipeline to Kubeflow Pipelines
+
+
+
+
+690
+

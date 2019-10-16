@@ -4,7 +4,7 @@
 import nbformat as nbf
 
 from .HierBlock import HierBlock
-from .TextBlock import TextBlock
+from .MarkdownBlock import MarkdownBlock
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from .LeafBlock import LeafBlock
@@ -14,9 +14,12 @@ class _CodeBlock(LeafBlock):
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class CodeBlock(HierBlock):
-    def __init__(self, text, code):
+    def __init__(self, markdown, code, output):
         super().__init__()
-        self.add(TextBlock(text))
+        if markdown is not None:
+            self.add(MarkdownBlock(markdown))
         self.add(_CodeBlock(code))
+        if output is not None:
+            self.add(MarkdownBlock("Output:<br>`%s`" % output))
 
 # eof

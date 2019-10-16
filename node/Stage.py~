@@ -1,0 +1,17 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from enum import Enum
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Stage(Enum):
+
+    # CROP_TEXT = 0
+    CLEAN_TEXT      = 0
+    CODE_BLOCKS     = 1
+    MARKDOWN_BLOCKS = 2
+    FIGURES         = 3
+    EXERCISES       = 4
+    CUSTOMIZE       = 5
+
+# eof

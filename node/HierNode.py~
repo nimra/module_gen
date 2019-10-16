@@ -1,7 +1,12 @@
 # Lawrence McAfee
 
 # ~~~~~~~~ import ~~~~~~~~
+import os
+import shutil
+
+from lm.common.util.PrintAligner import PrintAligner as pa
 from lm.common.util.Types import Types
+from lm.common.util.Utils import Utils
 
 from .BaseNode import BaseNode
 
@@ -15,13 +20,38 @@ class HierNode(BaseNode):
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def xstr(self):
-        Utils.todo("dot.   :)")
+        return "child %d; %s" % (len(self.children), super().xstr())
     def xprint(self):
-        Utils.todo("dot.   :)")
+        return super().xprint().addx("children", self.children)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def add(self, child):
         self.children.append(Types.assertType(child, BaseNode))
+
+    def toNbf(self, top_dirname, sub_prefix):
+
+        # ~~~~~~~~ verify top dir ~~~~~~~~
+        if not os.path.isdir(top_dirname):
+            Utils.todo("Directory not found.")
+
+        # ~~~~~~~~ remove/create sub dir ~~~~~~~~
+        Utils.todo("sub_prefix before top_dirname?")
+        sub_dirname = os.path.join(
+            sub_prefix,
+            top_dirname,
+            self.getTitlePathname(),
+        )
+        shutil.rmtree(sub_dirname, True)
+        os.mkdir(sub_dirname)
+
+        # ~~~~~~~~ children ~~~~~~~~
+        [a.toNbf(sub_dirname, str(i)) for i, a in enumerate(self.children)]
+
+        # # ~~~~~~~~ debug ~~~~~~~~
+        # pa().add(
+        #     "top_dirname", top_dirname,
+        #     "sub_dirname", sub_dirname,
+        # ).ppprint()
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

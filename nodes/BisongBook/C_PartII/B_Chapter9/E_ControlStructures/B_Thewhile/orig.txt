@@ -1,0 +1,60 @@
+Chapter 9   Python
+
+else:
+    print('The number is negative and not an integer')
+
+'Output': Number is an integer
+
+
+The while Loop
+The while loop evaluates a condition, which, if true, repeatedly executes the set of
+instructions within the while block. It does so until the condition evaluates to false. The
+while statement is visualized by the flowchart in Figure 9-3.
+
+
+
+
+Figure 9-3. Flowchart of the while loop
+
+     Here is a program example:
+
+a = 8
+while a > 0:
+    print('Number is', a)
+
+    # decrement a
+    a -= 1
+
+
+
+
+82
+                                                                       Chapter 9   Python
+
+'Output': Number is 8
+     Number is 7
+     Number is 6
+     Number is 5
+     Number is 4
+     Number is 3
+     Number is 2
+     Number is 1
+
+
+T he for Loop
+The for loop repeats the statements within its code block until a terminating condition
+is reached. It is different from the while loop in that it knows exactly how many times
+the iteration should occur. The for loop is controlled by an iterable expression (i.e.,
+expressions in which elements can be accessed sequentially). The for statement is
+visualized by the flowchart in Figure 9-4.
+
+
+
+
+Figure 9-4. Flowchart of the for loop
+
+
+
+
+                                                                                          83
+

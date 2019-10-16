@@ -1,0 +1,81 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+from .A_IdentifyingMissing.index import IdentifyingMissing as A_IdentifyingMissing
+from .B_RemovingMissing.index import RemovingMissing as B_RemovingMissing
+from .C_ImputingValues.index import ImputingValues as C_ImputingValues
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 11   Pandas
+# 
+# 'Output':
+# Out[246]:
+#    First  Second  Third  First  Second  Third
+# 0    2.0     3.0    9.0     3        6     3
+# 1    8.0     7.0    7.0     2        2     1
+# 2    8.0     6.0    4.0     9        3     8
+# 3    NaN     NaN    NaN     2        9     2
+# 
+# 
+# 
+# Handling Missing Data
+# Dealing with missing data is an integral part of the data cleaning/data analysis process.
+# Moreover, some machine learning algorithms will not work in the presence of missing
+# data. Let’s see some simple Pandas methods for identifying and removing missing data,
+# as well as imputing values into missing data.
+# 
+# 
+# Identifying Missing Data
+# In this section, we’ll use the isnull() method to check if missing cells exist in a
+# DataFrame.
+# 
+# # let's create a data frame with missing data
+# my_DF = pd.DataFrame({'age': [15,17,np.nan,29,25], \
+#             'state_of_origin':['Lagos', 'Cross River', 'Kano',
+#              'Abia', np.nan]})
+# my_DF
+# 'Output':
+#     age state_of_origin
+# 0  15.0           Lagos
+# 1  17.0     Cross River
+# 2   NaN            Kano
+# 3  29.0            Abia
+# 4  25.0             NaN
+# 
+#    Let’s check for missing data in this data frame. The isnull() method will return True
+# where there is a missing data, whereas the notnull() function returns False.
+# 
+# 
+# 132
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Handling Missing Data",
+            # Stage.CLEAN_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Handling Missing Data"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class HandlingMissing(HierNode):
+    def __init__(self):
+        super().__init__("Handling Missing Data")
+        self.add(Content())
+        self.add(A_IdentifyingMissing())
+        self.add(B_RemovingMissing())
+        self.add(C_ImputingValues())
+
+# eof

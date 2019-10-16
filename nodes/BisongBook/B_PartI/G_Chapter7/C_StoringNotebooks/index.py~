@@ -1,0 +1,98 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 7   Google Colaboratory
+# 
+#       2. Here, the options exist to change the Python runtime and
+#          hardware accelerator to a GPU or TPU (see Figure 7-4).
+# 
+# 
+# 
+# 
+# Figure 7-4. Change runtime
+# 
+# 
+# S
+#  toring Notebooks
+# Notebooks on Colab are stored on Google Drive. They can also be saved to GitHub or
+# published as a GitHub Gist. They can also be downloaded to the local machine.
+#    Figure 7-5 highlights the options for storing Jupyter notebooks running on Google
+# Colab.
+# 
+# 
+# 
+# 
+# 62
+# 
+#                                 Chapter 7   Google Colaboratory
+# 
+# 
+# 
+# 
+# Figure 7-5. Storing Notebooks
+# 
+# 
+# 
+# 
+#                                                             63
+# 
+# Chapter 7   Google Colaboratory
+# 
+# 
+# U
+#  ploading Notebooks
+# Notebooks can be uploaded from Google Drive, GitHub, or the local machine (see
+# Figure 7-6).
+# 
+# 
+# 
+# 
+# Figure 7-6. Opening Notebooks
+# 
+#     This chapter introduces Google Colaboratory as an alternative platform to quickly
+# spin up a high-performance computing infrastructure running Jupyter notebooks for
+# rapid data science and data modeling tasks.
+#     This is the last chapter in Part 1 on “Getting Started with Google Cloud Platform.” In
+# Part 2, containing Chapters 8–12, we will go over the fundamentals of “Programming for
+# Data Science.” The code samples in the ensuing chapters can be executed either using
+# Jupyter notebooks running on Google Deep Learning VMs or running on Google Colab.
+#     The advantage of working with Google Colab is that you do not need to log into
+# the Google Cloud Console and it is free to use. When security and privacy are not a
+# premium, Google Colab is a good option for modeling as it saves computing cost as far
+# as data science and machine learning prototyping is concerned.
+# 
+# 
+# 
+# 
+# 64
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Storing Notebooks",
+            # Stage.CLEAN_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Storing Notebooks"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class StoringNotebooks(HierNode):
+    def __init__(self):
+        super().__init__("Storing Notebooks")
+        self.add(Content())
+
+# eof

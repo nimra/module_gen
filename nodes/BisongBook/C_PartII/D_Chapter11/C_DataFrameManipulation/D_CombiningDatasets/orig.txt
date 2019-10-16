@@ -1,0 +1,84 @@
+                                                                     Chapter 11   Pandas
+
+div(), floordiv(), mod(), and pow() for addition, subtraction, multiplication, integer
+division, numeric division, remainder division, and exponentiation. Let’s see examples.
+
+df_A.add(df_B, fill_value=10)
+'Output':
+   First  Second  Third
+0    5.0     9.0   12.0
+1   10.0    9.0    8.0
+2   17.0    9.0   12.0
+3   12.0    19.0   12.0
+
+
+Combining Datasets
+We may need to combine two or more datasets together; Pandas provides methods for
+such operations. We would consider the simple case of combining data frames with
+shared column names using the concat method.
+
+# combine two dataframes column-wise
+pd.concat([df_A, df_B])
+'Output':
+   First  Second  Third
+0      2       3      9
+1      8       7      7
+2      8       6      4
+0      3       6      3
+1      2       2      1
+2      9       3      8
+3      2       9      2
+
+    Observe that the concat method preserves indices by default. We can also
+concatenate or combine two dataframes by rows (or horizontally). This is done by setting
+the axis parameter to 1.
+
+# combine two dataframes horizontally
+pd.concat([df_A, df_B], axis=1)
+
+
+
+
+                                                                                     131
+Chapter 11   Pandas
+
+'Output':
+Out[246]:
+   First  Second  Third  First  Second  Third
+0    2.0     3.0    9.0     3        6     3
+1    8.0     7.0    7.0     2        2     1
+2    8.0     6.0    4.0     9        3     8
+3    NaN     NaN    NaN     2        9     2
+
+
+
+Handling Missing Data
+Dealing with missing data is an integral part of the data cleaning/data analysis process.
+Moreover, some machine learning algorithms will not work in the presence of missing
+data. Let’s see some simple Pandas methods for identifying and removing missing data,
+as well as imputing values into missing data.
+
+
+Identifying Missing Data
+In this section, we’ll use the isnull() method to check if missing cells exist in a
+DataFrame.
+
+# let's create a data frame with missing data
+my_DF = pd.DataFrame({'age': [15,17,np.nan,29,25], \
+            'state_of_origin':['Lagos', 'Cross River', 'Kano',
+             'Abia', np.nan]})
+my_DF
+'Output':
+    age state_of_origin
+0  15.0           Lagos
+1  17.0     Cross River
+2   NaN            Kano
+3  29.0            Abia
+4  25.0             NaN
+
+   Let’s check for missing data in this data frame. The isnull() method will return True
+where there is a missing data, whereas the notnull() function returns False.
+
+
+132
+

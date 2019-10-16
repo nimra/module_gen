@@ -1,0 +1,124 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 27   What Is Deep Learning?
+# 
+# 
+# I nspiration from the Brain
+# Scientists often look to nature for inspiration when performing incredible feats. Notably,
+# the birds inspired the airplane. In that vein, there is no better type to study as an antitype
+# of intelligence as the human brain.
+#      We can view the brain as a society of intelligent agents that are networked together
+# and communicate by passing information via electrical signals from one agent to
+# another. These agents are known as neurons. Our principal interest here is to have a
+# glimpse of what neurons are, what their components are, and how they pass information
+# around to create intelligence.
+#      A neuron is an autonomous agent in the brain and is a central part of the nervous
+# system. Neurons are responsible for receiving and transmitting information to other cells
+# within the body based on external or internal stimuli. Neurons react by firing electrical
+# impulses generated at the stimuli source to the brain and other cells for the appropriate
+# response. The intricate and coordinated workings of neurons are central to human
+# intelligence.
+#      The following are the three most essential components of neurons that are of
+# primary interest to us:
+# 
+#       •   The axon
+# 
+#       •   The dendrite
+# 
+#       •   The synapse
+# 
+#     The axon is a long tail connected to the nucleus of the neuron as seen in
+# Figure 27-­1. The axon is responsible for transmitting electrical signals from the
+# nucleus to other neuron cells through the axon terminals. The dendrite, on the other
+# hand, receives information as electrical impulses from other neuron cells through
+# the synapses to the nucleus of a neuron cell.
+# 
+# 
+# 
+# 
+# 328
+# 
+#                                                         Chapter 27   What Is Deep Learning?
+# 
+# 
+# 
+# 
+# Figure 27-1. A neuron
+# 
+#     By mimicking these three biological components of a neuron, scientists developed
+# the core design and structure of an artificial neural network (ANN) that allows us to build
+# machines that can learn. We will discuss the ANN in more detail in the next chapter.
+# There is much hope that if we can mimic the capabilities of the brain from a science and
+# engineering perspective, we can build machines that can learn hierarchical features
+# from complex domain use cases.
+#     This chapter introduces the field of deep learning as an engineering impersonation
+# of how the brain learns to build artificial neural networks. In the next chapter, we’ll go
+# deeper to discuss the neural network algorithm.
+# 
+# 
+# 
+# 
+#                                                                                        329
+# 
+# CHAPTER 28
+# 
+# 
+# 
+# Neural Network
+# Foundations
+# Building on the inspiration of the biological neuron, the artificial neural network
+# (ANN) is a society of connectionist agents that learn and transfer information from
+# one artificial neuron to the other. As data transfers between neurons, a hierarchy
+# of representations or a hierarchy of features is learned, hence the name deep
+# representation learning or deep learning.
+# 
+# 
+# 
+# T he Architecture
+# An artificial neural network is composed of
+# 
+#        •    An input layer
+# 
+#        •    Hidden layer(s)
+# 
+#        •    An output layer
+# 
+# 
+# 
+# 
+#                                                                                           331
+# © Ekaba Bisong 2019
+# E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+# https://doi.org/10.1007/978-1-4842-4470-8_28
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Inspiration from the Brain",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        self.add(MarkdownBlock("# Inspiration from the Brain"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Inspirationfrom(HierNode):
+    def __init__(self):
+        super().__init__("Inspiration from the Brain")
+        self.add(Content())
+
+# eof

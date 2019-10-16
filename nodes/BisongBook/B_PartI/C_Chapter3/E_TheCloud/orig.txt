@@ -1,0 +1,67 @@
+                                              Chapter 3   The Google Cloud SDK and Web CLI
+
+
+
+
+Figure 3-8. Open IAM & admin
+
+The Cloud Shell
+The Cloud Shell is a vital component for working with GCP resources. Cloud Shell
+provisions an ephemeral virtual machine with command-line tools installed for
+interacting with GCP resources. It gives the user cloud-based command-line access to
+manipulate resources directly from within the GCP perimeter without installing the
+Google Cloud SDK on a local machine.
+    The Cloud Shell is accessed by clicking the prompt icon in the top-left corner of the
+window. See Figures 3-9, 3-10, and 3-11.
+
+
+
+
+Figure 3-9. Activate Cloud Shell
+                                                                                        17
+Chapter 3   The Google Cloud SDK and Web CLI
+
+
+
+
+Figure 3-10. Start Cloud Shell
+
+
+
+
+Figure 3-11. Cloud Shell interface
+18
+                                             Chapter 3   The Google Cloud SDK and Web CLI
+
+
+Google Cloud SDK
+The Google Cloud SDK installs command-line tools for interacting with cloud resources
+from the terminal on the local machine:
+
+     1. Go to https://cloud.google.com/sdk/ to download and install the
+        appropriate Cloud SDK for your machine type (see Figure 3-12).
+
+
+
+
+Figure 3-12. Download Google Cloud SDK
+
+     2. Follow the instructions for the operating system (OS) type to
+        install the Google Cloud SDK. The installation installs the default
+        Cloud SDK components.
+
+     3. Open the terminal application of your OS and run the command
+        ‘gcloud init’ to begin authorization and configuration of the Cloud
+        SDK.
+
+         gcloud init
+
+         Welcome! This command will take you through the configuration
+         of gcloud.
+
+         Pick configuration to use:
+          [1] Create a new configuration
+         Please enter your numeric choice:  1
+
+                                                                                      19
+

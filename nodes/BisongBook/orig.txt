@@ -1,0 +1,35 @@
+Introduction
+Machine learning and deep learning technologies have impacted the world in profound
+ways, from how we interact with technological products and with one another. These
+technologies are disrupting how we relate, how we work, and how we engage life in
+general. Today, and in the foreseeable future, intelligent machines increasingly form
+the core upon which sociocultural and socioeconomic relationships rest. We are indeed
+already in the "age of intelligence."
+
+
+
+What Are Machine Learning and Deep Learning?
+Machine learning can be described as an assortment of tools and techniques for
+predicting or classifying a future event based on a set of interactions between variables
+(also referred to as features or attributes) in a particular dataset. Deep learning, on the
+other hand, extends a machine learning algorithm called neural network for learning
+complex tasks which are incredibly difficult for a computer to perform. Examples of
+these tasks may include recognizing faces and understanding languages in their varied
+contextual meanings.
+
+
+
+The Role of Big Data
+A key ingredient that is critical to the rise and future improved performance of
+machine learning and deep learning is data. Since the turn of the twenty-first century,
+there has been a steady exponential increase in the amount of data generated and
+stored. The rise of humongous data is partly due to the emergence of the Internet and
+the miniaturization of processors that have spurned the "Internet of Things (IoT)"
+technologies. These vast amounts of data have made it possible to train the computer to
+learn complex tasks where an explicit instruction set is infeasible.
+
+
+
+
+                                                                                        xxvii
+

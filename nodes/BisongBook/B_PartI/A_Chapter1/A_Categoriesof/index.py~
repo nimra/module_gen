@@ -1,0 +1,106 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock
+from modules.node.block.MarkdownBlock import MarkdownBlock
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Chapter 1    What Is Cloud Computing?
+# 
+# 
+# Categories of Cloud Solutions
+# The cloud is a terminology that describes large sets of computers that are networked
+# together in groups called data centers. These clustered machines can be interacted with
+# via dashboards, command-line interfaces, REST APIs, and client libraries. Data centers
+# are often distributed across multiple geographical locations. The size of data centers is
+# over 100,000 sq. ft. (and those are the smaller sizes!). Cloud computing solutions can be
+# broadly categorized into three, namely, the public, private, and hybrid cloud. Let’s briefly
+# discuss them:
+# 
+#       •     Public cloud: Public clouds are the conventional cloud computing
+#             model, where cloud service providers make available their
+#             computing infrastructure and products for general use by other
+#             enterprises and individuals (see Figure 1-1). In public clouds, the
+#             cloud service provider is responsible for managing the hardware
+#             configuration and servicing.
+# 
+# 
+# 
+# 
+# Figure 1-1. The public cloud
+# 
+# 
+# 
+# 
+# 4
+# 
+#                                                        Chapter 1   What Is Cloud Computing?
+# 
+#       •   Private cloud: In a private cloud, an organization is solely responsible
+#           for the management and servicing of its computing infrastructure.
+#           The machines in a private cloud can be located on-premises, or it
+#           can be hosted with a cloud service provider but routed on a private
+#           network.
+# 
+#       •   Hybrid cloud: The hybrid cloud is a compromise between the cost
+#           and efficiency of a public cloud and the data sovereignty and in-­
+#           house security assurances of the private cloud. Many companies
+#           and institutions opt for a hybrid cloud and multi-cloud by using
+#           technology solutions to facilitate easy porting and sharing of data and
+#           applications between on-premise and cloud-based infrastructures.
+# 
+# 
+# 
+# Cloud Computing Models
+# Cloud computing is also categorized into three models of service delivery. They are
+# illustrated as a pyramid as shown in Figure 1-2, where the layers of infrastructure
+# abstraction increase as we approach the apex of the pyramid:
+# 
+#       •   Infrastructure as a Service (IaaS): This model is best suited for
+#           enterprises or individuals who want to manage the hardware
+#           infrastructure that hosts their data and applications. This level
+#           of fine-grained management requires the necessary system
+#           administration skills.
+# 
+#       •   Platform as a Service (PaaS): In the PaaS model, the hardware
+#           configuration is managed by the cloud service provider, as well as
+#           other system and development tools. This relieves the user to focus
+#           on the business logic for quick and easy deployment of application
+#           and database solutions. Another concept that comes up together
+#           with PaaS is the idea of Serverless, where the cloud service provider
+#           manages a scalable infrastructure that utilizes and relinquishes
+#           resources according to demand.
+# 
+#       •   Software as a Service (SaaS): The SaaS model is most recognizable
+#           by the general public, as a great deal of users interact with SaaS
+#           applications without knowing. The typical examples of SaaS
+# 
+# 
+#                                                                                          5
+# 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Categories of Cloud Solutions",
+            # Stage.CLEAN_TEXT,
+            # Stage.CODE_BLOCKS,
+            # Stage.MARKDOWN_BLOCKS,
+            # Stage.FIGURES,
+            # Stage.EXERCISES,
+            # Stage.CUSTOMIZED,
+        )
+        self.add(MarkdownBlock("# Categories of Cloud Solutions"))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Categoriesof(HierNode):
+    def __init__(self):
+        super().__init__("Categories of Cloud Solutions")
+        self.add(Content())
+
+# eof

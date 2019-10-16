@@ -1,0 +1,31 @@
+CHAPTER 19
+
+
+
+Linear Regression
+The fundamental idea behind the linear regression algorithm is that it assumes a linear
+relationship between the features of the dataset. As a result of the pre-defined structure
+that is imposed on the parameters of the model, it is also called a parametric learning
+algorithm. Linear regression is used to predict targets that contain real values. As we will
+see later in Chapter 20 on logistic regression, the linear regression model is not adequate
+to deal with learning problems whose targets are categorical.
+
+
+
+The Regression Model
+In linear regression, the prevailing assumption is that the target variable (i.e., the unit
+that we want to predict) can be modeled as a linear combination of the features.
+     A linear combination is simply the addition of a certain number of vectors that are
+scaled (or adjusted) by some arbitrary constant. A vector is a mathematical construct for
+representing a set of numbers.
+     For example, let us assume a randomly generated dataset consisting of two features
+and a target variable. The dataset has 50 observations (see Figure 19-1).
+
+
+
+
+                                                                                          231
+© Ekaba Bisong 2019
+E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+https://doi.org/10.1007/978-1-4842-4470-8_19
+

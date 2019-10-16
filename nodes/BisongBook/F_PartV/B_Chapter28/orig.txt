@@ -1,0 +1,31 @@
+CHAPTER 28
+
+
+
+Neural Network
+Foundations
+Building on the inspiration of the biological neuron, the artificial neural network
+(ANN) is a society of connectionist agents that learn and transfer information from
+one artificial neuron to the other. As data transfers between neurons, a hierarchy
+of representations or a hierarchy of features is learned, hence the name deep
+representation learning or deep learning.
+
+
+
+T he Architecture
+An artificial neural network is composed of
+
+       •    An input layer
+
+       •    Hidden layer(s)
+
+       •    An output layer
+
+
+
+
+                                                                                          331
+© Ekaba Bisong 2019
+E. Bisong, Building Machine Learning and Deep Learning Models on Google Cloud Platform,
+https://doi.org/10.1007/978-1-4842-4470-8_28
+

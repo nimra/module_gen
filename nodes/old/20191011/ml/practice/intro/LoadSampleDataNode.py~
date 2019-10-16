@@ -1,0 +1,16 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from .LoadSampleDataNode import LoadSampleDataNode
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class LoadSampleDataNode(LeafNode):
+    def __init__(self):
+        super().__init__()
+        # self.add(IntroNode())
+        self.add(LoadSampleDataNode())
+        # self.add(SplitDataNode())
+        # self.add(PreprocessDataNode())
+        # self.add(MLAlgosNode())
+
+# eof
