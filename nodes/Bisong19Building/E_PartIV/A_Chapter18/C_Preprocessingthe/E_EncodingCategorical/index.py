@@ -4,17 +4,17 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.ImageBlock import ImageBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
-    MarkdownBlock("Most machine learning algorithms do not compute with non-numerical or categorical variables. Hence, encoding categorical variables is the technique for converting non-­ numerical features with labels into a numerical representation for use in machine learning modeling. Scikit-learn provides modules for encoding categorical variables including the LabelEncoder for encoding labels as integers, OneHotEncoder for converting categorical features into a matrix of integers, and LabelBinarizer for creating a one-hot encoding of target labels."),
-    MarkdownBlock("LabelEncoder is typically used on the target variable to transform a vector of hashable categories (or labels) into an integer representation by encoding label with values between 0 and the number of categories minus 1. This is further illustrated in Figure 18-1."),
-    # ImageBlock("http://www.lamar.com/", ?), # "4.Part4/ch18/page236/0.png"),
-    CodeBlock("Let’s see an example of LabelEncoder.", """
+    mbk("Most machine learning algorithms do not compute with non-numerical or categorical variables. Hence, encoding categorical variables is the technique for converting non-­ numerical features with labels into a numerical representation for use in machine learning modeling. Scikit-learn provides modules for encoding categorical variables including the LabelEncoder for encoding labels as integers, OneHotEncoder for converting categorical features into a matrix of integers, and LabelBinarizer for creating a one-hot encoding of target labels."),
+    mbk("LabelEncoder is typically used on the target variable to transform a vector of hashable categories (or labels) into an integer representation by encoding label with values between 0 and the number of categories minus 1. This is further illustrated in Figure 18-1."),
+    # ibk("http://www.lamar.com/", ?), # "4.Part4/ch18/page236/0.png"),
+    cbk("Let’s see an example of LabelEncoder.", """
 # import packages
 from sklearn.preprocessing import LabelEncoder
 
@@ -32,7 +32,7 @@ array([['5', '8', 'calabar'],
        ['0', '8', 'calabar'],
        ['1', '8', 'owerri']], dtype='<U21')
     """),
-    CodeBlock(None, """
+    cbk(None, """
 # separate features and target
 X = data[:,:2]
 y = data[:,-1]
@@ -53,9 +53,9 @@ array([['5', '8', '0'],
        ['0', '8', '0'],
        ['1', '8', '1']], dtype='<U21')
     """),
-    MarkdownBlock("OneHotEncoder is used to transform a categorical feature variable in a matrix of integers. This matrix is a sparse matrix with each column corresponding to one possible value of a category. This is further illustrated in Figure 18-2."),
-    # ImageBlock("Figure 18-2. OneHotEncoder", ?),
-    CodeBlock("Let’s see an example of OneHotEncoder.", """
+    mbk("OneHotEncoder is used to transform a categorical feature variable in a matrix of integers. This matrix is a sparse matrix with each column corresponding to one possible value of a category. This is further illustrated in Figure 18-2."),
+    # ibk("Figure 18-2. OneHotEncoder", ?),
+    cbk("Let’s see an example of OneHotEncoder.", """
 # import packages
 from sklearn.preprocessing import OneHotEncoder
 
@@ -79,7 +79,7 @@ array([['5', 'efik', '8'],
        ['0', 'efik', '8'],
        ['1', 'igbo', '8']], dtype='<U21')
     """),
-    CodeBlock(None, """
+    cbk(None, """
 # one_hot_encode X
 one_hot_encoder = OneHotEncoder(handle_unknown='ignore')
 encode_categorical = X[:,1].reshape(len(X[:,1]), 1)
@@ -97,7 +97,7 @@ matrix([[1., 0., 0.],
         [1., 0., 0.],
         [0., 0., 1.]])
     """),
-    CodeBlock(None, """
+    cbk(None, """
 # remove categorical label
 X = np.delete(X, 1, axis=1)
 # append encoded matrix
@@ -127,7 +127,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Encoding Categorical Variables"))
+        self.add(mbk("# Encoding Categorical Variables"))
         [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

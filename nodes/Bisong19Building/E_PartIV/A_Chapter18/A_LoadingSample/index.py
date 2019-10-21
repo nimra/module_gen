@@ -4,15 +4,16 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
-    MarkdownBlock("Scikit-learn comes with a set of small standard datasets for quickly testing and prototyping machine learning models. These datasets are ideal for learning purposes when starting off working with machine learning or even trying out the performance of some new model. They save a bit of the time required to identify, download, and clean up a dataset obtained from the wild. However, these datasets are small and well curated, they do not represent real-world scenarios."),
+    mbk("Scikit-learn comes with a set of small standard datasets for quickly testing and prototyping machine learning models. These datasets are ideal for learning purposes when starting off working with machine learning or even trying out the performance of some new model. They save a bit of the time required to identify, download, and clean up a dataset obtained from the wild. However, these datasets are small and well curated, they do not represent real-world scenarios."),
 
-    MarkdownBlock("""
+    mbk("""
 Five popular sample datasets are
 - Boston house-prices dataset
 - Diabetes dataset
@@ -23,7 +24,7 @@ Five popular sample datasets are
 Table 18-1 summarizes the properties of these datasets.
     """),
 
-    MarkdownBlock("""
+    mbk("""
 [ Caption: Table 18-1. Scikit-learn Sample Dataset Properties ]
 
 | Dataset name | Observations | Dimensions | Features | Targets |
@@ -34,17 +35,17 @@ Table 18-1 summarizes the properties of these datasets.
 | Wisconsin breast cancer dataset (classification) | 569 | 30 | real, positive | 2 classes |
 | Wine dataset (classification) | 178 | 13 | real, positive | 3 classes |
     """),
-    CodeBlock("To load the sample dataset, we’ll run:", """
+    cbk("To load the sample dataset, we’ll run:", """
 # load library
 from sklearn import datasets
 import numpy as np
     """, None),
-    CodeBlock("Load the Iris dataset:", """
+    cbk("Load the Iris dataset:", """
 # load iris
 iris = datasets.load_iris()
 iris.data.shape
     """, "(150, 4)"),
-    CodeBlock(None, """
+    cbk(None, """
 iris.feature_names
     """, """
 ['sepal length (cm)',
@@ -52,7 +53,7 @@ iris.feature_names
  'petal length (cm)',
  'petal width (cm)']
     """),
-    MarkdownBlock("""
+    mbk("""
 Methods for loading other datasets:
 
 - Boston house-prices dataset – `datasets.load_boston()`
@@ -74,7 +75,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Loading Sample Datasets from Scikit-learn"))
+        self.add(mbk("# Loading Sample Datasets from Scikit-learn"))
         [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

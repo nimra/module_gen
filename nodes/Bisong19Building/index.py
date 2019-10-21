@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Introduction.index import Introduction as A_Introduction
 from .B_PartI.index import PartI as B_PartI
@@ -32,7 +33,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Bisong19Building"))
+        self.add(mbk("# Bisong19Building"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Bisong19Building(HierNode):

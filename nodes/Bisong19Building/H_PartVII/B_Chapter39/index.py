@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_GettingStarted.index import GettingStarted as A_GettingStarted
 from .B_UsingFlows.index import UsingFlows as B_UsingFlows
@@ -61,7 +62,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Chapter 39: Google Cloud Dataprep"))
+        self.add(mbk("# Chapter 39: Google Cloud Dataprep"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter39(HierNode):

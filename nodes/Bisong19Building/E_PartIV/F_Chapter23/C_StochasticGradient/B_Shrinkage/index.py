@@ -4,17 +4,15 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Shrinkage
-# The shrinkage hyper-parameter λ controls the learning rate of the gradient boosting
-# model. An arbitrarily small value of λ may necessitate a larger number of trees to obtain a
-# good model performance. However, with a small shrinkage size and tree depth d = 1, the
-# residuals slowly improve by creating more varied trees to improve the worst performing
-# areas of the model. Rule of thumb: shrinkage size is 0.01 or 0.001.
+blocks = [
+    mbk("The shrinkage hyper-parameter λ controls the learning rate of the gradient boosting model. An arbitrarily small value of λ may necessitate a larger number of trees to obtain a good model performance. However, with a small shrinkage size and tree depth d = 1, the residuals slowly improve by creating more varied trees to improve the worst performing areas of the model. Rule of thumb: shrinkage size is 0.01 or 0.001."),
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
@@ -22,13 +20,14 @@ class Content(LeafNode):
         super().__init__(
             "Shrinkage",
             Stage.REMOVE_EXTRANEOUS,
-            # Stage.ORIG_BLOCKS,
+            Stage.ORIG_BLOCKS,
             # Stage.CUSTOM_BLOCKS,
             # Stage.ORIG_FIGURES,
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Shrinkage"))
+        self.add(mbk("# Shrinkage"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Shrinkage(HierNode):

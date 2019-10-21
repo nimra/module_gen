@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_OnRegression.index import OnRegression as A_OnRegression
 from .B_Growinga.index import Growinga as B_Growinga
@@ -15,17 +16,10 @@ from .E_Strengthsand.index import Strengthsand as E_Strengthsand
 from .F_CARTwith.index import CARTwith as F_CARTwith
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Decision Trees
-# Decision trees, more popularly known as classification and regression trees (CART),
-# can be visualized as a graph or flowchart of decisions. A branch connects the nodes in
-# the graph, the last node of the graph is called a terminal node, and the topmost node is
-# called the root. As seen in Figure 23-1, when constructing a decision tree, the root is at
-# the top, while the branches connect nodes at lower layers until the terminal node.
-# 
-# 
-# 
-# 
-# Figure 23-1. Illustration of a decision tree
+blocks = [
+    mbk("Decision trees, more popularly known as classification and regression trees (CART), can be visualized as a graph or flowchart of decisions. A branch connects the nodes in the graph, the last node of the graph is called a terminal node, and the topmost node is called the root. As seen in Figure 23-1, when constructing a decision tree, the root is at the top, while the branches connect nodes at lower layers until the terminal node."),
+    ibk("Figure 23-1. Illustration of a decision tree"),
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
@@ -33,13 +27,14 @@ class Content(LeafNode):
         super().__init__(
             "Decision Trees",
             Stage.REMOVE_EXTRANEOUS,
-            # Stage.ORIG_BLOCKS,
+            Stage.ORIG_BLOCKS,
             # Stage.CUSTOM_BLOCKS,
             # Stage.ORIG_FIGURES,
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Decision Trees"))
+        self.add(mbk("# Decision Trees"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class DecisionTrees(HierNode):

@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_TheRegression.index import TheRegression as A_TheRegression
 from .B_HowDo.index import HowDo as B_HowDo
@@ -15,17 +16,9 @@ from .E_HigherOrderLinear.index import HigherOrderLinear as E_HigherOrderLinear
 from .F_Improvingthe.index import Improvingthe as F_Improvingthe
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# CHAPTER 19
-# 
-# 
-# 
-# Linear Regression
-# The fundamental idea behind the linear regression algorithm is that it assumes a linear
-# relationship between the features of the dataset. As a result of the pre-defined structure
-# that is imposed on the parameters of the model, it is also called a parametric learning
-# algorithm. Linear regression is used to predict targets that contain real values. As we will
-# see later in Chapter 20 on logistic regression, the linear regression model is not adequate
-# to deal with learning problems whose targets are categorical.
+blocks = [
+    mbk("The fundamental idea behind the linear regression algorithm is that it assumes a linear relationship between the features of the dataset. As a result of the pre-defined structure that is imposed on the parameters of the model, it is also called a parametric learning algorithm. Linear regression is used to predict targets that contain real values. As we will see later in Chapter 20 on logistic regression, the linear regression model is not adequate to deal with learning problems whose targets are categorical."),
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
@@ -33,13 +26,14 @@ class Content(LeafNode):
         super().__init__(
             "Chapter 19: Linear Regression",
             Stage.REMOVE_EXTRANEOUS,
-            # Stage.ORIG_BLOCKS,
+            Stage.ORIG_BLOCKS,
             # Stage.CUSTOM_BLOCKS,
             # Stage.ORIG_FIGURES,
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Chapter 19: Linear Regression"))
+        self.add(mbk("# Chapter 19: Linear Regression"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter19(HierNode):

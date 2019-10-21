@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_DataRescaling.index import DataRescaling as A_DataRescaling
 from .B_Standardization.index import Standardization as B_Standardization
@@ -17,9 +18,9 @@ from .G_GeneratingHigherOrder.index import GeneratingHigherOrder as G_Generating
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
-    MarkdownBlock("Before a dataset is trained or fitted with a machine learning model, it necessarily undergoes some vital transformations. These transformations have a huge effect on the performance of the learning model. Transformations in Scikit-learn have a fit() and transform() method, or a fit_transform() method."),
-    MarkdownBlock("Depending on the use case, the fit() method can be used to learn the parameters of the dataset, while the transform() method applies the data transform based on the learned parameters to the same dataset and also to the test or validation datasets before modeling. Also, the fit_transform() method can be used to learn and apply the transformation to the same dataset in a one-off fashion. Data transformation packages are found in the sklearn.preprocessing package."),
-    MarkdownBlock("""
+    mbk("Before a dataset is trained or fitted with a machine learning model, it necessarily undergoes some vital transformations. These transformations have a huge effect on the performance of the learning model. Transformations in Scikit-learn have a fit() and transform() method, or a fit_transform() method."),
+    mbk("Depending on the use case, the fit() method can be used to learn the parameters of the dataset, while the transform() method applies the data transform based on the learned parameters to the same dataset and also to the test or validation datasets before modeling. Also, the fit_transform() method can be used to learn and apply the transformation to the same dataset in a one-off fashion. Data transformation packages are found in the sklearn.preprocessing package."),
+    mbk("""
 This section will cover some critical transformation for numeric and categorical variables. They include:",
 
 - Data rescaling
@@ -44,7 +45,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Preprocessing the Data for Model Fitting"))
+        self.add(mbk("# Preprocessing the Data for Model Fitting"))
         [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

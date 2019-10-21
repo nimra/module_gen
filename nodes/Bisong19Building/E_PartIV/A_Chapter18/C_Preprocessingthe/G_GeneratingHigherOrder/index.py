@@ -4,14 +4,15 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
-    MarkdownBlock("Scikit-learn has a module called PolynomialFeatures for generating a new dataset containing high-order polynomial and interaction features based off the features in the original dataset. For example, if the original dataset has two dimensions [a, b], the second-degree polynomial transformation of the features will result in [1, a, b, a2, ab, b2]."),
-    CodeBlock(None, """
+    mbk("Scikit-learn has a module called PolynomialFeatures for generating a new dataset containing high-order polynomial and interaction features based off the features in the original dataset. For example, if the original dataset has two dimensions [a, b], the second-degree polynomial transformation of the features will result in [1, a, b, a2, ab, b2]."),
+    cbk(None, """
 # import packages
 from sklearn.preprocessing import PolynomialFeatures
 
@@ -29,7 +30,7 @@ array([[5, 8],
        [8, 7],
        [1, 5]])
     """),
-    CodeBlock(None, """
+    cbk(None, """
 # create polynomial features
 polynomial_features = PolynomialFeatures(2)
 data = polynomial_features.fit_transform(data)
@@ -57,7 +58,7 @@ class Content(LeafNode):
             # Stage.CUSTOM_FIGURES,
             # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Generating Higher-Order Polynomial Features"))
+        self.add(mbk("# Generating Higher-Order Polynomial Features"))
         [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
