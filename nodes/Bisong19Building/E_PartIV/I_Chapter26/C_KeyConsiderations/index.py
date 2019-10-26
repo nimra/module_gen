@@ -12,7 +12,7 @@ from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
     mbk("It is vital to perform mean normalization and feature scaling on the variables of features of the original dataset before implementing PCA. This is because unscaled features can have stretched and narrow distance n-dimensional space, and this has a huge consequence when finding the principal components that explain the variance of the dataset (see Figure 26-4)."),
-    ibk("Figure 26-4. Right: An illustration of PCA with scaled features. Left: An illustration of PCA with unscaled features."),
+    ibk(None, "Figure 26-4. Right: An illustration of PCA with scaled features. Left: An illustration of PCA with unscaled features."),
     mbk("Again mean normalization ensures that every attribute or feature of the dataset has a zero mean, while feature scaling ensures all the features are within the same numeric range."),
     mbk("Finally, PCA is susceptible to vary wildly due to slight perturbations or changes in the dataset."),
 ]

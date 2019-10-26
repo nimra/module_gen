@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Preface.index import Preface as A_Preface
 from .B_Chapter1.index import Chapter1 as B_Chapter1
@@ -70,7 +71,7 @@ class Content(LeafNode):
             # Stage.EXERCISES,
             # Stage.CUSTOMIZED,
         )
-        self.add(MarkdownBlock("# Ramsundar18TensorFlow"))
+        self.add(mbk("# Ramsundar18TensorFlow"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Ramsundar18TensorFlow(HierNode):

@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_MeasuringAccuracy.index import MeasuringAccuracy as A_MeasuringAccuracy
 from .B_ConfusionMatrix.index import ConfusionMatrix as B_ConfusionMatrix
@@ -14,6 +17,7 @@ from .D_PrecisionRecallTradeoff.index import PrecisionRecallTradeoff as D_Precis
 from .E_TheROC.index import TheROC as E_TheROC
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                          Download from finelybook www.finelybook.com
 #      import numpy as np
 # 
@@ -113,26 +117,27 @@ from .E_TheROC.index import TheROC as E_TheROC
 # 
 #                                                                      Performance Measures   |   83
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Performance Measures",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Performance Measures"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class PerformanceMeasures(HierNode):
     def __init__(self):
         super().__init__("Performance Measures")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_MeasuringAccuracy())
         self.add(B_ConfusionMatrix())
         self.add(C_Precisionand())

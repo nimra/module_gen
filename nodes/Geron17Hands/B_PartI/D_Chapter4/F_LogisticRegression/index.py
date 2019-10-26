@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_EstimatingProbabilities.index import EstimatingProbabilities as A_EstimatingProbabilities
 from .B_Trainingand.index import Trainingand as B_Trainingand
@@ -13,6 +16,7 @@ from .C_DecisionBoundaries.index import DecisionBoundaries as C_DecisionBoundari
 from .D_SoftmaxRegression.index import SoftmaxRegression as D_SoftmaxRegression
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                         Download from finelybook www.finelybook.com
 #       sgd_reg = SGDRegressor(n_iter=1, warm_start=True, penalty=None,
 #                              learning_rate="constant", eta0=0.0005)
@@ -59,26 +63,27 @@ from .D_SoftmaxRegression.index import SoftmaxRegression as D_SoftmaxRegression
 # 
 # 134    |   Chapter 4: Training Models
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Logistic Regression",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Logistic Regression"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class LogisticRegression(HierNode):
     def __init__(self):
         super().__init__("Logistic Regression")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_EstimatingProbabilities())
         self.add(B_Trainingand())
         self.add(C_DecisionBoundaries())

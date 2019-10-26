@@ -18,7 +18,7 @@ from .F_Optimizingthe.index import Optimizingthe as F_Optimizingthe
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
     mbk("Logistic regression is a supervised machine learning algorithm developed for learning classification problems. A classification learning problem is when the target variable is categorical. The goal of logistic regression is to map a function from the features of the dataset to the targets to predict the probability that a new example belongs to one of the target classes. Figure 20-1 is an example of a dataset with categorical targets."),
-    ibk("Figure 20-1. Dataset with qualitative variables as output"),
+    ibk(None, "Figure 20-1. Dataset with qualitative variables as output"),
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

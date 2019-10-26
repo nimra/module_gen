@@ -1,0 +1,387 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# The dashed line and solid line are exactly on top of each other, meaning the linear
+# regression model and the decision tree make exactly the same predictions. For each
+# bin, they predict a constant value. As features are constant within each bin, any
+# model must predict the same value for all points within a bin. Comparing what the
+# models learned before binning the features and after, we see that the linear model
+# became much more flexible, because it now has a different value for each bin, while
+# the decision tree model got much less flexible. Binning features generally has no ben‐
+# eficial effect for tree-based models, as these models can learn to split up the data any‐
+# where. In a sense, that means decision trees can learn whatever binning is most useful
+# for predicting on this data. Additionally, decision trees look at multiple features at
+# once, while binning is usually done on a per-feature basis. However, the linear model
+# benefited greatly in expressiveness from the transformation of the data.
+# If there are good reasons to use a linear model for a particular dataset—say, because it
+# is very large and high-dimensional, but some features have nonlinear relations with
+# the output—binning can be a great way to increase modeling power.
+# 
+# Interactions and Polynomials
+# Another way to enrich a feature representation, particularly for linear models, is
+# adding interaction features and polynomial features of the original data. This kind of
+# feature engineering is often used in statistical modeling, but it’s also common in many
+# practical machine learning applications.
+# As a first example, look again at Figure 4-2. The linear model learned a constant value
+# for each bin in the wave dataset. We know, however, that linear models can learn not
+# only offsets, but also slopes. One way to add a slope to the linear model on the binned
+# data is to add the original feature (the x-axis in the plot) back in. This leads to an 11-
+# dimensional dataset, as seen in Figure 4-3:
+# In[17]:
+#       X_combined = np.hstack([X, X_binned])
+#       print(X_combined.shape)
+# 
+# Out[17]:
+#       (100, 11)
+# 
+# In[18]:
+#       reg = LinearRegression().fit(X_combined, y)
+# 
+#       line_combined = np.hstack([line, line_binned])
+#       plt.plot(line, reg.predict(line_combined), label='linear regression combined')
+# 
+#       for bin in bins:
+#           plt.plot([bin, bin], [-3, 3], ':', c='k')
+# 
+# 
+# 
+# 224   |   Chapter 4: Representing Data and Engineering Features
+# 
+#     plt.legend(loc="best")
+#     plt.ylabel("Regression output")
+#     plt.xlabel("Input feature")
+#     plt.plot(X[:, 0], y, 'o', c='k')
+# 
+# 
+# 
+# 
+# Figure 4-3. Linear regression using binned features and a single global slope
+# 
+# In this example, the model learned an offset for each bin, together with a slope. The
+# learned slope is downward, and shared across all the bins—there is a single x-axis fea‐
+# ture, which has a single slope. Because the slope is shared across all bins, it doesn’t
+# seem to be very helpful. We would rather have a separate slope for each bin! We can
+# achieve this by adding an interaction or product feature that indicates which bin a
+# data point is in and where it lies on the x-axis. This feature is a product of the bin
+# indicator and the original feature. Let’s create this dataset:
+# In[19]:
+#     X_product = np.hstack([X_binned, X * X_binned])
+#     print(X_product.shape)
+# 
+# Out[19]:
+#     (100, 20)
+# The dataset now has 20 features: the indicators for which bin a data point is in, and a
+# product of the original feature and the bin indicator. You can think of the product
+# 
+# 
+#                                                              Interactions and Polynomials   |   225
+# 
+# feature as a separate copy of the x-axis feature for each bin. It is the original feature
+# within the bin, and zero everywhere else. Figure 4-4 shows the result of the linear
+# model on this new representation:
+# In[20]:
+#       reg = LinearRegression().fit(X_product, y)
+# 
+#       line_product = np.hstack([line_binned, line * line_binned])
+#       plt.plot(line, reg.predict(line_product), label='linear regression product')
+# 
+#       for bin in bins:
+#           plt.plot([bin, bin], [-3, 3], ':', c='k')
+# 
+#       plt.plot(X[:, 0], y, 'o', c='k')
+#       plt.ylabel("Regression output")
+#       plt.xlabel("Input feature")
+#       plt.legend(loc="best")
+# 
+# 
+# 
+# 
+# Figure 4-4. Linear regression with a separate slope per bin
+# 
+# As you can see, now each bin has its own offset and slope in this model.
+# 
+# 
+# 
+# 
+# 226   |   Chapter 4: Representing Data and Engineering Features
+# 
+# Using binning is one way to expand a continuous feature. Another one is to use poly‐
+# nomials of the original features. For a given feature x, we might want to consider
+# x ** 2, x ** 3, x ** 4, and so on. This is implemented in PolynomialFeatures in
+# the preprocessing module:
+# In[21]:
+#     from sklearn.preprocessing import PolynomialFeatures
+# 
+#     # include polynomials up to x ** 10:
+#     # the default "include_bias=True" adds a feature that's constantly 1
+#     poly = PolynomialFeatures(degree=10, include_bias=False)
+#     poly.fit(X)
+#     X_poly = poly.transform(X)
+# Using a degree of 10 yields 10 features:
+# In[22]:
+#     print("X_poly.shape: {}".format(X_poly.shape))
+# 
+# Out[22]:
+#     X_poly.shape: (100, 10)
+# 
+# Let’s compare the entries of X_poly to those of X:
+# In[23]:
+#     print("Entries of X:\n{}".format(X[:5]))
+#     print("Entries of X_poly:\n{}".format(X_poly[:5]))
+# 
+# Out[23]:
+#     Entries of X:
+#     [[-0.753]
+#      [ 2.704]
+#      [ 1.392]
+#      [ 0.592]
+#      [-2.064]]
+#     Entries of X_poly:
+#     [[    -0.753       0.567     -0.427     0.321     -0.242           0.182
+#           -0.137       0.103     -0.078     0.058]
+#      [     2.704       7.313     19.777    53.482     144.632       391.125
+#         1057.714   2860.360    7735.232 20918.278]
+#      [     1.392       1.938      2.697     3.754        5.226         7.274
+#           10.125     14.094      19.618    27.307]
+#      [     0.592       0.350      0.207     0.123        0.073         0.043
+#            0.025       0.015      0.009     0.005]
+#      [    -2.064       4.260     -8.791    18.144     -37.448        77.289
+#         -159.516    329.222    -679.478  1402.367]]
+# 
+# You can obtain the semantics of the features by calling the get_feature_names
+# method, which provides the exponent for each feature:
+# 
+# 
+#                                                            Interactions and Polynomials   |   227
+# 
+# In[24]:
+#       print("Polynomial feature names:\n{}".format(poly.get_feature_names()))
+# 
+# Out[24]:
+#       Polynomial feature names:
+#       ['x0', 'x0^2', 'x0^3', 'x0^4', 'x0^5', 'x0^6', 'x0^7', 'x0^8', 'x0^9', 'x0^10']
+# 
+# You can see that the first column of X_poly corresponds exactly to X, while the other
+# columns are the powers of the first entry. It’s interesting to see how large some of the
+# values can get. The second column has entries above 20,000, orders of magnitude dif‐
+# ferent from the rest.
+# Using polynomial features together with a linear regression model yields the classical
+# model of polynomial regression (see Figure 4-5):
+# In[26]:
+#       reg = LinearRegression().fit(X_poly, y)
+# 
+#       line_poly = poly.transform(line)
+#       plt.plot(line, reg.predict(line_poly), label='polynomial linear regression')
+#       plt.plot(X[:, 0], y, 'o', c='k')
+#       plt.ylabel("Regression output")
+#       plt.xlabel("Input feature")
+#       plt.legend(loc="best")
+# 
+# 
+# 
+# 
+# Figure 4-5. Linear regression with tenth-degree polynomial features
+# 
+# 228   |   Chapter 4: Representing Data and Engineering Features
+# 
+# As you can see, polynomial features yield a very smooth fit on this one-dimensional
+# data. However, polynomials of high degree tend to behave in extreme ways on the
+# boundaries or in regions with little data.
+# As a comparison, here is a kernel SVM model learned on the original data, without
+# any transformation (see Figure 4-6):
+# In[26]:
+#    from sklearn.svm import SVR
+# 
+#    for gamma in [1, 10]:
+#        svr = SVR(gamma=gamma).fit(X, y)
+#        plt.plot(line, svr.predict(line), label='SVR gamma={}'.format(gamma))
+# 
+#    plt.plot(X[:, 0], y, 'o', c='k')
+#    plt.ylabel("Regression output")
+#    plt.xlabel("Input feature")
+#    plt.legend(loc="best")
+# 
+# 
+# 
+# 
+# Figure 4-6. Comparison of different gamma parameters for an SVM with RBF kernel
+# 
+# Using a more complex model, a kernel SVM, we are able to learn a similarly complex
+# prediction to the polynomial regression without an explicit transformation of the
+# features.
+# 
+# 
+# 
+#                                                         Interactions and Polynomials   |   229
+# 
+# As a more realistic application of interactions and polynomials, let’s look again at the
+# Boston Housing dataset. We already used polynomial features on this dataset in
+# Chapter 2. Now let’s have a look at how these features were constructed, and at how
+# much the polynomial features help. First we load the data, and rescale it to be
+# between 0 and 1 using MinMaxScaler:
+# In[27]:
+#       from sklearn.datasets import load_boston
+#       from sklearn.model_selection import train_test_split
+#       from sklearn.preprocessing import MinMaxScaler
+# 
+#       boston = load_boston()
+#       X_train, X_test, y_train, y_test = train_test_split
+#           (boston.data, boston.target, random_state=0)
+# 
+#       # rescale data
+#       scaler = MinMaxScaler()
+#       X_train_scaled = scaler.fit_transform(X_train)
+#       X_test_scaled = scaler.transform(X_test)
+# Now, we extract polynomial features and interactions up to a degree of 2:
+# In[28]:
+#       poly = PolynomialFeatures(degree=2).fit(X_train_scaled)
+#       X_train_poly = poly.transform(X_train_scaled)
+#       X_test_poly = poly.transform(X_test_scaled)
+#       print("X_train.shape: {}".format(X_train.shape))
+#       print("X_train_poly.shape: {}".format(X_train_poly.shape))
+# 
+# Out[28]:
+#       X_train.shape: (379, 13)
+#       X_train_poly.shape: (379, 105)
+# The data originally had 13 features, which were expanded into 105 interaction fea‐
+# tures. These new features represent all possible interactions between two different
+# original features, as well as the square of each original feature. degree=2 here means
+# that we look at all features that are the product of up to two original features. The
+# exact correspondence between input and output features can be found using the
+# get_feature_names method:
+# In[29]:
+#       print("Polynomial feature names:\n{}".format(poly.get_feature_names()))
+# 
+# Out[29]:
+#       Polynomial feature names:
+#       ['1', 'x0', 'x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8', 'x9', 'x10',
+#       'x11', 'x12', 'x0^2', 'x0 x1', 'x0 x2', 'x0 x3', 'x0 x4', 'x0 x5', 'x0 x6',
+#       'x0 x7', 'x0 x8', 'x0 x9', 'x0 x10', 'x0 x11', 'x0 x12', 'x1^2', 'x1 x2',
+# 
+# 
+# 230   |   Chapter 4: Representing Data and Engineering Features
+# 
+#     'x1 x3', 'x1 x4', 'x1 x5', 'x1 x6', 'x1 x7', 'x1 x8', 'x1 x9', 'x1 x10',
+#     'x1 x11', 'x1 x12', 'x2^2', 'x2 x3', 'x2 x4', 'x2 x5', 'x2 x6', 'x2 x7',
+#     'x2 x8', 'x2 x9', 'x2 x10', 'x2 x11', 'x2 x12', 'x3^2', 'x3 x4', 'x3 x5',
+#     'x3 x6', 'x3 x7', 'x3 x8', 'x3 x9', 'x3 x10', 'x3 x11', 'x3 x12', 'x4^2',
+#     'x4 x5', 'x4 x6', 'x4 x7', 'x4 x8', 'x4 x9', 'x4 x10', 'x4 x11', 'x4 x12',
+#     'x5^2', 'x5 x6', 'x5 x7', 'x5 x8', 'x5 x9', 'x5 x10', 'x5 x11', 'x5 x12',
+#     'x6^2', 'x6 x7', 'x6 x8', 'x6 x9', 'x6 x10', 'x6 x11', 'x6 x12', 'x7^2',
+#     'x7 x8', 'x7 x9', 'x7 x10', 'x7 x11', 'x7 x12', 'x8^2', 'x8 x9', 'x8 x10',
+#     'x8 x11', 'x8 x12', 'x9^2', 'x9 x10', 'x9 x11', 'x9 x12', 'x10^2', 'x10 x11',
+#     'x10 x12', 'x11^2', 'x11 x12', 'x12^2']
+# 
+# The first new feature is a constant feature, called "1" here. The next 13 features are
+# the original features (called "x0" to "x12"). Then follows the first feature squared
+# ("x0^2") and combinations of the first and the other features.
+# Let’s compare the performance using Ridge on the data with and without interac‐
+# tions:
+# In[30]:
+#     from sklearn.linear_model import Ridge
+#     ridge = Ridge().fit(X_train_scaled, y_train)
+#     print("Score without interactions: {:.3f}".format(
+#         ridge.score(X_test_scaled, y_test)))
+#     ridge = Ridge().fit(X_train_poly, y_train)
+#     print("Score with interactions: {:.3f}".format(
+#         ridge.score(X_test_poly, y_test)))
+# 
+# Out[30]:
+#     Score without interactions: 0.621
+#     Score with interactions: 0.753
+# Clearly, the interactions and polynomial features gave us a good boost in perfor‐
+# mance when using Ridge. When using a more complex model like a random forest,
+# the story is a bit different, though:
+# In[31]:
+#     from sklearn.ensemble import RandomForestRegressor
+#     rf = RandomForestRegressor(n_estimators=100).fit(X_train_scaled, y_train)
+#     print("Score without interactions: {:.3f}".format(
+#         rf.score(X_test_scaled, y_test)))
+#     rf = RandomForestRegressor(n_estimators=100).fit(X_train_poly, y_train)
+#     print("Score with interactions: {:.3f}".format(rf.score(X_test_poly, y_test)))
+# 
+# Out[31]:
+#     Score without interactions: 0.799
+#     Score with interactions: 0.763
+# 
+# 
+# 
+# 
+#                                                           Interactions and Polynomials   |   231
+# 
+# You can see that even without additional features, the random forest beats the
+# performance of Ridge. Adding interactions and polynomials actually decreases per‐
+# formance slightly.
+# 
+# Univariate Nonlinear Transformations
+# We just saw that adding squared or cubed features can help linear models for regres‐
+# sion. There are other transformations that often prove useful for transforming certain
+# features: in particular, applying mathematical functions like log, exp, or sin. While
+# tree-based models only care about the ordering of the features, linear models and
+# neural networks are very tied to the scale and distribution of each feature, and if there
+# is a nonlinear relation between the feature and the target, that becomes hard to model
+# —particularly in regression. The functions log and exp can help by adjusting the rel‐
+# ative scales in the data so that they can be captured better by a linear model or neural
+# network. We saw an application of that in Chapter 2 with the memory price data. The
+# sin and cos functions can come in handy when dealing with data that encodes peri‐
+# odic patterns.
+# Most models work best when each feature (and in regression also the target) is loosely
+# Gaussian distributed—that is, a histogram of each feature should have something
+# resembling the familiar “bell curve” shape. Using transformations like log and exp is
+# a hacky but simple and efficient way to achieve this. A particularly common case
+# when such a transformation can be helpful is when dealing with integer count data.
+# By count data, we mean features like “how often did user A log in?” Counts are never
+# negative, and often follow particular statistical patterns. We are using a synthetic
+# dataset of counts here that has properties similar to those you can find in the wild.
+# The features are all integer-valued, while the response is continuous:
+# In[32]:
+#       rnd = np.random.RandomState(0)
+#       X_org = rnd.normal(size=(1000, 3))
+#       w = rnd.normal(size=3)
+# 
+#       X = rnd.poisson(10 * np.exp(X_org))
+#       y = np.dot(X_org, w)
+# Let’s look at the first 10 entries of the first feature. All are integer values and positive,
+# but apart from that it’s hard to make out a particular pattern.
+# If we count the appearance of each value, the distribution of values becomes clearer:
+# 
+# 
+# 
+# 
+# 232   |   Chapter 4: Representing Data and Engineering Features
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Interactions and Polynomials",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Interactionsand(HierNode):
+    def __init__(self):
+        super().__init__("Interactions and Polynomials")
+        self.add(Content(), "content")
+
+# eof

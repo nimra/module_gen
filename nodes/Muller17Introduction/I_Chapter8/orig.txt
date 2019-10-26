@@ -1,0 +1,34 @@
+                                                                        CHAPTER 8
+                                                            Wrapping Up
+
+
+
+
+You now know how to apply the important machine learning algorithms for super‐
+vised and unsupervised learning, which allow you to solve a wide variety of machine
+learning problems. Before we leave you to explore all the possibilities that machine
+learning offers, we want to give you some final words of advice, point you toward
+some additional resources, and give you suggestions on how you can further improve
+your machine learning and data science skills.
+
+Approaching a Machine Learning Problem
+With all the great methods that we introduced in this book now at your fingertips, it
+may be tempting to jump in and start solving your data-related problem by just run‐
+ning your favorite algorithm. However, this is not usually a good way to begin your
+analysis. The machine learning algorithm is usually only a small part of a larger data
+analysis and decision-making process. To make effective use of machine learning, we
+need to take a step back and consider the problem at large. First, you should think
+about what kind of question you want to answer. Do you want to do exploratory anal‐
+ysis and just see if you find something interesting in the data? Or do you already have
+a particular goal in mind? Often you will start with a goal, like detecting fraudulent
+user transactions, making movie recommendations, or finding unknown planets. If
+you have such a goal, before building a system to achieve it, you should first think
+about how to define and measure success, and what the impact of a successful solu‐
+tion would be to your overall business or research goals. Let’s say your goal is fraud
+detection.
+
+
+
+
+                                                                                    357
+

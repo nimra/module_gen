@@ -1,0 +1,154 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+#                # lines is a list of plt.Line2D instances
+#                plt.legend(lines[:2], ['first', 'second']);
+# 
+# 
+# 
+# 
+# Figure 4-45. Customization of legend elements
+# 
+# I generally find in practice that it is clearer to use the first method, applying labels to
+# the plot elements you’d like to show on the legend (Figure 4-46):
+#       In[8]: plt.plot(x, y[:, 0], label='first')
+#              plt.plot(x, y[:, 1], label='second')
+#              plt.plot(x, y[:, 2:])
+#              plt.legend(framealpha=1, frameon=True);
+# 
+# 
+# 
+# 
+# Figure 4-46. Alternative method of customizing legend elements
+# 
+# Notice that by default, the legend ignores all elements without a label attribute set.
+# 
+# Legend for Size of Points
+# Sometimes the legend defaults are not sufficient for the given visualization. For exam‐
+# ple, perhaps you’re using the size of points to mark certain features of the data, and
+# want to create a legend reflecting this. Here is an example where we’ll use the size of
+# points to indicate populations of California cities. We’d like a legend that specifies the
+# 
+# 
+# 
+# 252   |   Chapter 4: Visualization with Matplotlib
+# 
+# scale of the sizes of the points, and we’ll accomplish this by plotting some labeled data
+# with no entries (Figure 4-47):
+#     In[9]: import pandas as pd
+#            cities = pd.read_csv('data/california_cities.csv')
+# 
+#            # Extract the data we're interested in
+#            lat, lon = cities['latd'], cities['longd']
+#            population, area = cities['population_total'], cities['area_total_km2']
+# 
+#            # Scatter the points, using size and color but no label
+#            plt.scatter(lon, lat, label=None,
+#                        c=np.log10(population), cmap='viridis',
+#                        s=area, linewidth=0, alpha=0.5)
+#            plt.axis(aspect='equal')
+#            plt.xlabel('longitude')
+#            plt.ylabel('latitude')
+#            plt.colorbar(label='log$_{10}$(population)')
+#            plt.clim(3, 7)
+# 
+#            # Here we create a legend:
+#            # we'll plot empty lists with the desired size and label
+#            for area in [100, 300, 500]:
+#                plt.scatter([], [], c='k', alpha=0.3, s=area,
+#                            label=str(area) + ' km$^2$')
+#            plt.legend(scatterpoints=1, frameon=False,
+#                       labelspacing=1, title='City Area')
+# 
+#            plt.title('California Cities: Area and Population');
+# 
+# 
+# 
+# 
+# Figure 4-47. Location, geographic size, and population of California cities
+# 
+# The legend will always reference some object that is on the plot, so if we’d like to dis‐
+# play a particular shape we need to plot it. In this case, the objects we want (gray cir‐
+# cles) are not on the plot, so we fake them by plotting empty lists. Notice too that the
+# legend only lists plot elements that have a label specified.
+# 
+# 
+#                                                                Customizing Plot Legends   |   253
+# 
+# By plotting empty lists, we create labeled plot objects that are picked up by the legend,
+# and now our legend tells us some useful information. This strategy can be useful for
+# creating more sophisticated visualizations.
+# Finally, note that for geographic data like this, it would be clearer if we could show
+# state boundaries or other map-specific elements. For this, an excellent choice of tool
+# is Matplotlib’s Basemap add-on toolkit, which we’ll explore in “Geographic Data with
+# Basemap” on page 298.
+# 
+# Multiple Legends
+# Sometimes when designing a plot you’d like to add multiple legends to the same axes.
+# Unfortunately, Matplotlib does not make this easy: via the standard legend interface,
+# it is only possible to create a single legend for the entire plot. If you try to create a
+# second legend using plt.legend() or ax.legend(), it will simply override the first
+# one. We can work around this by creating a new legend artist from scratch, and then
+# using the lower-level ax.add_artist() method to manually add the second artist to
+# the plot (Figure 4-48):
+#       In[10]: fig, ax = plt.subplots()
+# 
+#                lines = []
+#                styles = ['-', '--', '-.', ':']
+#                x = np.linspace(0, 10, 1000)
+# 
+#                for i in range(4):
+#                    lines += ax.plot(x, np.sin(x - i * np.pi / 2),
+#                                     styles[i], color='black')
+#                ax.axis('equal')
+# 
+#                # specify the lines and labels of the first legend
+#                ax.legend(lines[:2], ['line A', 'line B'],
+#                          loc='upper right', frameon=False)
+# 
+#                # Create the second legend and add the artist manually.
+#                from matplotlib.legend import Legend
+#                leg = Legend(ax, lines[2:], ['line C', 'line D'],
+#                             loc='lower right', frameon=False)
+#                ax.add_artist(leg);
+# 
+# 
+# 
+# 
+# 254   |   Chapter 4: Visualization with Matplotlib
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Legend for Size of Points",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Legendfor(HierNode):
+    def __init__(self):
+        super().__init__("Legend for Size of Points")
+        self.add(Content())
+
+# eof

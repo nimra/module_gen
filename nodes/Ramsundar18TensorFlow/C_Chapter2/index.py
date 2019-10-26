@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_IntroducingTensors.index import IntroducingTensors as A_IntroducingTensors
 from .B_BasicComputations.index import BasicComputations as B_BasicComputations
@@ -62,7 +63,7 @@ class Content(LeafNode):
             # Stage.EXERCISES,
             # Stage.CUSTOMIZED,
         )
-        self.add(MarkdownBlock("# Chapter 2. Introduction to TensorFlow Primitives"))
+        self.add(mbk("# Chapter 2. Introduction to TensorFlow Primitives"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter2(HierNode):

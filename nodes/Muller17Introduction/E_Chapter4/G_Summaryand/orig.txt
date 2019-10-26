@@ -1,0 +1,62 @@
+Figure 4-19. Coefficients of the linear regression model using a product of hour and day
+
+Summary and Outlook
+In this chapter, we discussed how to deal with different data types (in particular, with
+categorical variables). We emphasized the importance of representing data in a way
+that is suitable for the machine learning algorithm—for example, by one-hot-
+encoding categorical variables. We also discussed the importance of engineering new
+features, and the possibility of utilizing expert knowledge in creating derived features
+from your data. In particular, linear models might benefit greatly from generating
+new features via binning and adding polynomials and interactions, while more com‐
+plex, nonlinear models like random forests and SVMs might be able to learn more
+complex tasks without explicitly expanding the feature space. In practice, the features
+that are used (and the match between features and method) is often the most impor‐
+tant piece in making a machine learning approach work well.
+Now that you have a good idea of how to represent your data in an appropriate way
+and which algorithm to use for which task, the next chapter will focus on evaluating
+the performance of machine learning models and selecting the right parameter
+settings.
+
+
+
+
+250   |   Chapter 4: Representing Data and Engineering Features
+                                                                        CHAPTER 5
+              Model Evaluation and Improvement
+
+
+
+
+Having discussed the fundamentals of supervised and unsupervised learning, and
+having explored a variety of machine learning algorithms, we will now dive more
+deeply into evaluating models and selecting parameters.
+We will focus on the supervised methods, regression and classification, as evaluating
+and selecting models in unsupervised learning is often a very qualitative process (as
+we saw in Chapter 3).
+To evaluate our supervised models, so far we have split our dataset into a training set
+and a test set using the train_test_split function, built a model on the training set
+by calling the fit method, and evaluated it on the test set using the score method,
+which for classification computes the fraction of correctly classified samples. Here’s
+an example of that process:
+In[2]:
+    from sklearn.datasets import make_blobs
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import train_test_split
+
+    # create a synthetic dataset
+    X, y = make_blobs(random_state=0)
+    # split data and labels into a training and a test set
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+    # instantiate a model and fit it to the training set
+    logreg = LogisticRegression().fit(X_train, y_train)
+    # evaluate the model on the test set
+    print("Test set score: {:.2f}".format(logreg.score(X_test, y_test)))
+
+Out[2]:
+    Test set score: 0.88
+
+
+
+
+                                                                                    251
+

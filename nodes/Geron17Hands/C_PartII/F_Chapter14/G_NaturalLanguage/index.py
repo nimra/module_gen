@@ -4,13 +4,17 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_WordEmbeddings.index import WordEmbeddings as A_WordEmbeddings
 from .B_AnEncoderDecoder.index import AnEncoderDecoder as B_AnEncoderDecoder
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                  Download from finelybook www.finelybook.com
 #     it outputs a 0, the opposite happens. In other words, whenever a memory must
 #     be stored, the location where it will be stored is erased first. This is actually a fre‐
@@ -57,26 +61,27 @@ from .B_AnEncoderDecoder.index import AnEncoderDecoder as B_AnEncoderDecoder
 # 
 #                                                              Natural Language Processing   |   405
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Natural Language Processing",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Natural Language Processing"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class NaturalLanguage(HierNode):
     def __init__(self):
         super().__init__("Natural Language Processing")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_WordEmbeddings())
         self.add(B_AnEncoderDecoder())
 

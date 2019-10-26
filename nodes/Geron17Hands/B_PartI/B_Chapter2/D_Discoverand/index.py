@@ -4,14 +4,18 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_VisualizingGeographical.index import VisualizingGeographical as A_VisualizingGeographical
 from .B_Lookingfor.index import Lookingfor as B_Lookingfor
 from .C_Experimentingwith.index import Experimentingwith as C_Experimentingwith
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #               Download from finelybook www.finelybook.com
 # Now you should remove the income_cat attribute so the data is back to its original
 # state:
@@ -46,26 +50,27 @@ from .C_Experimentingwith.index import Experimentingwith as C_Experimentingwith
 # 
 #                                                 Discover and Visualize the Data to Gain Insights   |   53
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Discover and Visualize the Data to Gain Insights",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Discover and Visualize the Data to Gain Insights"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Discoverand(HierNode):
     def __init__(self):
         super().__init__("Discover and Visualize the Data to Gain Insights")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_VisualizingGeographical())
         self.add(B_Lookingfor())
         self.add(C_Experimentingwith())

@@ -15,9 +15,9 @@ blocks = [
     mbk("If X is a m × p matrix and Areduced is a p × 2 matrix,"),
     mbk("$$ T_{reduced} = X_{m \\times p} \\times A_{p \\times 2} $$"),
     mbk("Observe that the result Treduced is a m × 2 matrix. Hence, T is a 2-D representation of the original dataset X as shown in Figure 26-2."),
-    ibk("Figure 26-2. Reducing the dimension of the original dataset"),
+    ibk(None, "Figure 26-2. Reducing the dimension of the original dataset"),
     mbk("In plotting the reduced dataset, the principal components are ranked in order of importance with the first principal component more prominent than the second and so on. Figure 26-3 illustrates a plot of the first two principal components."),
-    ibk("Figure 26-3. Visualize the principal components"),
+    ibk(None, "Figure 26-3. Visualize the principal components"),
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

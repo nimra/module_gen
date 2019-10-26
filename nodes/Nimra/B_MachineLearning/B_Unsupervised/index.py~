@@ -1,0 +1,16 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.nodes.Nimra.ChapterNode import ChapterNode
+# from modules.nodes.Nimra.MetaChapterNode import MetaChapterNode
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# class Unsupervised(HierNode):
+# class Unsupervised(MetaChapterNode):
+class Unsupervised(ChapterNode):
+    def __init__(self):
+        super().__init__("Unsupervised")
+        # self.add(Clustering())
+        # self.add(DimensionalityReduction())
+
+# eof

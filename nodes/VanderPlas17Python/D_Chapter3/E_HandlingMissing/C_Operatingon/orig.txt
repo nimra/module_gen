@@ -1,0 +1,223 @@
+Table 3-2. Pandas handling of NAs by type
+TypeclassConversion when storing NAs NA sentinel value
+floating No change                   np.nan
+object       No change                    None or np.nan
+integer      Cast to float64              np.nan
+boolean      Cast to object               None or np.nan
+
+
+Keep in mind that in Pandas, string data is always stored with an object dtype.
+
+Operating on Null Values
+As we have seen, Pandas treats None and NaN as essentially interchangeable for indi‐
+cating missing or null values. To facilitate this convention, there are several useful
+methods for detecting, removing, and replacing null values in Pandas data structures.
+They are:
+isnull()
+      Generate a Boolean mask indicating missing values
+notnull()
+      Opposite of isnull()
+dropna()
+      Return a filtered version of the data
+fillna()
+      Return a copy of the data with missing values filled or imputed
+We will conclude this section with a brief exploration and demonstration of these
+routines.
+
+Detecting null values
+Pandas data structures have two useful methods for detecting null data: isnull() and
+notnull(). Either one will return a Boolean mask over the data. For example:
+      In[13]: data = pd.Series([1, np.nan, 'hello', None])
+      In[14]: data.isnull()
+      Out[14]: 0    False
+               1     True
+               2    False
+               3     True
+               dtype: bool
+As mentioned in “Data Indexing and Selection” on page 107, Boolean masks can be
+used directly as a Series or DataFrame index:
+
+124   | Chapter 3: Data Manipulation with Pandas
+    In[15]: data[data.notnull()]
+    Out[15]: 0        1
+             2    hello
+             dtype: object
+
+The isnull() and notnull() methods produce similar Boolean results for Data
+Frames.
+
+Dropping null values
+In addition to the masking used before, there are the convenience methods, dropna()
+(which removes NA values) and fillna() (which fills in NA values). For a Series,
+the result is straightforward:
+    In[16]: data.dropna()
+    Out[16]: 0        1
+             2    hello
+             dtype: object
+
+For a DataFrame, there are more options. Consider the following DataFrame:
+    In[17]: df = pd.DataFrame([[1,      np.nan, 2],
+                               [2,      3,      5],
+                               [np.nan, 4,      6]])
+            df
+    Out[17]:         0     1   2
+               0   1.0   NaN   2
+               1   2.0   3.0   5
+               2   NaN   4.0   6
+
+We cannot drop single values from a DataFrame; we can only drop full rows or full
+columns. Depending on the application, you might want one or the other, so
+dropna() gives a number of options for a DataFrame.
+By default, dropna() will drop all rows in which any null value is present:
+    In[18]: df.dropna()
+    Out[18]:         0     1   2
+               1   2.0   3.0   5
+
+Alternatively, you can drop NA values along a different axis; axis=1 drops all col‐
+umns containing a null value:
+    In[19]: df.dropna(axis='columns')
+    Out[19]:       2
+               0   2
+               1   5
+               2   6
+
+
+
+
+                                                                Handling Missing Data   |   125
+But this drops some good data as well; you might rather be interested in dropping
+rows or columns with all NA values, or a majority of NA values. This can be specified
+through the how or thresh parameters, which allow fine control of the number of
+nulls to allow through.
+The default is how='any', such that any row or column (depending on the axis key‐
+word) containing a null value will be dropped. You can also specify how='all', which
+will only drop rows/columns that are all null values:
+      In[20]: df[3] = np.nan
+              df
+      Out[20]:          0     1     2   3
+                 0    1.0   NaN     2 NaN
+                 1    2.0   3.0     5 NaN
+                 2    NaN   4.0     6 NaN
+      In[21]: df.dropna(axis='columns', how='all')
+      Out[21]:          0     1 2
+                 0    1.0   NaN 2
+                 1    2.0   3.0 5
+                 2    NaN   4.0 6
+
+For finer-grained control, the thresh parameter lets you specify a minimum number
+of non-null values for the row/column to be kept:
+      In[22]: df.dropna(axis='rows', thresh=3)
+      Out[22]:          0       1   2   3
+                 1    2.0     3.0   5 NaN
+Here the first and last row have been dropped, because they contain only two non-
+null values.
+
+Filling null values
+Sometimes rather than dropping NA values, you’d rather replace them with a valid
+value. This value might be a single number like zero, or it might be some sort of
+imputation or interpolation from the good values. You could do this in-place using
+the isnull() method as a mask, but because it is such a common operation Pandas
+provides the fillna() method, which returns a copy of the array with the null values
+replaced.
+Consider the following Series:
+      In[23]: data = pd.Series([1, np.nan, 2, None, 3], index=list('abcde'))
+              data
+      Out[23]: a        1.0
+               b        NaN
+               c        2.0
+               d        NaN
+
+
+126   |   Chapter 3: Data Manipulation with Pandas
+               e    3.0
+               dtype: float64
+We can fill NA entries with a single value, such as zero:
+    In[24]: data.fillna(0)
+    Out[24]: a    1.0
+             b    0.0
+             c    2.0
+             d    0.0
+             e    3.0
+             dtype: float64
+We can specify a forward-fill to propagate the previous value forward:
+    In[25]: # forward-fill
+            data.fillna(method='ffill')
+    Out[25]: a    1.0
+             b    1.0
+             c    2.0
+             d    2.0
+             e    3.0
+             dtype: float64
+Or we can specify a back-fill to propagate the next values backward:
+    In[26]: # back-fill
+            data.fillna(method='bfill')
+    Out[26]: a    1.0
+             b    2.0
+             c    2.0
+             d    3.0
+             e    3.0
+             dtype: float64
+
+For DataFrames, the options are similar, but we can also specify an axis along which
+the fills take place:
+    In[27]: df
+    Out[27]:         0     1   2   3
+               0   1.0   NaN   2 NaN
+               1   2.0   3.0   5 NaN
+               2   NaN   4.0   6 NaN
+    In[28]: df.fillna(method='ffill', axis=1)
+    Out[28]:         0     1     2       3
+               0   1.0   1.0   2.0     2.0
+               1   2.0   3.0   5.0     5.0
+               2   NaN   4.0   6.0     6.0
+Notice that if a previous value is not available during a forward fill, the NA value
+remains.
+
+
+                                                              Handling Missing Data   |   127
+Hierarchical Indexing
+Up to this point we’ve been focused primarily on one-dimensional and two-
+dimensional data, stored in Pandas Series and DataFrame objects, respectively. Often
+it is useful to go beyond this and store higher-dimensional data—that is, data indexed
+by more than one or two keys. While Pandas does provide Panel and Panel4D objects
+that natively handle three-dimensional and four-dimensional data (see “Panel Data”
+on page 141), a far more common pattern in practice is to make use of hierarchical
+indexing (also known as multi-indexing) to incorporate multiple index levels within a
+single index. In this way, higher-dimensional data can be compactly represented
+within the familiar one-dimensional Series and two-dimensional DataFrame objects.
+In this section, we’ll explore the direct creation of MultiIndex objects; considerations
+around indexing, slicing, and computing statistics across multiply indexed data; and
+useful routines for converting between simple and hierarchically indexed representa‐
+tions of your data.
+We begin with the standard imports:
+      In[1]: import pandas as pd
+             import numpy as np
+
+
+A Multiply Indexed Series
+Let’s start by considering how we might represent two-dimensional data within a
+one-dimensional Series. For concreteness, we will consider a series of data where
+each point has a character and numerical key.
+
+The bad way
+Suppose you would like to track data about states from two different years. Using the
+Pandas tools we’ve already covered, you might be tempted to simply use Python
+tuples as keys:
+      In[2]: index = [('California', 2000), ('California', 2010),
+                      ('New York', 2000), ('New York', 2010),
+                      ('Texas', 2000), ('Texas', 2010)]
+             populations = [33871648, 37253956,
+                            18976457, 19378102,
+                            20851820, 25145561]
+             pop = pd.Series(populations, index=index)
+             pop
+      Out[2]: (California, 2000)              33871648
+              (California, 2010)              37253956
+              (New York, 2000)                18976457
+              (New York, 2010)                19378102
+              (Texas, 2000)                   20851820
+
+
+
+128   |   Chapter 3: Data Manipulation with Pandas
+

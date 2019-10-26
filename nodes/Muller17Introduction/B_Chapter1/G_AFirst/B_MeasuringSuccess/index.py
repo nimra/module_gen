@@ -1,0 +1,168 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# In[19]:
+#     print("Shape of target: {}".format(iris_dataset['target'].shape))
+# 
+# Out[19]:
+#     Shape of target: (150,)
+# The species are encoded as integers from 0 to 2:
+# In[20]:
+#     print("Target:\n{}".format(iris_dataset['target']))
+# 
+# Out[20]:
+#     Target:
+#     [0 0 0 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+#      0 0 0 0   0   0   0   0   0   0   0   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+#      1 1 1 1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   2   2   2   2   2   2   2   2   2   2
+#      2 2 2 2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2
+#      2 2]
+# 
+# The meanings of the numbers are given by the iris['target_names'] array:
+# 0 means setosa, 1 means versicolor, and 2 means virginica.
+# 
+# Measuring Success: Training and Testing Data
+# We want to build a machine learning model from this data that can predict the spe‐
+# cies of iris for a new set of measurements. But before we can apply our model to new
+# measurements, we need to know whether it actually works—that is, whether we
+# should trust its predictions.
+# Unfortunately, we cannot use the data we used to build the model to evaluate it. This
+# is because our model can always simply remember the whole training set, and will
+# therefore always predict the correct label for any point in the training set. This
+# “remembering” does not indicate to us whether our model will generalize well (in
+# other words, whether it will also perform well on new data).
+# To assess the model’s performance, we show it new data (data that it hasn’t seen
+# before) for which we have labels. This is usually done by splitting the labeled data we
+# have collected (here, our 150 flower measurements) into two parts. One part of the
+# data is used to build our machine learning model, and is called the training data or
+# training set. The rest of the data will be used to assess how well the model works; this
+# is called the test data, test set, or hold-out set.
+# scikit-learn contains a function that shuffles the dataset and splits it for you: the
+# train_test_split function. This function extracts 75% of the rows in the data as the
+# training set, together with the corresponding labels for this data. The remaining 25%
+# of the data, together with the remaining labels, is declared as the test set. Deciding
+# 
+# 
+#                                                                                        A First Application: Classifying Iris Species               |   17
+# 
+# how much data you want to put into the training and the test set respectively is some‐
+# what arbitrary, but using a test set containing 25% of the data is a good rule of thumb.
+# In scikit-learn, data is usually denoted with a capital X, while labels are denoted by
+# a lowercase y. This is inspired by the standard formulation f(x)=y in mathematics,
+# where x is the input to a function and y is the output. Following more conventions
+# from mathematics, we use a capital X because the data is a two-dimensional array (a
+# matrix) and a lowercase y because the target is a one-dimensional array (a vector).
+# Let’s call train_test_split on our data and assign the outputs using this nomencla‐
+# ture:
+# In[21]:
+#      from sklearn.model_selection import train_test_split
+#      X_train, X_test, y_train, y_test = train_test_split(
+#          iris_dataset['data'], iris_dataset['target'], random_state=0)
+# 
+# Before making the split, the train_test_split function shuffles the dataset using a
+# pseudorandom number generator. If we just took the last 25% of the data as a test set,
+# all the data points would have the label 2, as the data points are sorted by the label
+# (see the output for iris['target'] shown earlier). Using a test set containing only
+# one of the three classes would not tell us much about how well our model generalizes,
+# so we shuffle our data to make sure the test data contains data from all classes.
+# To make sure that we will get the same output if we run the same function several
+# times, we provide the pseudorandom number generator with a fixed seed using the
+# random_state parameter. This will make the outcome deterministic, so this line will
+# always have the same outcome. We will always fix the random_state in this way when
+# using randomized procedures in this book.
+# The output of the train_test_split function is X_train, X_test, y_train, and
+# y_test, which are all NumPy arrays. X_train contains 75% of the rows of the dataset,
+# and X_test contains the remaining 25%:
+# In[22]:
+#      print("X_train shape: {}".format(X_train.shape))
+#      print("y_train shape: {}".format(y_train.shape))
+# 
+# Out[22]:
+#      X_train shape: (112, 4)
+#      y_train shape: (112,)
+# 
+# 
+# 
+# 
+# 18   | Chapter 1: Introduction
+# 
+# In[23]:
+#     print("X_test shape: {}".format(X_test.shape))
+#     print("y_test shape: {}".format(y_test.shape))
+# 
+# Out[23]:
+#     X_test shape: (38, 4)
+#     y_test shape: (38,)
+# 
+# 
+# First Things First: Look at Your Data
+# Before building a machine learning model it is often a good idea to inspect the data,
+# to see if the task is easily solvable without machine learning, or if the desired infor‐
+# mation might not be contained in the data.
+# Additionally, inspecting your data is a good way to find abnormalities and peculiari‐
+# ties. Maybe some of your irises were measured using inches and not centimeters, for
+# example. In the real world, inconsistencies in the data and unexpected measurements
+# are very common.
+# One of the best ways to inspect data is to visualize it. One way to do this is by using a
+# scatter plot. A scatter plot of the data puts one feature along the x-axis and another
+# along the y-axis, and draws a dot for each data point. Unfortunately, computer
+# screens have only two dimensions, which allows us to plot only two (or maybe three)
+# features at a time. It is difficult to plot datasets with more than three features this way.
+# One way around this problem is to do a pair plot, which looks at all possible pairs of
+# features. If you have a small number of features, such as the four we have here, this is
+# quite reasonable. You should keep in mind, however, that a pair plot does not show
+# the interaction of all of features at once, so some interesting aspects of the data may
+# not be revealed when visualizing it this way.
+# Figure 1-3 is a pair plot of the features in the training set. The data points are colored
+# according to the species the iris belongs to. To create the plot, we first convert the
+# NumPy array into a pandas DataFrame. pandas has a function to create pair plots
+# called scatter_matrix. The diagonal of this matrix is filled with histograms of each
+# feature:
+# In[24]:
+#     # create dataframe from data in X_train
+#     # label the columns using the strings in iris_dataset.feature_names
+#     iris_dataframe = pd.DataFrame(X_train, columns=iris_dataset.feature_names)
+#     # create a scatter matrix from the dataframe, color by y_train
+#     grr = pd.scatter_matrix(iris_dataframe, c=y_train, figsize=(15, 15), marker='o',
+#                             hist_kwds={'bins': 20}, s=60, alpha=.8, cmap=mglearn.cm3)
+# 
+# 
+# 
+# 
+#                                                      A First Application: Classifying Iris Species   |   19
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Measuring Success: Training and Testing Data",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class MeasuringSuccess(HierNode):
+    def __init__(self):
+        super().__init__("Measuring Success: Training and Testing Data")
+        self.add(Content(), "content")
+
+# eof

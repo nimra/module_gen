@@ -1,0 +1,318 @@
+Utilizing Expert Knowledge
+Feature engineering is often an important place to use expert knowledge for a particu‐
+lar application. While the purpose of machine learning in many cases is to avoid hav‐
+ing to create a set of expert-designed rules, that doesn’t mean that prior knowledge of
+the application or domain should be discarded. Often, domain experts can help in
+identifying useful features that are much more informative than the initial represen‐
+tation of the data. Imagine you work for a travel agency and want to predict flight
+prices. Let’s say you have a record of prices together with dates, airlines, start loca‐
+tions, and destinations. A machine learning model might be able to build a decent
+model from that. Some important factors in flight prices, however, cannot be learned.
+For example, flights are usually more expensive during peak vacation months and
+around holidays. While the dates of some holidays (like Christmas) are fixed, and
+their effect can therefore be learned from the date, others might depend on the phases
+of the moon (like Hanukkah and Easter) or be set by authorities (like school holi‐
+days). These events cannot be learned from the data if each flight is only recorded
+using the (Gregorian) date. However, it is easy to add a feature that encodes whether a
+flight was on, preceding, or following a public or school holiday. In this way, prior
+knowledge about the nature of the task can be encoded in the features to aid a
+machine learning algorithm. Adding a feature does not force a machine learning
+algorithm to use it, and even if the holiday information turns out to be noninforma‐
+tive for flight prices, augmenting the data with this information doesn’t hurt.
+We’ll now look at one particular case of using expert knowledge—though in this case
+it might be more rightfully called “common sense.” The task is predicting bicycle rent‐
+als in front of Andreas’s house.
+In New York, Citi Bike operates a network of bicycle rental stations with a subscrip‐
+tion system. The stations are all over the city and provide a convenient way to get
+around. Bike rental data is made public in an anonymized form and has been ana‐
+lyzed in various ways. The task we want to solve is to predict for a given time and day
+how many people will rent a bike in front of Andreas’s house—so he knows if any
+bikes will be left for him.
+We first load the data for August 2015 for this particular station as a pandas Data
+Frame. We resample the data into three-hour intervals to obtain the main trends for
+each day:
+In[49]:
+      citibike = mglearn.datasets.load_citibike()
+
+
+
+
+242   |   Chapter 4: Representing Data and Engineering Features
+In[50]:
+    print("Citi Bike data:\n{}".format(citibike.head()))
+
+Out[50]:
+    Citi Bike data:
+    starttime
+    2015-08-01 00:00:00     3.0
+    2015-08-01 03:00:00     0.0
+    2015-08-01 06:00:00     9.0
+    2015-08-01 09:00:00    41.0
+    2015-08-01 12:00:00    39.0
+    Freq: 3H, Name: one, dtype: float64
+The following example shows a visualization of the rental frequencies for the whole
+month (Figure 4-12):
+In[51]:
+    plt.figure(figsize=(10, 3))
+    xticks = pd.date_range(start=citibike.index.min(), end=citibike.index.max(),
+                           freq='D')
+    plt.xticks(xticks, xticks.strftime("%a %m-%d"), rotation=90, ha="left")
+    plt.plot(citibike, linewidth=1)
+    plt.xlabel("Date")
+    plt.ylabel("Rentals")
+
+
+
+
+Figure 4-12. Number of bike rentals over time for a selected Citi Bike station
+
+Looking at the data, we can clearly distinguish day and night for each 24-hour inter‐
+val. The patterns for weekdays and weekends also seem to be quite different. When
+evaluating a prediction task on a time series like this, we usually want to learn from
+the past and predict for the future. This means when doing a split into a training and a
+test set, we want to use all the data up to a certain date as the training set and all the
+data past that date as the test set. This is how we would usually use time series predic‐
+tion: given everything that we know about rentals in the past, what do we think will
+
+                                                              Utilizing Expert Knowledge   |   243
+happen tomorrow? We will use the first 184 data points, corresponding to the first 23
+days, as our training set, and the remaining 64 data points, corresponding to the
+remaining 8 days, as our test set.
+The only feature that we are using in our prediction task is the date and time when a
+particular number of rentals occurred. So, the input feature is the date and time—say,
+2015-08-01 00:00:00—and the output is the number of rentals in the following
+three hours (three in this case, according to our DataFrame).
+A (surprisingly) common way that dates are stored on computers is using POSIX
+time, which is the number of seconds since January 1970 00:00:00 (aka the beginning
+of Unix time). As a first try, we can use this single integer feature as our data repre‐
+sentation:
+In[52]:
+      #   extract the target values (number of rentals)
+      y   = citibike.values
+      #   convert the time to POSIX time using "%s"
+      X   = citibike.index.strftime("%s").astype("int").reshape(-1, 1)
+We first define a function to split the data into training and test sets, build the model,
+and visualize the result:
+In[54]:
+      # use the first 184 data points for training, and the rest for testing
+      n_train = 184
+
+      # function to evaluate and plot a regressor on a given feature set
+      def eval_on_features(features, target, regressor):
+          # split the given features into a training and a test set
+          X_train, X_test = features[:n_train], features[n_train:]
+          # also split the target array
+          y_train, y_test = target[:n_train], target[n_train:]
+          regressor.fit(X_train, y_train)
+          print("Test-set R^2: {:.2f}".format(regressor.score(X_test, y_test)))
+          y_pred = regressor.predict(X_test)
+          y_pred_train = regressor.predict(X_train)
+          plt.figure(figsize=(10, 3))
+
+           plt.xticks(range(0, len(X), 8), xticks.strftime("%a %m-%d"), rotation=90,
+                      ha="left")
+
+           plt.plot(range(n_train), y_train, label="train")
+           plt.plot(range(n_train, len(y_test) + n_train), y_test, '-', label="test")
+           plt.plot(range(n_train), y_pred_train, '--', label="prediction train")
+
+           plt.plot(range(n_train, len(y_test) + n_train), y_pred, '--',
+                    label="prediction test")
+           plt.legend(loc=(1.01, 0))
+           plt.xlabel("Date")
+           plt.ylabel("Rentals")
+
+
+
+244   | Chapter 4: Representing Data and Engineering Features
+We saw earlier that random forests require very little preprocessing of the data, which
+makes this seem like a good model to start with. We use the POSIX time feature X and
+pass a random forest regressor to our eval_on_features function. Figure 4-13 shows
+the result:
+In[55]:
+    from sklearn.ensemble import RandomForestRegressor
+    regressor = RandomForestRegressor(n_estimators=100, random_state=0)
+    plt.figure()
+    eval_on_features(X, y, regressor)
+
+Out[55]:
+    Test-set R^2: -0.04
+
+
+
+
+Figure 4-13. Predictions made by a random forest using only the POSIX time
+
+The predictions on the training set are quite good, as is usual for random forests.
+However, for the test set, a constant line is predicted. The R2 is –0.03, which means
+that we learned nothing. What happened?
+The problem lies in the combination of our feature and the random forest. The value
+of the POSIX time feature for the test set is outside of the range of the feature values
+in the training set: the points in the test set have timestamps that are later than all the
+points in the training set. Trees, and therefore random forests, cannot extrapolate to
+feature ranges outside the training set. The result is that the model simply predicts the
+target value of the closest point in the training set—which is the last time it observed
+any data.
+Clearly we can do better than this. This is where our “expert knowledge” comes in.
+From looking at the rental figures in the training data, two factors seem to be very
+important: the time of day and the day of the week. So, let’s add these two features.
+We can’t really learn anything from the POSIX time, so we drop that feature. First,
+let’s use only the hour of the day. As Figure 4-14 shows, now the predictions have the
+same pattern for each day of the week:
+
+
+                                                              Utilizing Expert Knowledge   |   245
+In[56]:
+      X_hour = citibike.index.hour.reshape(-1, 1)
+      eval_on_features(X_hour, y, regressor)
+
+Out[56]:
+      Test-set R^2: 0.60
+
+
+
+
+Figure 4-14. Predictions made by a random forest using only the hour of the day
+
+The R2 is already much better, but the predictions clearly miss the weekly pattern.
+Now let’s also add the day of the week (see Figure 4-15):
+In[57]:
+      X_hour_week = np.hstack([citibike.index.dayofweek.reshape(-1, 1),
+                               citibike.index.hour.reshape(-1, 1)])
+      eval_on_features(X_hour_week, y, regressor)
+
+Out[57]:
+      Test-set R^2: 0.84
+
+
+
+
+Figure 4-15. Predictions with a random forest using day of week and hour of day
+features
+
+
+
+246   |   Chapter 4: Representing Data and Engineering Features
+Now we have a model that captures the periodic behavior by considering the day of
+week and time of day. It has an R2 of 0.84, and shows pretty good predictive perfor‐
+mance. What this model likely is learning is the mean number of rentals for each
+combination of weekday and time of day from the first 23 days of August. This
+actually does not require a complex model like a random forest, so let’s try with a
+simpler model, LinearRegression (see Figure 4-16):
+In[58]:
+    from sklearn.linear_model import LinearRegression
+    eval_on_features(X_hour_week, y, LinearRegression())
+
+Out[58]:
+    Test-set R^2: 0.13
+
+
+
+
+Figure 4-16. Predictions made by linear regression using day of week and hour of day as
+features
+
+LinearRegression works much worse, and the periodic pattern looks odd. The rea‐
+son for this is that we encoded day of week and time of day using integers, which are
+interpreted as categorical variables. Therefore, the linear model can only learn a lin‐
+ear function of the time of day—and it learned that later in the day, there are more
+rentals. However, the patterns are much more complex than that. We can capture this
+by interpreting the integers as categorical variables, by transforming them using One
+HotEncoder (see Figure 4-17):
+In[59]:
+    enc = OneHotEncoder()
+    X_hour_week_onehot = enc.fit_transform(X_hour_week).toarray()
+
+
+
+
+                                                            Utilizing Expert Knowledge   |   247
+In[60]:
+      eval_on_features(X_hour_week_onehot, y, Ridge())
+
+Out[60]:
+      Test-set R^2: 0.62
+
+
+
+
+Figure 4-17. Predictions made by linear regression using a one-hot encoding of hour of
+day and day of week
+
+This gives us a much better match than the continuous feature encoding. Now the
+linear model learns one coefficient for each day of the week, and one coefficient for
+each time of the day. That means that the “time of day” pattern is shared over all days
+of the week, though.
+Using interaction features, we can allow the model to learn one coefficient for each
+combination of day and time of day (see Figure 4-18):
+In[61]:
+      poly_transformer = PolynomialFeatures(degree=2, interaction_only=True,
+                                            include_bias=False)
+      X_hour_week_onehot_poly = poly_transformer.fit_transform(X_hour_week_onehot)
+      lr = Ridge()
+      eval_on_features(X_hour_week_onehot_poly, y, lr)
+
+Out[61]:
+      Test-set R^2: 0.85
+
+
+
+
+248   |   Chapter 4: Representing Data and Engineering Features
+Figure 4-18. Predictions made by linear regression using a product of the day of week
+and hour of day features
+
+This transformation finally yields a model that performs similarly well to the random
+forest. A big benefit of this model is that it is very clear what is learned: one coeffi‐
+cient for each day and time. We can simply plot the coefficients learned by the model,
+something that would not be possible for the random forest.
+First, we create feature names for the hour and day features:
+In[62]:
+    hour = ["%02d:00" % i for i in range(0, 24, 3)]
+    day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    features = day + hour
+
+Then we name all the interaction features extracted by PolynomialFeatures, using
+the get_feature_names method, and keep only the features with nonzero coeffi‐
+cients:
+In[63]:
+    features_poly = poly_transformer.get_feature_names(features)
+    features_nonzero = np.array(features_poly)[lr.coef_ != 0]
+    coef_nonzero = lr.coef_[lr.coef_ != 0]
+Now we can visualize the coefficients learned by the linear model, as seen in
+Figure 4-19:
+In[64]:
+    plt.figure(figsize=(15, 2))
+    plt.plot(coef_nonzero, 'o')
+    plt.xticks(np.arange(len(coef_nonzero)), features_nonzero, rotation=90)
+    plt.xlabel("Feature magnitude")
+    plt.ylabel("Feature")
+
+
+
+
+                                                             Utilizing Expert Knowledge   |   249
+Figure 4-19. Coefficients of the linear regression model using a product of hour and day
+
+Summary and Outlook
+In this chapter, we discussed how to deal with different data types (in particular, with
+categorical variables). We emphasized the importance of representing data in a way
+that is suitable for the machine learning algorithm—for example, by one-hot-
+encoding categorical variables. We also discussed the importance of engineering new
+features, and the possibility of utilizing expert knowledge in creating derived features
+from your data. In particular, linear models might benefit greatly from generating
+new features via binning and adding polynomials and interactions, while more com‐
+plex, nonlinear models like random forests and SVMs might be able to learn more
+complex tasks without explicitly expanding the feature space. In practice, the features
+that are used (and the match between features and method) is often the most impor‐
+tant piece in making a machine learning approach work well.
+Now that you have a good idea of how to represent your data in an appropriate way
+and which algorithm to use for which task, the next chapter will focus on evaluating
+the performance of machine learning models and selecting the right parameter
+settings.
+
+
+
+
+250   |   Chapter 4: Representing Data and Engineering Features
+

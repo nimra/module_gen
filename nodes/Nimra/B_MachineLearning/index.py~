@@ -1,0 +1,14 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# class MachineLearning(HierNode):
+class MachineLearning(ModuleNode):
+    def __init__(self):
+        super().__init__("Machine Learning")
+        self.add(Supervised())
+        self.add(Unsupervised())
+        self.add(Reinforcement())
+
+# eof

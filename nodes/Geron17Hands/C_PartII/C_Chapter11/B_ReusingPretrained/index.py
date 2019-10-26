@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Reusinga.index import Reusinga as A_Reusinga
 from .B_ReusingModels.index import ReusingModels as B_ReusingModels
@@ -17,6 +20,7 @@ from .G_UnsupervisedPretraining.index import UnsupervisedPretraining as G_Unsupe
 from .H_Pretrainingon.index import Pretrainingon as H_Pretrainingon
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                        Download from finelybook www.finelybook.com
 #       with tf.Session() as sess:
 #           sess.run(init)
@@ -102,26 +106,27 @@ from .H_Pretrainingon.index import Pretrainingon as H_Pretrainingon
 # 
 #                                                                 Reusing Pretrained Layers   |   287
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Reusing Pretrained Layers",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Reusing Pretrained Layers"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class ReusingPretrained(HierNode):
     def __init__(self):
         super().__init__("Reusing Pretrained Layers")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Reusinga())
         self.add(B_ReusingModels())
         self.add(C_Freezingthe())

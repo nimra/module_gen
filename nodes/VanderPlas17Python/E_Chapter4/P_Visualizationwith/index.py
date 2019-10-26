@@ -1,0 +1,107 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+from .A_SeabornVersus.index import SeabornVersus as A_SeabornVersus
+from .B_ExploringSeaborn.index import ExploringSeaborn as B_ExploringSeaborn
+from .C_ExampleExploring.index import ExampleExploring as C_ExampleExploring
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# Figure 4-110. The temperature anomaly in January 2014
+# 
+# Visualization with Seaborn
+# Matplotlib has proven to be an incredibly useful and popular visualization tool, but
+# even avid users will admit it often leaves much to be desired. There are several valid
+# complaints about Matplotlib that often come up:
+# 
+#   • Prior to version 2.0, Matplotlib’s defaults are not exactly the best choices. It was
+#     based off of MATLAB circa 1999, and this often shows.
+#   • Matplotlib’s API is relatively low level. Doing sophisticated statistical visualiza‐
+#     tion is possible, but often requires a lot of boilerplate code.
+#   • Matplotlib predated Pandas by more than a decade, and thus is not designed for
+#     use with Pandas DataFrames. In order to visualize data from a Pandas DataFrame,
+#     you must extract each Series and often concatenate them together into the right
+#     format. It would be nicer to have a plotting library that can intelligently use the
+#     DataFrame labels in a plot.
+# 
+# An answer to these problems is Seaborn. Seaborn provides an API on top of Matplot‐
+# lib that offers sane choices for plot style and color defaults, defines simple high-level
+# functions for common statistical plot types, and integrates with the functionality pro‐
+# vided by Pandas DataFrames.
+# 
+# 
+#                                                              Visualization with Seaborn   |   311
+# 
+# To be fair, the Matplotlib team is addressing this: it has recently added the plt.style
+# tools (discussed in “Customizing Matplotlib: Configurations and Stylesheets” on page
+# 282), and is starting to handle Pandas data more seamlessly. The 2.0 release of the
+# library will include a new default stylesheet that will improve on the current status
+# quo. But for all the reasons just discussed, Seaborn remains an extremely useful
+# add-on.
+# 
+# Seaborn Versus Matplotlib
+# Here is an example of a simple random-walk plot in Matplotlib, using its classic plot
+# formatting and colors. We start with the typical imports:
+#       In[1]: import matplotlib.pyplot as plt
+#              plt.style.use('classic')
+#              %matplotlib inline
+#              import numpy as np
+#              import pandas as pd
+# Now we create some random walk data:
+#       In[2]: # Create some data
+#              rng = np.random.RandomState(0)
+#              x = np.linspace(0, 10, 500)
+#              y = np.cumsum(rng.randn(500, 6), 0)
+# And do a simple plot (Figure 4-111):
+#       In[3]: # Plot the data with Matplotlib defaults
+#              plt.plot(x, y)
+#              plt.legend('ABCDEF', ncol=2, loc='upper left');
+# 
+# 
+# 
+# 
+# Figure 4-111. Data in Matplotlib’s default style
+# 
+# Although the result contains all the information we’d like it to convey, it does so in a
+# way that is not all that aesthetically pleasing, and even looks a bit old-fashioned in the
+# context of 21st-century data visualization.
+# 
+# 
+# 
+# 312   | Chapter 4: Visualization with Matplotlib
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Visualization with Seaborn",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Visualizationwith(HierNode):
+    def __init__(self):
+        super().__init__("Visualization with Seaborn")
+        self.add(Content())
+        self.add(A_SeabornVersus())
+        self.add(B_ExploringSeaborn())
+        self.add(C_ExampleExploring())
+
+# eof

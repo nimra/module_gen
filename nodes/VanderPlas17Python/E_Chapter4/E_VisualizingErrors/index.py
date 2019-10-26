@@ -1,0 +1,114 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+from .A_BasicErrorbars.index import BasicErrorbars as A_BasicErrorbars
+from .B_ContinuousErrors.index import ContinuousErrors as B_ContinuousErrors
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# Figure 4-26. Using point properties to encode features of the Iris data
+# 
+# We can see that this scatter plot has given us the ability to simultaneously explore
+# four different dimensions of the data: the (x, y) location of each point corresponds to
+# the sepal length and width, the size of the point is related to the petal width, and the
+# color is related to the particular species of flower. Multicolor and multifeature scatter
+# plots like this can be useful for both exploration and presentation of data.
+# 
+# plot Versus scatter: A Note on Efficiency
+# Aside from the different features available in plt.plot and plt.scatter, why might
+# you choose to use one over the other? While it doesn’t matter as much for small
+# amounts of data, as datasets get larger than a few thousand points, plt.plot can be
+# noticeably more efficient than plt.scatter. The reason is that plt.scatter has the
+# capability to render a different size and/or color for each point, so the renderer must
+# do the extra work of constructing each point individually. In plt.plot, on the other
+# hand, the points are always essentially clones of each other, so the work of determin‐
+# ing the appearance of the points is done only once for the entire set of data. For large
+# datasets, the difference between these two can lead to vastly different performance,
+# and for this reason, plt.plot should be preferred over plt.scatter for large
+# datasets.
+# 
+# Visualizing Errors
+# For any scientific measurement, accurate accounting for errors is nearly as important,
+# if not more important, than accurate reporting of the number itself. For example,
+# imagine that I am using some astrophysical observations to estimate the Hubble Con‐
+# stant, the local measurement of the expansion rate of the universe. I know that the
+# current literature suggests a value of around 71 (km/s)/Mpc, and I measure a value of
+# 74 (km/s)/Mpc with my method. Are the values consistent? The only correct answer,
+# given this information, is this: there is no way to know.
+# 
+# 
+#                                                                           Visualizing Errors   |   237
+# 
+# Suppose I augment this information with reported uncertainties: the current litera‐
+# ture suggests a value of around 71 ± 2.5 (km/s)/Mpc, and my method has measured a
+# value of 74 ± 5 (km/s)/Mpc. Now are the values consistent? That is a question that
+# can be quantitatively answered.
+# In visualization of data and results, showing these errors effectively can make a plot
+# convey much more complete information.
+# 
+# Basic Errorbars
+# A basic errorbar can be created with a single Matplotlib function call (Figure 4-27):
+#       In[1]: %matplotlib inline
+#              import matplotlib.pyplot as plt
+#              plt.style.use('seaborn-whitegrid')
+#              import numpy as np
+#       In[2]: x = np.linspace(0, 10, 50)
+#              dy = 0.8
+#              y = np.sin(x) + dy * np.random.randn(50)
+# 
+#                plt.errorbar(x, y, yerr=dy, fmt='.k');
+# 
+# 
+# 
+# 
+# Figure 4-27. An errorbar example
+# 
+# Here the fmt is a format code controlling the appearance of lines and points, and has
+# the same syntax as the shorthand used in plt.plot, outlined in “Simple Line Plots”
+# on page 224 and “Simple Scatter Plots” on page 233.
+# In addition to these basic options, the errorbar function has many options to fine-
+# tune the outputs. Using these additional options you can easily customize the aesthet‐
+# ics of your errorbar plot. I often find it helpful, especially in crowded plots, to make
+# the errorbars lighter than the points themselves (Figure 4-28):
+#       In[3]: plt.errorbar(x, y, yerr=dy, fmt='o', color='black',
+#                           ecolor='lightgray', elinewidth=3, capsize=0);
+# 
+# 
+# 
+# 
+# 238   |   Chapter 4: Visualization with Matplotlib
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Visualizing Errors",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class VisualizingErrors(HierNode):
+    def __init__(self):
+        super().__init__("Visualizing Errors")
+        self.add(Content())
+        self.add(A_BasicErrorbars())
+        self.add(B_ContinuousErrors())
+
+# eof

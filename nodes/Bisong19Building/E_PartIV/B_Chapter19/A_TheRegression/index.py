@@ -16,7 +16,7 @@ blocks = [
     mbk("In linear regression, the prevailing assumption is that the target variable (i.e., the unit that we want to predict) can be modeled as a linear combination of the features."),
     mbk("A linear combination is simply the addition of a certain number of vectors that are scaled (or adjusted) by some arbitrary constant. A vector is a mathematical construct for representing a set of numbers."),
     mbk("For example, let us assume a randomly generated dataset consisting of two features and a target variable. The dataset has 50 observations (see Figure 19-1)."),
-    ibk("Figure 19-1. Sample dataset"),
+    ibk(None, "Figure 19-1. Sample dataset"),
     mbk("The vectors of this dataset are"),
     mbk("$$x_1 = \\begin{bmatrix} 40 & 31 & 81 & 57 & ... & 66 \\end{bmatrix}$$"),
     mbk("$$x_2 = \\begin{bmatrix} 73 & 59 & 18 & 69 & ... & 20 \\end{bmatrix}$$"),

@@ -1,0 +1,37 @@
+                                                                          Preface
+
+
+
+
+Machine learning is an integral part of many commercial applications and research
+projects today, in areas ranging from medical diagnosis and treatment to finding your
+friends on social networks. Many people think that machine learning can only be
+applied by large companies with extensive research teams. In this book, we want to
+show you how easy it can be to build machine learning solutions yourself, and how to
+best go about it. With the knowledge in this book, you can build your own system for
+finding out how people feel on Twitter, or making predictions about global warming.
+The applications of machine learning are endless and, with the amount of data avail‐
+able today, mostly limited by your imagination.
+
+Who Should Read This Book
+This book is for current and aspiring machine learning practitioners looking to
+implement solutions to real-world machine learning problems. This is an introduc‐
+tory book requiring no previous knowledge of machine learning or artificial intelli‐
+gence (AI). We focus on using Python and the scikit-learn library, and work
+through all the steps to create a successful machine learning application. The meth‐
+ods we introduce will be helpful for scientists and researchers, as well as data scien‐
+tists working on commercial applications. You will get the most out of the book if you
+are somewhat familiar with Python and the NumPy and matplotlib libraries.
+We made a conscious effort not to focus too much on the math, but rather on the
+practical aspects of using machine learning algorithms. As mathematics (probability
+theory, in particular) is the foundation upon which machine learning is built, we
+won’t go into the analysis of the algorithms in great detail. If you are interested in the
+mathematics of machine learning algorithms, we recommend the book The Elements
+of Statistical Learning (Springer) by Trevor Hastie, Robert Tibshirani, and Jerome
+Friedman, which is available for free at the authors’ website. We will also not describe
+how to write machine learning algorithms from scratch, and will instead focus on
+
+
+
+                                                                                        vii
+

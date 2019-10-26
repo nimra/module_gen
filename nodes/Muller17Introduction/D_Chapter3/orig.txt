@@ -1,0 +1,35 @@
+                                                                          CHAPTER 3
+   Unsupervised Learning and Preprocessing
+
+
+
+
+The second family of machine learning algorithms that we will discuss is unsuper‐
+vised learning algorithms. Unsupervised learning subsumes all kinds of machine
+learning where there is no known output, no teacher to instruct the learning algo‐
+rithm. In unsupervised learning, the learning algorithm is just shown the input data
+and asked to extract knowledge from this data.
+
+Types of Unsupervised Learning
+We will look into two kinds of unsupervised learning in this chapter: transformations
+of the dataset and clustering.
+Unsupervised transformations of a dataset are algorithms that create a new representa‐
+tion of the data which might be easier for humans or other machine learning algo‐
+rithms to understand compared to the original representation of the data. A common
+application of unsupervised transformations is dimensionality reduction, which takes
+a high-dimensional representation of the data, consisting of many features, and finds
+a new way to represent this data that summarizes the essential characteristics with
+fewer features. A common application for dimensionality reduction is reduction to
+two dimensions for visualization purposes.
+Another application for unsupervised transformations is finding the parts or compo‐
+nents that “make up” the data. An example of this is topic extraction on collections of
+text documents. Here, the task is to find the unknown topics that are talked about in
+each document, and to learn what topics appear in each document. This can be useful
+for tracking the discussion of themes like elections, gun control, or pop stars on social
+media.
+Clustering algorithms, on the other hand, partition data into distinct groups of similar
+items. Consider the example of uploading photos to a social media site. To allow you
+
+
+                                                                                      131
+

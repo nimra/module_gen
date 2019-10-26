@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_TensorFlowGraphs.index import TensorFlowGraphs as A_TensorFlowGraphs
 from .B_TensorFlowSessions.index import TensorFlowSessions as B_TensorFlowSessions
@@ -165,7 +166,7 @@ class Content(LeafNode):
             # Stage.EXERCISES,
             # Stage.CUSTOMIZED,
         )
-        self.add(MarkdownBlock("# Imperative and Declarative Programming"))
+        self.add(mbk("# Imperative and Declarative Programming"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Imperativeand(HierNode):

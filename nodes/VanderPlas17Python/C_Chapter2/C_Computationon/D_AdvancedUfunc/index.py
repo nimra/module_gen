@@ -1,0 +1,172 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# Specialized ufuncs
+# NumPy has many more ufuncs available, including hyperbolic trig functions, bitwise
+# arithmetic, comparison operators, conversions from radians to degrees, rounding and
+# remainders, and much more. A look through the NumPy documentation reveals a lot
+# of interesting functionality.
+# Another excellent source for more specialized and obscure ufuncs is the submodule
+# scipy.special. If you want to compute some obscure mathematical function on
+# your data, chances are it is implemented in scipy.special. There are far too many
+# functions to list them all, but the following snippet shows a couple that might come
+# up in a statistics context:
+#      In[21]: from scipy import special
+#      In[22]: # Gamma functions (generalized factorials) and related functions
+#              x = [1, 5, 10]
+#              print("gamma(x)     =", special.gamma(x))
+#              print("ln|gamma(x)| =", special.gammaln(x))
+#              print("beta(x, 2)   =", special.beta(x, 2))
+#      gamma(x)     = [ 1.00000000e+00   2.40000000e+01  3.62880000e+05]
+#      ln|gamma(x)| = [ 0.           3.17805383 12.80182748]
+#      beta(x, 2)   = [ 0.5        0.03333333 0.00909091]
+#      In[23]: # Error function (integral of Gaussian)
+#              # its complement, and its inverse
+#              x = np.array([0, 0.3, 0.7, 1.0])
+#              print("erf(x) =", special.erf(x))
+#              print("erfc(x) =", special.erfc(x))
+#              print("erfinv(x) =", special.erfinv(x))
+#      erf(x) = [ 0.                    0.32862676 0.67780119 0.84270079]
+#      erfc(x) = [ 1.                   0.67137324 0.32219881 0.15729921]
+#      erfinv(x) = [ 0.                   0.27246271 0.73286908        inf]
+# 
+# There are many, many more ufuncs available in both NumPy and scipy.special.
+# Because the documentation of these packages is available online, a web search along
+# the lines of “gamma function python” will generally find the relevant information.
+# 
+# Advanced Ufunc Features
+# Many NumPy users make use of ufuncs without ever learning their full set of features.
+# We’ll outline a few specialized features of ufuncs here.
+# 
+# Specifying output
+# For large calculations, it is sometimes useful to be able to specify the array where the
+# result of the calculation will be stored. Rather than creating a temporary array, you
+# can use this to write computation results directly to the memory location where you’d
+# 
+# 
+# 
+# 56   |   Chapter 2: Introduction to NumPy
+# 
+# like them to be. For all ufuncs, you can do this using the out argument of the
+# function:
+#     In[24]: x = np.arange(5)
+#             y = np.empty(5)
+#             np.multiply(x, 10, out=y)
+#             print(y)
+#     [   0.   10.   20.   30.   40.]
+# This can even be used with array views. For example, we can write the results of a
+# computation to every other element of a specified array:
+#     In[25]: y = np.zeros(10)
+#             np.power(2, x, out=y[::2])
+#             print(y)
+#     [   1.   0.    2.    0.     4.     0.   8.     0.   16.    0.]
+# 
+# If we had instead written y[::2] = 2 ** x, this would have resulted in the creation
+# of a temporary array to hold the results of 2 ** x, followed by a second operation
+# copying those values into the y array. This doesn’t make much of a difference for such
+# a small computation, but for very large arrays the memory savings from careful use of
+# the out argument can be significant.
+# 
+# Aggregates
+# For binary ufuncs, there are some interesting aggregates that can be computed
+# directly from the object. For example, if we’d like to reduce an array with a particular
+# operation, we can use the reduce method of any ufunc. A reduce repeatedly applies a
+# given operation to the elements of an array until only a single result remains.
+# For example, calling reduce on the add ufunc returns the sum of all elements in the
+# array:
+#     In[26]: x = np.arange(1, 6)
+#             np.add.reduce(x)
+#     Out[26]: 15
+# 
+# Similarly, calling reduce on the multiply ufunc results in the product of all array
+# elements:
+#     In[27]: np.multiply.reduce(x)
+#     Out[27]: 120
+# If we’d like to store all the intermediate results of the computation, we can instead use
+# accumulate:
+#     In[28]: np.add.accumulate(x)
+#     Out[28]: array([ 1,        3,    6, 10, 15])
+# 
+# 
+# 
+#                                                    Computation on NumPy Arrays: Universal Functions   |   57
+# 
+#      In[29]: np.multiply.accumulate(x)
+#      Out[29]: array([         1,     2,     6,    24, 120])
+# Note that for these particular cases, there are dedicated NumPy functions to compute
+# the results (np.sum, np.prod, np.cumsum, np.cumprod), which we’ll explore in “Aggre‐
+# gations: Min, Max, and Everything in Between” on page 58.
+# 
+# Outer products
+# Finally, any ufunc can compute the output of all pairs of two different inputs using
+# the outer method. This allows you, in one line, to do things like create a multiplica‐
+# tion table:
+#      In[30]: x = np.arange(1, 6)
+#              np.multiply.outer(x, x)
+#      Out[30]: array([[        1,    2,     3,    4,    5],
+#                      [        2,    4,     6,    8,   10],
+#                      [        3,    6,     9,   12,   15],
+#                      [        4,    8,    12,   16,   20],
+#                      [        5,   10,    15,   20,   25]])
+# 
+# The ufunc.at and ufunc.reduceat methods, which we’ll explore in “Fancy Index‐
+# ing” on page 78, are very helpful as well.
+# Another extremely useful feature of ufuncs is the ability to operate between arrays of
+# different sizes and shapes, a set of operations known as broadcasting. This subject is
+# important enough that we will devote a whole section to it (see “Computation on
+# Arrays: Broadcasting” on page 63).
+# 
+# Ufuncs: Learning More
+# More information on universal functions (including the full list of available func‐
+# tions) can be found on the NumPy and SciPy documentation websites.
+# Recall that you can also access information directly from within IPython by import‐
+# ing the packages and using IPython’s tab-completion and help (?) functionality, as
+# described in “Help and Documentation in IPython” on page 3.
+# 
+# Aggregations: Min, Max, and Everything in Between
+# Often when you are faced with a large amount of data, a first step is to compute sum‐
+# mary statistics for the data in question. Perhaps the most common summary statistics
+# are the mean and standard deviation, which allow you to summarize the “typical” val‐
+# ues in a dataset, but other aggregates are useful as well (the sum, product, median,
+# minimum and maximum, quantiles, etc.).
+# 
+# 
+# 
+# 
+# 58   |   Chapter 2: Introduction to NumPy
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Advanced Ufunc Features",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class AdvancedUfunc(HierNode):
+    def __init__(self):
+        super().__init__("Advanced Ufunc Features")
+        self.add(Content())
+
+# eof

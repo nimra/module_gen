@@ -1,0 +1,33 @@
+The result of t-SNE is quite remarkable. All the classes are quite clearly separated.
+The ones and nines are somewhat split up, but most of the classes form a single dense
+group. Keep in mind that this method has no knowledge of the class labels: it is com‐
+pletely unsupervised. Still, it can find a representation of the data in two dimensions
+that clearly separates the classes, based solely on how close points are in the original
+space.
+The t-SNE algorithm has some tuning parameters, though it often works well with
+the default settings. You can try playing with perplexity and early_exaggeration,
+but the effects are usually minor.
+
+Clustering
+As we described earlier, clustering is the task of partitioning the dataset into groups,
+called clusters. The goal is to split up the data in such a way that points within a single
+cluster are very similar and points in different clusters are different. Similarly to clas‐
+sification algorithms, clustering algorithms assign (or predict) a number to each data
+point, indicating which cluster a particular point belongs to.
+
+k-Means Clustering
+k-means clustering is one of the simplest and most commonly used clustering algo‐
+rithms. It tries to find cluster centers that are representative of certain regions of the
+data. The algorithm alternates between two steps: assigning each data point to the
+closest cluster center, and then setting each cluster center as the mean of the data
+points that are assigned to it. The algorithm is finished when the assignment of
+instances to clusters no longer changes. The following example (Figure 3-23) illus‐
+trates the algorithm on a synthetic dataset:
+In[47]:
+      mglearn.plots.plot_kmeans_algorithm()
+
+
+
+
+168   | Chapter 3: Unsupervised Learning and Preprocessing
+

@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_WhatIs.index import WhatIs as A_WhatIs
 from .B_Neuronsin.index import Neuronsin as B_Neuronsin
@@ -61,7 +62,7 @@ class Content(LeafNode):
             # Stage.EXERCISES,
             # Stage.CUSTOMIZED,
         )
-        self.add(MarkdownBlock("# Chapter 4. Fully Connected Deep Networks"))
+        self.add(mbk("# Chapter 4. Fully Connected Deep Networks"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter4(HierNode):

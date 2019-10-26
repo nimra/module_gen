@@ -4,14 +4,18 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_ConstructionPhase.index import ConstructionPhase as A_ConstructionPhase
 from .B_ExecutionPhase.index import ExecutionPhase as B_ExecutionPhase
 from .C_Usingthe.index import Usingthe as C_Usingthe
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                  Download from finelybook www.finelybook.com
 # Training a DNN Using Plain TensorFlow
 # If you want more control over the architecture of the network, you may prefer to use
@@ -59,26 +63,27 @@ from .C_Usingthe.index import Usingthe as C_Usingthe
 # 
 #                                                      Training a DNN Using Plain TensorFlow   |   265
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Training a DNN Using Plain TensorFlow",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Training a DNN Using Plain TensorFlow"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Traininga(HierNode):
     def __init__(self):
         super().__init__("Training a DNN Using Plain TensorFlow")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_ConstructionPhase())
         self.add(B_ExecutionPhase())
         self.add(C_Usingthe())

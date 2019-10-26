@@ -1,0 +1,110 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from pathlib import Path
+import imp
+
+from lm.common.util.PrintAligner import PrintAligner as pa
+from lm.common.util.Utils import Utils
+
+from modules.node.HierNode import HierNode
+# from modules.node.LeafNode import LeafNode
+# from modules.node.Stage import Stage
+# from modules.node.block.CodeBlock import CodeBlock as cbk
+# from modules.node.block.ImageBlock import ImageBlock as ibk
+# from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class BasicTools(HierNode):
+    def __init__(self):
+        super().__init__("Basic Tools")
+        self.add(Math())
+        self.add(Python())
+        self.add(ScikitLearn())
+        self.add(NumPy())
+        self.add(Matplotlib())
+        self.add(Colab())
+        self.add(Github())
+
+class Concepts(HierNode):
+    def __init__(self):
+        super().__init__("Concepts")
+        self.add(LoadStoreFile())
+        self.add(CleanPrepare())
+        self.add(Wrangle())
+        self.add(AggregateGroup())
+        self.add(ModelingLibs())
+        self.add(DatabasesSQL())
+        self.add(GetData())
+        self.add(MapReduce())
+
+class DataScience(HierNode):
+    def __init__(self):
+        super().__init__("Data Science")
+        self.add(BasicTools())
+        self.add(Concepts())
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Supervised(HierNode):
+    def __init__(self):
+        super().__init__("Supervised")
+        self.add(Regression())
+        self.add(Classification())
+        self.add(Ensemble())
+
+class Unsupervised(HierNode):
+    def __init__(self):
+        super().__init__("Unsupervised")
+        self.add(Clustering())
+        self.add(DimensionalityReduction())
+
+class Reinforcement(HierNode):
+    def __init__(self):
+        super().__init__("Reinforcement")
+        self.add(QLearning())
+        self.add(PolicyLearning())
+        self.add(AsynchronousTraining())
+        self.add(A3CAlgorithm())
+
+class MachineLearning(HierNode):
+    def __init__(self):
+        super().__init__("Machine Learning")
+        self.add(Supervised())
+        self.add(Unsupervised())
+        self.add(Reinforcement())
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class NimraNode(HierNode):
+    def __init__(self):
+
+        super().__init__("Curriculum")
+
+        self.add(DataScience())
+        self.add(MachineLearning())
+        self.add(DeepLearning())
+        self.add(Performance())
+
+        # # ~~~~~~~~ module filenames ~~~~~~~~
+        # module_filenames = list(Path("modules/nodes/web").glob("**/index.py"))
+        # module_filenames.remove(Path("modules/nodes/web/index.py"))
+        # # pa().addx("index_filenames", index_filenames).ppprint()
+
+        # # ~~~~~~~~ add nodes ~~~~~~~~
+        # for module_filename in module_filenames:
+
+        #     with open(module_filename, "rb") as f:
+        #         module = imp.load_module(
+        #             "leaf_node",
+        #             f,
+        #             "",
+        #             ('.py', 'rb', imp.PY_SOURCE),
+        #         )
+        #         node = module.Index()
+
+        #     # pa().add("node", node.Index()).ppprint()
+        #     self.add(node)
+
+        # # # ~~~~~~~~ debug ~~~~~~~~
+        # # pa().addx("*web", self).ppprint()
+
+# eof

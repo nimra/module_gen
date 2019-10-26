@@ -1,0 +1,29 @@
+Figure 2-3. Histogram of presidential heights
+
+These aggregates are some of the fundamental pieces of exploratory data analysis that
+we’ll explore in more depth in later chapters of the book.
+
+Computation on Arrays: Broadcasting
+We saw in the previous section how NumPy’s universal functions can be used to vec‐
+torize operations and thereby remove slow Python loops. Another means of vectoriz‐
+ing operations is to use NumPy’s broadcasting functionality. Broadcasting is simply a
+set of rules for applying binary ufuncs (addition, subtraction, multiplication, etc.) on
+arrays of different sizes.
+
+Introducing Broadcasting
+Recall that for arrays of the same size, binary operations are performed on an
+element-by-element basis:
+    In[1]: import numpy as np
+    In[2]: a = np.array([0, 1, 2])
+           b = np.array([5, 5, 5])
+           a + b
+    Out[2]: array([5, 6, 7])
+Broadcasting allows these types of binary operations to be performed on arrays of dif‐
+ferent sizes—for example, we can just as easily add a scalar (think of it as a zero-
+dimensional array) to an array:
+
+
+
+
+                                                      Computation on Arrays: Broadcasting   |   63
+

@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_DecisionFunction.index import DecisionFunction as A_DecisionFunction
 from .B_TrainingObjective.index import TrainingObjective as B_TrainingObjective
@@ -15,6 +18,7 @@ from .E_KernelizedSVM.index import KernelizedSVM as E_KernelizedSVM
 from .F_OnlineSVMs.index import OnlineSVMs as F_OnlineSVMs
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                    Download from finelybook www.finelybook.com
 # The following code produces the model represented on the left of Figure 5-11 using
 # Scikit-Learn’s SVR class (which supports the kernel trick). The SVR class is the regres‐
@@ -63,26 +67,27 @@ from .F_OnlineSVMs.index import OnlineSVMs as F_OnlineSVMs
 # 
 # 156    |   Chapter 5: Support Vector Machines
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Under the Hood",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Under the Hood"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Underthe(HierNode):
     def __init__(self):
         super().__init__("Under the Hood")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_DecisionFunction())
         self.add(B_TrainingObjective())
         self.add(C_QuadraticProgramming())

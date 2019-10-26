@@ -1,0 +1,2792 @@
+
+<!-- saved from url=(0072)https://pythonprogramming.net/neural-networks-machine-learning-tutorial/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!--
+		palette:
+		dark blue: #003F72
+		yellow: #FFD166
+		salmon: #EF476F
+		offwhite: #e7d7d7
+		Light Blue: #118AB2
+		Light green: #7DDF64
+		-->
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Python Programming Tutorials</title>
+
+		<meta name="description" content="Python Programming tutorials from beginner to advanced on a massive variety of topics. All video and text tutorials are free.">
+
+		<link rel="shortcut icon" href="https://pythonprogramming.net/static/favicon.ico">
+		<link rel="stylesheet" href="./orig_files/materialize.min.css">
+        <link href="./orig_files/icon" rel="stylesheet">
+        <meta name="google-site-verification" content="3fLok05gk5gGtWd_VSXbSSSH27F2kr1QqcxYz9vYq2k">
+        <link rel="stylesheet" type="text/css" href="./orig_files/bootstrap.css">
+
+
+		  <!-- Compiled and minified CSS -->
+
+		<!-- Compiled and minified JavaScript -->
+
+		<script async="" src="./orig_files/analytics.js"></script><script src="./orig_files/jquery-2.1.4.min.js"></script>
+		<script src="./orig_files/materialize.min.js"></script>
+
+
+
+        <style>
+		@media (min-width:992px) {
+		#aside {
+			width:250px;
+		}
+		pre { tab-size: 4;}
+		.btn {background-color:#FFD166;
+			  color:#000;
+		      height:auto;
+			  font-color:#000;
+			  }
+		.btn:hover {background-color:#FFD166;
+					}
+
+
+		</style>
+
+		<!-- Google Tracking -->
+		<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+              ga('config', 'UA-51891827-1', {'anonymize_ip': true});﻿
+			  ga('create', 'UA-51891827-1', 'auto');
+			  ga('send', 'pageview');
+
+		</script>
+
+            
+                
+                    <script async="" src="./orig_files/f.txt"></script>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({
+                              google_ad_client: "ca-pub-1579050400541873",
+                              enable_page_level_ads: true
+                         });
+                    </script>
+                
+            
+
+
+
+
+	<link rel="stylesheet" type="text/css" href="./orig_files/prettify.css"></head>
+
+	<body class="body">
+
+		<div class="navbar-fixed">
+			<nav style="background-color:#003F72">
+				<div class="nav-wrapper container">
+					<a href="https://pythonprogramming.net/" class="brand-logo"><img class="img-responsive" style="width:50px; height;50px; margin-top:5px" src="./orig_files/mainlogowhitethick.jpg"></a>
+					<a href="https://pythonprogramming.net/neural-networks-machine-learning-tutorial/#" data-activates="navsidebar" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+					<ul class="right hide-on-med-and-down">
+					<li><i class="material-icons">search</i></li>
+					<li>
+						<form method="get" id="searchform" style="height:50px; padding-top:10px" action="https://pythonprogramming.net/search/?l=hi">
+							<input name="q" id="search" type="search" placeholder="search" style="font-size:16px">
+						</form>
+					</li>
+						
+			<li><a href="https://pythonprogramming.net/">Home</a></li>
+			<li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="sudo apt-get upgrade" href="https://pythonprogramming.net/+=1/" data-tooltip-id="12565505-714f-b26b-f088-aa017f371c22">+=1</a></li>
+			<!--<li><a href="/store/python-hoodie/">Store</a></li>-->
+			<li><a href="https://pythonprogramming.net/support/">Support the Content</a></li>
+			
+			<li><a href="https://goo.gl/7zgAVQ" target="blank"><!--<i class="material-icons">question_answer</i>-->Community</a></li>
+				<li><a href="https://pythonprogramming.net/login/">Log in</a></li>
+                <li><a href="https://pythonprogramming.net/register/">Sign up</a></li>
+			
+
+					</ul>
+					<ul class="side-nav" id="navsidebar" style="left: -250px;">
+					<li>
+						<form method="get" id="searchform" style="height:50px; padding-top:10px" action="https://pythonprogramming.net/search/?l=hi">
+							<input name="q" id="search" type="search" placeholder="search" style="font-size:16px">
+						</form>
+					</li>
+						
+			<li><a href="https://pythonprogramming.net/">Home</a></li>
+			<li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="sudo apt-get upgrade" href="https://pythonprogramming.net/+=1/" data-tooltip-id="ca3cc52d-b307-fbff-4b53-94349598e821">+=1</a></li>
+			<!--<li><a href="/store/python-hoodie/">Store</a></li>-->
+			<li><a href="https://pythonprogramming.net/support/">Support the Content</a></li>
+			
+			<li><a href="https://goo.gl/7zgAVQ" target="blank"><!--<i class="material-icons">question_answer</i>-->Community</a></li>
+				<li><a href="https://pythonprogramming.net/login/">Log in</a></li>
+                <li><a href="https://pythonprogramming.net/register/">Sign up</a></li>
+			
+
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+
+
+		<!-- main content -->
+		<div class="container" style="max-width:1500px; min-height:100%">
+			<!--Notification:-->
+            <!--<p style="font-size:80%">TensorFlow.js Livestream:  <a href="https://www.youtube.com/watch?v=NjSlj95lliM" target="blank"><strong>Deep Learning in the browser</strong></a></p>-->
+            <!--End Notification:-->
+
+					
+					
+					  
+					
+
+					
+<!--       <pre class="prettyprint">              width="750" height="423"    -->
+
+    <div class="row">
+    <div class="col l8 m12 s12">
+
+
+      <div class="container-fluid" align="left">
+		
+
+
+
+
+
+
+
+		<br>
+		<h2>Introduction to Neural Networks</h2>
+		<br>
+	  
+		<div class="video-container"><iframe width="560" height="315" src="./orig_files/oYbVFhK_olY.html" frameborder="0" allowfullscreen=""></iframe></div><br>
+
+		
+
+
+
+
+
+
+		<br>
+	  
+<p>Welcome to a new section in our Machine Learning Tutorial series: Deep Learning with Neural Networks and TensorFlow. The artificial neural network is a biologically-inspired methodology to conduct machine learning, intended to mimic your brain (a biological neural network).</p>
+
+<p>The Artificial Neural Network, which I will now just refer to as a neural network, is not a new concept. The idea has been around since the 1940's, and has had a few ups and downs, most notably when compared against the Support Vector Machine (SVM). For example, the Neural Network was popularized up until the mid 90s when it was shown that the SVM, using a new-to-the-public (the technique itself was thought up long before it was actually put to use) technique, the "Kernel Trick," was capable of working with non-linearly separable datasets. With this, the Support Vector Machine catapulted to the front again, leaving neural nets behind and mostly nothing interesting until about 2011, where Deep Neural Networks began to take hold and outperform the Support Vector Machine, using new techniques, huge dataset availability, and much more powerful computers.</p>
+
+<p>This is why, if you plan to stick around in the field of machine learning, understanding the other models is fairly important, since tides can, and do, change. Now that we have machines capable of actually executing neural networks to scale, we have a somewhat interesting situation, since people have been sitting around pondering the subject for decades already. It's not a rare case that someone tries to publish a paper of research with neural networks, and some paper decades on that exact topic has already been written.</p>
+
+<p>The model of the neural network is actually a very simple concept. The idea is to mimic a neuron, and, with a basic neuron, you have the dendrites, a nucleus, axon, and terminal axon.</p>
+
+<img class="responsive-img" src="./orig_files/basic-neuron-example.png" alt="Deep Learning with Python, Neural Networks, and TensorFlow">
+
+<p>Next, for a network, you need two neurons. Neurons transmit information via synapse between the dendrites of one and the terminal axon of another. </p>
+
+<img class="responsive-img" src="./orig_files/two-neurons-with-synapse.png" alt="Deep Learning with Python, Neural Networks, and TensorFlow">
+
+<p>Okay, so that's how neurons are proposed to work. Now computer scientists come in think we got this. So we propose a model of an artificial neuron that looks like:</p>
+
+<img class="responsive-img" src="./orig_files/artificial-neuron-model-step-function.png" alt="Deep Learning with Python, Neural Networks, and TensorFlow">
+
+<p>Done. So that's your neuron up close. Generally though, we simplify things further, and if you google images a neural network, you'll probably see something more like:</p>
+
+<img class="responsive-img" src="./orig_files/artificial-neural-network-model.png" alt="Deep Learning with Python, Neural Networks, and TensorFlow">
+
+<p>The circles are neurons or nodes, with their functions on the data and the lines connecting them are the weights/informating being passed along. Each column is a layer. The first layer of your data is the input layer. Then, unless your output is your input, you have at least one hidden layer. If you just have one hidden layer, then you have a regular artificial neural network. If you elect to have many hidden layers, boom, you have yourself a deep neural network. Wasn't that easy? ...Well at least in concept.</p>
+
+<p>So with this model, you have input data, you weight it, and pass it through the function in the neuron. The function in the neuron is a threshold function, which is also called your activation function. Basically, is the sum of all of the values after the weighting above or below a certain value. If it is, then you fire a signal (1) out, or nothing is fired out (0). That is then weighted and passed along to the next neuron, and the same sort of function is run.</p>
+
+<p>That's your neural network model. So what are the weights and thresholds? Well, to start, we get rid of the threshold "variable" thanks to Paul Werbos in 1974. Rather than dealing with the threshold as another variable to optimize, we take the threshold value, give it a weight of -1, and boom, the threshold is always at 0. No matter what the threshold is, it negatates itself, and always is a zero. We still have an ugly step function as the decision about whether or not the neuron fires a 0 or 1 can be messy. We decide to make that a sigmoid (s-shape) function of some kind instead.</p>
+
+<img class="responsive-img" src="./orig_files/artificial-neuron-model-sigmoid-activiation-function.png" alt="Deep Learning with Python, Neural Networks, and TensorFlow">
+
+<p>As for the weights, they're just random to start, and they are unique per input into the node/neuron. Then, in a typical "feed forward" (your most basic type) neural network, you have your information pass straight through the network you created, and you compare the output to what you hoped the output would have been using your sample data. From here, you need to adjust the weights to help you get your output to match your desired output. The act of sending data straight through a neural network is called a <code>feed forward</code> neural network. Our data goes from input, to the layers, in order, then to output. When we go backwards and begin adjusting weights to minimize loss/cost, this is called <code>back propagation</code>.</p>
+
+<p>This is a new optimization problem. Recall the <a href="https://pythonprogramming.net/svm-optimization-python-machine-learning-tutorial/" target="blank"><strong>Support Vector Machine optimization problem</strong></a> from a few tutorials ago, and how we explained that it was a nice convex optimization problem. Even though we had two variables, our optimization problem was a perfect bowl shape, so we both could know when we had reached optimization and also take huge steps along the way to make processing cheap. With the neural network, this isn't the case. In real practice, you're looking at something more like hundreds of thousands of variables, or millions, or more. The original solution here was to use stochastic gradient descent, but there are other options such as AdaGrad and the Adam Optimizer. Regardless, this is a massive computational task.</p>
+
+<p>Now you can see why the Neural Network was mostly left on the shelf for over half a century. It was only very recently that we even had the power and architecture in our machines to even consider doing these operations, and the properly sized datasets to match. The good thing is though, we've had a half of a century to philosophize on the topic, and a lot of the work on the fundamentals has already been done, it just needs to be implemented and tested.</p>
+
+<p>Interestingly enough, just as we don't fully understand the human brain, we don't really fully understand why or how neural networks actually achieve such interesting results. Through a lot of digging and analysis, we can demystify some things, but, due to many variables and dimensions, we actually don't really know much about what's going on, we just see good results and are happy. Even our first example will be extremely rudimentary in principle, yet will have staggeringly good results for what it is doing.</p>
+
+<p>For simple classification tasks, the neural network is relatively close in performance to other simple algorithms, even something like K Nearest Neighbors. The real beauty in neural networks comes with much larger data, and much more complex questions, both of which put other machine learning models to shame. For example, current neural networks can do things like answer:</p>
+
+<p>Jack is 12 years old. Jane is 10. Kate is older than Jane, and younger than Jack. How old is Kate?</p>
+
+<p>The answer is 11, and a deep learning model can figure that out, without you somehow teaching it about how to actually do the logic part. You just simply pass the raw data in, which would be either words, or even characters, and the neural network does the rest. Oh, and you need millions of samples! By millions, I mean about half a billion for ideal accuracy.</p>
+
+<p>Where do you get millions of samples of things? You have some options. One option with image data is <a href="https://image-net.org/" target="blank"><strong>ImageNet</strong></a>, which works much like wordnet in the organization of things. If you aren't familiar, you can poke around to get an idea. Everything there is free. Next, for text data, the very first stop should be something like the <a href="https://dumps.wikimedia.org/backup-index.html" target="blank"><strong>wikipedia data dumps</strong></a>. This is useful for more deep-learning tasks, not so much for labeled data. Next, for even more text data, why not go for a large portion of websites already crawled and parsed for you? If that sounds fun, check out <a href="https://commoncrawl.org/" target="blank"><strong>CommonCrawl</strong></a>. This dataset is no joke, however, it's petabytes worth of data. For speech, I do not know many off the top of my head. One option is something like <a href="https://tatoeba.org/eng/" target="blank"><strong>Tatoeba</strong></a>, which has both labeled and some translations even, which is pretty useful. When all else fails, you can try to create your own datasets, but the size requirements are fairly challenging. Also, you can always ask around. In my experience, there's a dataset for anything, you just have to find it. Many times, Google will fail you when trying to find the datasets, but people can help you. At the moment, you could try asking around in the <a href="https://www.reddit.com/r/machinelearning/" target="blank"><strong>Machine Learning subreddit</strong></a>, as probably 90% of what goes on there is neural network related, and everyone there needs to know about massive datasets.</p>
+
+<p>It should be relatively obvious now why companies like Facebook and Google are so big into AI and neural networks especially. They actually possess the required volumes of data to do some very interesting things.</p>
+
+<p>Now that we have that out of the way, how are we going to be working on neural networks? We're going to be using TensorFlow, which is a relatively new package from Google, still in beta at the time of my writing this. There are other packages used for machine learning like Theano or Torch, but they all work in similar ways. We really just need to pick one, and I choose Tensorflow. In the next tutorial, we're going to install TensorFlow. If you already have TensorFlow installed, you can skip the next tutorial (either use the side navigation bar, or just click to the next, scroll to the bottom, and click next again).</p>
+
+
+
+
+
+        
+
+		
+
+		
+			
+				<br><a href="https://pythonprogramming.net/+=1/" target="blank">There exists <strong>1 quiz/question(s)</strong> for this tutorial. <button class="btn btn-success">Sign up to <strong>+=1</strong></button> for access to these, video downloads, and no ads.</a><br><br>
+			
+		
+		
+
+
+                
+		<p>The next tutorial: <a title="Installing TensorFlow for Deep Learning - OPTIONAL" href="https://pythonprogramming.net/installing-tensorflow-machine-learning-tutorial/?completed=/neural-networks-machine-learning-tutorial/"><button class="btn" style="background-color:#FFD166; color:#000000">Installing TensorFlow for Deep Learning - OPTIONAL</button></a></p>
+
+		
+
+
+
+
+
+<br>
+	  </div>
+
+</div>
+<div class="col l4 m12 s12">
+<br><br><br>
+
+  <ul class="collapsible popout" data-collapsible="accordion" style="font-size:85%; padding-left:50px">
+
+
+  		<!-- C.A. : -->
+
+	    
+	    	
+        <a href="https://bit.ly/2FROSRQ?a=17&amp;t=/neural-networks-machine-learning-tutorial/" id="process_click">
+          <div class="card hoverable" style="max-width:400px; align-items: left;">
+            <div class="card-image">
+              <img id="process_click" class="responsive-img" src="./orig_files/paperspace-1.png">
+            </div>
+          </div>
+        </a>
+        
+		
+
+  		<!--HONLY -->
+
+  	    
+
+
+
+	
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+
+				     
+						 
+							
+								<li>
+								  <div class="collapsible-header">Practical Machine Learning Tutorial with Python Introduction</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/machine-learning-tutorial-python-introduction/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - Intro and Data</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/regression-introduction-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - Features and Labels</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/features-labels-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - Training and Testing</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/training-testing-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - Forecasting and Predicting</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/forecasting-predicting-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Pickling and Scaling</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/pickling-scaling-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - Theory and how it works</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/simple-linear-regression-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - How to program the Best Fit Slope</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/how-to-program-best-fit-line-slope-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - How to program the Best Fit Line</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/how-to-program-best-fit-line-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - R Squared and Coefficient of Determination Theory</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/r-squared-coefficient-of-determination-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Regression - How to Program R Squared</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/how-to-program-r-squared-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Creating Sample Data for Testing</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/sample-data-testing-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Classification Intro with K Nearest Neighbors</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/k-nearest-neighbors-intro-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Applying K Nearest Neighbors to Data</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/k-nearest-neighbors-application-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Euclidean Distance theory</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/euclidean-distance-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Creating a K Nearest Neighbors Classifer from scratch</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/programming-k-nearest-neighbors-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Creating a K Nearest Neighbors Classifer from scratch part 2</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/coding-k-nearest-neighbors-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Testing our K Nearest Neighbors classifier</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/testing-our-k-nearest-neighbors-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Final thoughts on K Nearest Neighbors</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/final-thoughts-knn-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Machine introduction</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/support-vector-machine-intro-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Vector Basics</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/vector-basics-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Assertions</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/support-vector-assertions-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Machine Fundamentals</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/support-vector-machine-fundamentals-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Constraint Optimization with Support Vector Machine</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/svm-constraint-optimization-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Beginning SVM from Scratch in Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/svm-in-python-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Machine Optimization in Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/svm-optimization-python-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Machine Optimization in Python part 2</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/svm-optimization-python-2-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Visualization and Predicting with our Custom SVM</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/predictions-svm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Kernels Introduction</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/kernels-with-svm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Why Kernels</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/why-use-kernel-with-svm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Soft Margin Support Vector Machine</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/soft-margin-svm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Kernels, Soft Margin SVM, and Quadratic Programming with Python and CVXOPT</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/soft-margin-kernel-cvxopt-svm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Support Vector Machine Parameters</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/support-vector-machine-parameters-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Machine Learning - Clustering Introduction</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/machine-learning-clustering-introduction-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Handling Non-Numerical Data for Machine Learning</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/working-with-non-numerical-data-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">K-Means with Titanic Dataset</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/k-means-titanic-dataset-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">K-Means from Scratch in Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/k-means-from-scratch-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Finishing K-Means from Scratch in Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/k-means-from-scratch-2-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Hierarchical Clustering with Mean Shift Introduction</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/hierarchical-clustering-mean-shift-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Mean Shift applied to Titanic Dataset</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/mean-shift-titanic-dataset-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Mean Shift algorithm from scratch in Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/mean-shift-from-scratch-python-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Dynamically Weighted Bandwidth for Mean Shift</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/weighted-bandwidth-mean-shift-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+							    <li class="active">
+								  <div class="collapsible-header active" style="padding:2px">Introduction to Neural Networks</div>
+
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Installing TensorFlow for Deep Learning - OPTIONAL</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/installing-tensorflow-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Introduction to Deep Learning with TensorFlow</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/tensorflow-introduction-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Deep Learning with TensorFlow - Creating the Neural Network Model</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/tensorflow-deep-neural-network-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Deep Learning with TensorFlow - How the Network will run</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/tensorflow-neural-network-session-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Deep Learning with our own Data</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/using-our-own-data-tensorflow-deep-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Simple Preprocessing Language Data for Deep Learning</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/preprocessing-tensorflow-deep-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Training and Testing on our Data for Deep Learning</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/train-test-tensorflow-deep-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">10K samples compared to 1.6 million samples with Deep Learning</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/data-size-example-tensorflow-deep-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">How to use CUDA and the GPU Version of Tensorflow for Deep Learning</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/how-to-cuda-gpu-tensorflow-deep-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Recurrent Neural Network (RNN) basics and the Long Short Term Memory (LSTM) cell</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/recurrent-neural-network-rnn-lstm-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">RNN w/ LSTM cell example in TensorFlow and Python</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/rnn-tensorflow-python-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Convolutional Neural Network (CNN) basics</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/convolutional-neural-network-cnn-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Convolutional Neural Network CNN with TensorFlow tutorial</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/cnn-tensorflow-convolutional-nerual-network-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">TFLearn - High Level Abstraction Layer for TensorFlow Tutorial</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/tflearn-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Using a 3D Convolutional Neural Network on medical imaging data (CT Scans) for Kaggle</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/3d-convolutional-neural-network-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Classifying Cats vs Dogs with a Convolutional Neural Network on Kaggle</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/convolutional-neural-network-kats-vs-dogs-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+							
+								<li>
+								  <div class="collapsible-header">Using a neural network to solve OpenAI's CartPole balancing environment</div>
+								  <div class="collapsible-body" style="">
+										<p><a href="https://pythonprogramming.net/openai-cartpole-neural-network-example-machine-learning-tutorial/"><button class="btn waves-effect waves-light right-align" style="background-color:#FFD166; color:#000000">Go
+									  </button></a></p>
+								  </div>
+								</li>
+							
+						 
+					  
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+				  
+			   
+			
+
+  </ul>
+
+
+</div>
+</div>
+
+
+
+			</div>
+		
+
+		<!--login modal-->
+		
+
+		<!--Register modal-->
+		
+
+
+		<script>
+			$(document).ready(function(){
+				$(".button-collapse").sideNav();
+				$('.modal-trigger').leanModal();
+				$('.collapsible').collapsible({
+				  accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+				});
+				$('#aside').pushpin({ top:110, bottom:500 });
+		  });
+		</script>
+		<script>
+		  $(document).ready(function(){
+			$('.collapsible').collapsible({
+			  accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+			});
+			$('select').material_select();
+		  });
+	  </script>
+	  <script>
+		function goBack() {
+			window.history.back()
+		}
+	</script>
+		
+
+	
+
+<footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">You've reached the end!</h5>
+
+                <p class="grey-text text-lighten-4">Contact: Harrison@pythonprogramming.net.</p>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://pythonprogramming.net/support-donate/">Support this Website!</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://pythonprogramming.net/consulting/">Consulting and Contracting</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.facebook.com/pythonprogramming.net/">Facebook</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://twitter.com/sentdex">Twitter</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://instagram.com/sentdex">Instagram</a></li>
+                </ul>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h6 class="white-text">Legal stuff:</h6>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://pythonprogramming.net/about/tos/">Terms and Conditions</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://pythonprogramming.net/about/privacy-policy/">Privacy Policy</a></li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <a href="https://xkcd.com/353/" target="blank"><p class="grey-text right" style="padding-right:10px">Programming is a superpower.</p></a>
+          <div class="footer-copyright">
+            <div class="container">
+            © OVER 9000! PythonProgramming.net
+
+            </div>
+
+          </div>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="material-tooltip" id="12565505-714f-b26b-f088-aa017f371c22" style="opacity: 0; margin-top: 0px; margin-left: 0px; display: none;"><span>sudo apt-get upgrade</span><div class="backdrop" style="top: 0px; left: 0px; opacity: 0; transform: scale(1); display: none;"></div></div><div class="material-tooltip" id="ca3cc52d-b307-fbff-4b53-94349598e821"><span>sudo apt-get upgrade</span><div class="backdrop" style="top: 0px; left: 0px;"></div></div><div class="hiddendiv common"></div><div class="drag-target" style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div></body></html>

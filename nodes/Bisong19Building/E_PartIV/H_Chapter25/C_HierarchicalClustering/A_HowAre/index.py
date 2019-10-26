@@ -15,14 +15,14 @@ blocks = [
     mbk("The Euclidean distance is used to compute the nearness between n data points. After each pair of data points has combined to form a cluster, the new cluster pairs are then pulled into groups going up the tree, with the tree branch or dendrogram height reflecting the dissimilarity between the clusters."),
     mbk("Dissimilarity computes how different each cluster of data is from one another. The notion of dissimilarity between two clusters or groups is described in terms of linkage. Four types of linkage exist for grouping clusters in hierarchical clustering. They are centroid, complete, average, and single."),
     mbk("The centroid linkage computes the dissimilarity between two clusters using the geometric centroid of the clusters. The complete linkage uses the two farthest data points between the two clusters to compute the dissimilarity (see Figure 25-6)."),
-    ibk("Figure 25-6. Complete linkage"),
+    ibk(None, "Figure 25-6. Complete linkage"),
     mbk("The average linkage finds the means of points within the pair of clusters and uses that new artificial point to calculate the dissimilarity (see Figure 25-7)."),
-    ibk("Figure 25-7. Average linkage"),
+    ibk(None, "Figure 25-7. Average linkage"),
     mbk("The single linkage uses the closest data point between the cluster pairs to compute the dissimilarity measure (see Figure 25-8)."),
-    ibk("Figure 25-8. Single linkage"),
+    ibk(None, "Figure 25-8. Single linkage"),
     mbk("Empirically, the complete and average linkages are preferred in practice because they yield more balanced dendrograms. Other dissimilarity measures exist for evaluating the nearness or homogeneity of data points. One of such is the Manhattan distance, another distance-based measure, or the correlation-based distance which groups pairs of data samples with highly correlated features. A correlated-based dissimilarity measure may be more useful in datasets where proximity in multi-dimensional spaces is not as useful a metric for homogeneity as compared to the correlation of their features in the space. A choice of calculating dissimilarity has a significant impact on the ensuring dendrogram."),
     mbk("After running the algorithm, the dendrogram is cut at a particular height, and the number of distinct lines or branches after the cut is circumscribed as the number of clusters in the dataset. An illustration of cutting the dendrogram is shown in Figure 25-9."),
-    ibk("Figure 25-9. Dendrogram cut"),
+    ibk(None, "Figure 25-9. Dendrogram cut"),
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

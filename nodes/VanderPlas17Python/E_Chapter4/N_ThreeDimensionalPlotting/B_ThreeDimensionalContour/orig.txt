@@ -1,0 +1,62 @@
+Figure 4-93. Points and lines in three dimensions
+
+Notice that by default, the scatter points have their transparency adjusted to give a
+sense of depth on the page. While the three-dimensional effect is sometimes difficult
+to see within a static image, an interactive view can lead to some nice intuition about
+the layout of the points.
+
+Three-Dimensional Contour Plots
+Analogous to the contour plots we explored in “Density and Contour Plots” on page
+241, mplot3d contains tools to create three-dimensional relief plots using the same
+inputs. Like two-dimensional ax.contour plots, ax.contour3D requires all the input
+data to be in the form of two-dimensional regular grids, with the Z data evaluated at
+each point. Here we’ll show a three-dimensional contour diagram of a three-
+dimensional sinusoidal function (Figure 4-94):
+      In[5]: def f(x, y):
+                 return np.sin(np.sqrt(x ** 2 + y ** 2))
+
+               x = np.linspace(-6, 6, 30)
+               y = np.linspace(-6, 6, 30)
+
+               X, Y = np.meshgrid(x, y)
+               Z = f(X, Y)
+      In[6]: fig = plt.figure()
+             ax = plt.axes(projection='3d')
+             ax.contour3D(X, Y, Z, 50, cmap='binary')
+             ax.set_xlabel('x')
+             ax.set_ylabel('y')
+             ax.set_zlabel('z');
+
+
+
+
+292   |   Chapter 4: Visualization with Matplotlib
+Figure 4-94. A three-dimensional contour plot
+
+Sometimes the default viewing angle is not optimal, in which case we can use the
+view_init method to set the elevation and azimuthal angles. In this example (the
+result of which is shown in Figure 4-95), we’ll use an elevation of 60 degrees (that is,
+60 degrees above the x-y plane) and an azimuth of 35 degrees (that is, rotated 35
+degrees counter-clockwise about the z-axis):
+    In[7]: ax.view_init(60, 35)
+           fig
+
+
+
+
+Figure 4-95. Adjusting the view angle for a three-dimensional plot
+
+Again, note that we can accomplish this type of rotation interactively by clicking and
+dragging when using one of Matplotlib’s interactive backends.
+
+Wireframes and Surface Plots
+Two other types of three-dimensional plots that work on gridded data are wireframes
+and surface plots. These take a grid of values and project it onto the specified three-
+dimensional surface, and can make the resulting three-dimensional forms quite easy
+to visualize. Here’s an example using a wireframe (Figure 4-96):
+
+
+
+
+                                                   Three-Dimensional Plotting in Matplotlib   |   293
+

@@ -1,0 +1,74 @@
+Figure 5-103. Locally linear embedding can recover the underlying data from a nonli‐
+nearly embedded input
+
+The result remains somewhat distorted compared to our original manifold, but cap‐
+tures the essential relationships in the data!
+
+Some Thoughts on Manifold Methods
+Though this story and motivation is compelling, in practice manifold learning tech‐
+niques tend to be finicky enough that they are rarely used for anything more than
+simple qualitative visualization of high-dimensional data.
+The following are some of the particular challenges of manifold learning, which all
+contrast poorly with PCA:
+
+  • In manifold learning, there is no good framework for handling missing data. In
+    contrast, there are straightforward iterative approaches for missing data in PCA.
+  • In manifold learning, the presence of noise in the data can “short-circuit” the
+    manifold and drastically change the embedding. In contrast, PCA naturally filters
+    noise from the most important components.
+  • The manifold embedding result is generally highly dependent on the number of
+    neighbors chosen, and there is generally no solid quantitative way to choose an
+    optimal number of neighbors. In contrast, PCA does not involve such a choice.
+  • In manifold learning, the globally optimal number of output dimensions is diffi‐
+    cult to determine. In contrast, PCA lets you find the output dimension based on
+    the explained variance.
+  • In manifold learning, the meaning of the embedded dimensions is not always
+    clear. In PCA, the principal components have a very clear meaning.
+
+
+                                                           In-Depth: Manifold Learning   |   455
+  • In manifold learning the computational expense of manifold methods scales as
+    O[N2] or O[N3]. For PCA, there exist randomized approaches that are generally
+    much faster (though see the megaman package for some more scalable imple‐
+    mentations of manifold learning).
+
+With all that on the table, the only clear advantage of manifold learning methods over
+PCA is their ability to preserve nonlinear relationships in the data; for that reason I
+tend to explore data with manifold methods only after first exploring them with PCA.
+Scikit-Learn implements several common variants of manifold learning beyond Iso‐
+map and LLE: the Scikit-Learn documentation has a nice discussion and comparison
+of them. Based on my own experience, I would give the following recommendations:
+
+  • For toy problems such as the S-curve we saw before, locally linear embedding
+    (LLE) and its variants (especially modified LLE), perform very well. This is imple‐
+    mented in sklearn.manifold.LocallyLinearEmbedding.
+  • For high-dimensional data from real-world sources, LLE often produces poor
+    results, and isometric mapping (Isomap) seems to generally lead to more mean‐
+    ingful embeddings. This is implemented in sklearn.manifold.Isomap.
+  • For data that is highly clustered, t-distributed stochastic neighbor embedding (t-
+    SNE) seems to work very well, though can be very slow compared to other meth‐
+    ods. This is implemented in sklearn.manifold.TSNE.
+
+If you’re interested in getting a feel for how these work, I’d suggest running each of
+the methods on the data in this section.
+
+Example: Isomap on Faces
+One place manifold learning is often used is in understanding the relationship
+between high-dimensional data points. A common case of high-dimensional data is
+images; for example, a set of images with 1,000 pixels each can be thought of as col‐
+lection of points in 1,000 dimensions—the brightness of each pixel in each image
+defines the coordinate in that dimension.
+Here let’s apply Isomap on some faces data. We will use the Labeled Faces in the Wild
+dataset, which we previously saw in “In-Depth: Support Vector Machines” on page
+405 and “In Depth: Principal Component Analysis” on page 433. Running this com‐
+mand will download the data and cache it in your home directory for later use:
+      In[16]: from sklearn.datasets import fetch_lfw_people
+              faces = fetch_lfw_people(min_faces_per_person=30)
+              faces.data.shape
+      Out[16]: (2370, 2914)
+
+
+
+
+456   | Chapter 5: Machine Learning
+

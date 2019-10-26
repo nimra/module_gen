@@ -4,8 +4,9 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,7 +58,7 @@ class Content(LeafNode):
             # Stage.EXERCISES,
             # Stage.CUSTOMIZED,
         )
-        self.add(MarkdownBlock("# Gated Recurrent Units (GRU)"))
+        self.add(mbk("# Gated Recurrent Units (GRU)"))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class GatedRecurrent(HierNode):

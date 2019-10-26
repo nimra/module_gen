@@ -1,0 +1,71 @@
+clarity in the following pages is likely due to the many workshop participants and co-
+instructors who have given me valuable feedback on this material over the years!
+Finally, if you are seeking a more comprehensive or technical treatment of any of
+these subjects, I’ve listed several resources and references in “Further Machine Learn‐
+ing Resources” on page 514.
+
+What Is Machine Learning?
+Before we take a look at the details of various machine learning methods, let’s start by
+looking at what machine learning is, and what it isn’t. Machine learning is often cate‐
+gorized as a subfield of artificial intelligence, but I find that categorization can often
+be misleading at first brush. The study of machine learning certainly arose from
+research in this context, but in the data science application of machine learning meth‐
+ods, it’s more helpful to think of machine learning as a means of building models of
+data.
+Fundamentally, machine learning involves building mathematical models to help
+understand data. “Learning” enters the fray when we give these models tunable
+parameters that can be adapted to observed data; in this way the program can be con‐
+sidered to be “learning” from the data. Once these models have been fit to previously
+seen data, they can be used to predict and understand aspects of newly observed data.
+I’ll leave to the reader the more philosophical digression regarding the extent to
+which this type of mathematical, model-based “learning” is similar to the “learning”
+exhibited by the human brain.
+Understanding the problem setting in machine learning is essential to using these
+tools effectively, and so we will start with some broad categorizations of the types of
+approaches we’ll discuss here.
+
+Categories of Machine Learning
+At the most fundamental level, machine learning can be categorized into two main
+types: supervised learning and unsupervised learning.
+Supervised learning involves somehow modeling the relationship between measured
+features of data and some label associated with the data; once this model is deter‐
+mined, it can be used to apply labels to new, unknown data. This is further subdivi‐
+ded into classification tasks and regression tasks: in classification, the labels are
+discrete categories, while in regression, the labels are continuous quantities. We will
+see examples of both types of supervised learning in the following section.
+Unsupervised learning involves modeling the features of a dataset without reference to
+any label, and is often described as “letting the dataset speak for itself.” These models
+include tasks such as clustering and dimensionality reduction. Clustering algorithms
+
+
+332   |   Chapter 5: Machine Learning
+identify distinct groups of data, while dimensionality reduction algorithms search for
+more succinct representations of the data. We will see examples of both types of
+unsupervised learning in the following section.
+In addition, there are so-called semi-supervised learning methods, which fall some‐
+where between supervised learning and unsupervised learning. Semi-supervised
+learning methods are often useful when only incomplete labels are available.
+
+Qualitative Examples of Machine Learning Applications
+To make these ideas more concrete, let’s take a look at a few very simple examples of a
+machine learning task. These examples are meant to give an intuitive, non-
+quantitative overview of the types of machine learning tasks we will be looking at in
+this chapter. In later sections, we will go into more depth regarding the particular
+models and how they are used. For a preview of these more technical aspects, you can
+find the Python source that generates the figures in the online appendix.
+
+Classification: Predicting discrete labels
+We will first take a look at a simple classification task, in which you are given a set of
+labeled points and want to use these to classify some unlabeled points.
+Imagine that we have the data shown in Figure 5-1 (the code used to generate this
+figure, and all figures in this section, is available in the online appendix).
+
+
+
+
+Figure 5-1. A simple data set for classification
+
+
+
+                                                              What Is Machine Learning?   |   333
+

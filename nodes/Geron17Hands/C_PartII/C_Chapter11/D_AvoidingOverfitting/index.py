@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_EarlyStopping.index import EarlyStopping as A_EarlyStopping
 from .B_ℓ1and.index import ℓ1and as B_ℓ1and
@@ -14,6 +17,7 @@ from .D_MaxNormRegularization.index import MaxNormRegularization as D_MaxNormReg
 from .E_DataAugmentation.index import DataAugmentation as E_DataAugmentation
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                  Download from finelybook www.finelybook.com
 # A 2013 paper19 by Andrew Senior et al. compared the performance of some of the
 # most popular learning schedules when training deep neural networks for speech rec‐
@@ -109,26 +113,27 @@ from .E_DataAugmentation.index import DataAugmentation as E_DataAugmentation
 # 
 #                                                  Avoiding Overfitting Through Regularization   |   303
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Avoiding Overfitting Through Regularization",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Avoiding Overfitting Through Regularization"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class AvoidingOverfitting(HierNode):
     def __init__(self):
         super().__init__("Avoiding Overfitting Through Regularization")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_EarlyStopping())
         self.add(B_ℓ1and())
         self.add(C_Dropout())

@@ -17,7 +17,7 @@ blocks = [
     mbk("$$ \\hat{y} = \\theta_0 + \\theta_1 x_1 + \\theta_2 x_2 + ... + \\theta_n x_n $$"),
     mbk("$$ h \\left( \\hat{y} \\right) = \\frac{1}{1 + e^{-\\hat{y}}} $$"),
     mbk("where $0 \\leq h(t) \\leq 1$. The sigmoid function is graphically shown in Figure 20-4."),
-    ibk("Figure 20-4. Logistic function"),
+    ibk(None, "Figure 20-4. Logistic function"),
     mbk("The sigmoid function, which looks like an S curve, rises from 0 and plateaus at 1. From the sigmoid function shown in Figure 20-4, as $\\hat{y}$ increases to positive infinity, the sigmoid output gets closer to 1, and as t decreases toward negative infinity, the sigmoid function outputs 0."),
 ]
 

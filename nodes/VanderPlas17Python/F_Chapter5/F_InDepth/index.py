@@ -1,0 +1,54 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+from .A_SimpleLinear.index import SimpleLinear as A_SimpleLinear
+from .B_BasisFunction.index import BasisFunction as B_BasisFunction
+from .C_Regularization.index import Regularization as C_Regularization
+from .D_ExamplePredicting.index import ExamplePredicting as D_ExamplePredicting
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+    "Just as naive Bayes (discussed earlier in “In Depth: Naive Bayes Classification” on page 382) is a good starting point for classification tasks, linear regression models are a good starting point for regression tasks. Such models are popular because they can be fit very quickly, and are very interpretable. You are probably familiar with the simplest form of a linear regression model (i.e., fitting a straight line to data), but such models can be extended to model more complicated data behavior.",
+    "In this section we will start with a quick intuitive walk-through of the mathematics behind this well-known problem, before moving on to see how linear models can be generalized to account for more complicated patterns in data. We begin with the standard imports:",
+    cbk(None, """
+# matplotlib inline
+import matplotlib.pyplot as plt
+import seaborn as sns; sns.set()
+import numpy as np
+    """, None),
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "In Depth: Linear Regression",
+            Stage.REMOVE_EXTRANEOUS,
+            Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class InDepth(HierNode):
+    def __init__(self):
+        super().__init__("In Depth: Linear Regression")
+        self.add(Content())
+        self.add(A_SimpleLinear())      # Simple Linear Regression
+        self.add(B_BasisFunction())     # Basis Function Regression
+        self.add(C_Regularization())    # Regularization
+        self.add(D_ExamplePredicting()) # Example: Predicting Bicycle Traffic
+
+# eof

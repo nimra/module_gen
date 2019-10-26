@@ -1,0 +1,162 @@
+Using Pipelines in Grid Searches
+Using a pipeline in a grid search works the same way as using any other estimator. We
+define a parameter grid to search over, and construct a GridSearchCV from the pipe‐
+line and the parameter grid. When specifying the parameter grid, there is a slight
+change, though. We need to specify for each parameter which step of the pipeline it
+belongs to. Both parameters that we want to adjust, C and gamma, are parameters of
+SVC, the second step. We gave this step the name "svm". The syntax to define a param‐
+eter grid for a pipeline is to specify for each parameter the step name, followed by __
+(a double underscore), followed by the parameter name. To search over the C param‐
+eter of SVC we therefore have to use "svm__C" as the key in the parameter grid dictio‐
+nary, and similarly for gamma:
+In[8]:
+    param_grid = {'svm__C': [0.001, 0.01, 0.1, 1, 10, 100],
+                  'svm__gamma': [0.001, 0.01, 0.1, 1, 10, 100]}
+
+With this parameter grid we can use GridSearchCV as usual:
+In[9]:
+    grid = GridSearchCV(pipe, param_grid=param_grid, cv=5)
+    grid.fit(X_train, y_train)
+    print("Best cross-validation accuracy: {:.2f}".format(grid.best_score_))
+    print("Test set score: {:.2f}".format(grid.score(X_test, y_test)))
+    print("Best parameters: {}".format(grid.best_params_))
+
+Out[9]:
+    Best cross-validation accuracy: 0.98
+    Test set score: 0.97
+    Best parameters: {'svm__C': 1, 'svm__gamma': 1}
+In contrast to the grid search we did before, now for each split in the cross-validation,
+the MinMaxScaler is refit with only the training splits and no information is leaked
+from the test split into the parameter search. Compare this (Figure 6-2) with
+Figure 6-1 earlier in this chapter:
+In[10]:
+    mglearn.plots.plot_proper_processing()
+
+
+
+
+                                                          Using Pipelines in Grid Searches   |   309
+Figure 6-2. Data usage when preprocessing inside the cross-validation loop with a
+pipeline
+
+The impact of leaking information in the cross-validation varies depending on the
+nature of the preprocessing step. Estimating the scale of the data using the test fold
+usually doesn’t have a terrible impact, while using the test fold in feature extraction
+and feature selection can lead to substantial differences in outcomes.
+
+
+                                 Illustrating Information Leakage
+  A great example of leaking information in cross-validation is given in Hastie, Tibshir‐
+  ani, and Friedman’s book The Elements of Statistical Learning, and we reproduce an
+  adapted version here. Let’s consider a synthetic regression task with 100 samples and
+  1,000 features that are sampled independently from a Gaussian distribution. We also
+  sample the response from a Gaussian distribution:
+  In[11]:
+          rnd = np.random.RandomState(seed=0)
+          X = rnd.normal(size=(100, 10000))
+          y = rnd.normal(size=(100,))
+
+  Given the way we created the dataset, there is no relation between the data, X, and the
+  target, y (they are independent), so it should not be possible to learn anything from
+  this dataset. We will now do the following. First, select the most informative of the 10
+  features using SelectPercentile feature selection, and then we evaluate a Ridge
+  regressor using cross-validation:
+
+
+
+310   |    Chapter 6: Algorithm Chains and Pipelines
+In[12]:
+    from sklearn.feature_selection import SelectPercentile, f_regression
+
+    select = SelectPercentile(score_func=f_regression, percentile=5).fit(X, y)
+    X_selected = select.transform(X)
+    print("X_selected.shape: {}".format(X_selected.shape))
+
+Out[12]:
+    X_selected.shape: (100, 500)
+
+In[13]:
+    from sklearn.model_selection import cross_val_score
+    from sklearn.linear_model import Ridge
+    print("Cross-validation accuracy (cv only on ridge): {:.2f}".format(
+          np.mean(cross_val_score(Ridge(), X_selected, y, cv=5))))
+
+Out[13]:
+    Cross-validation accuracy (cv only on ridge): 0.91
+The mean R2 computed by cross-validation is 0.91, indicating a very good model.
+This clearly cannot be right, as our data is entirely random. What happened here is
+that our feature selection picked out some features among the 10,000 random features
+that are (by chance) very well correlated with the target. Because we fit the feature
+selection outside of the cross-validation, it could find features that are correlated both
+on the training and the test folds. The information we leaked from the test folds was
+very informative, leading to highly unrealistic results. Let’s compare this to a proper
+cross-validation using a pipeline:
+In[14]:
+    pipe = Pipeline([("select", SelectPercentile(score_func=f_regression,
+                                                 percentile=5)),
+                     ("ridge", Ridge())])
+    print("Cross-validation accuracy (pipeline): {:.2f}".format(
+          np.mean(cross_val_score(pipe, X, y, cv=5))))
+
+Out[14]:
+    Cross-validation accuracy (pipeline): -0.25
+This time, we get a negative R2 score, indicating a very poor model. Using the pipe‐
+line, the feature selection is now inside the cross-validation loop. This means features
+can only be selected using the training folds of the data, not the test fold. The feature
+selection finds features that are correlated with the target on the training set, but
+because the data is entirely random, these features are not correlated with the target
+on the test set. In this example, rectifying the data leakage issue in the feature selec‐
+tion makes the difference between concluding that a model works very well and con‐
+cluding that a model works not at all.
+
+
+
+
+                                                           Using Pipelines in Grid Searches   |   311
+The General Pipeline Interface
+The Pipeline class is not restricted to preprocessing and classification, but can in
+fact join any number of estimators together. For example, you could build a pipeline
+containing feature extraction, feature selection, scaling, and classification, for a total
+of four steps. Similarly, the last step could be regression or clustering instead of classi‐
+fication.
+The only requirement for estimators in a pipeline is that all but the last step need to
+have a transform method, so they can produce a new representation of the data that
+can be used in the next step.
+Internally, during the call to Pipeline.fit, the pipeline calls fit and then transform
+on each step in turn,2 with the input given by the output of the transform method of
+the previous step. For the last step in the pipeline, just fit is called.
+Brushing over some finer details, this is implemented as follows. Remember that pipe
+line.steps is a list of tuples, so pipeline.steps[0][1] is the first estimator, pipe
+line.steps[1][1] is the second estimator, and so on:
+In[15]:
+      def fit(self, X, y):
+          X_transformed = X
+          for name, estimator in self.steps[:-1]:
+              # iterate over all but the final step
+              # fit and transform the data
+              X_transformed = estimator.fit_transform(X_transformed, y)
+          # fit the last step
+          self.steps[-1][1].fit(X_transformed, y)
+          return self
+
+When predicting using Pipeline, we similarly transform the data using all but the
+last step, and then call predict on the last step:
+In[16]:
+      def predict(self, X):
+          X_transformed = X
+          for step in self.steps[:-1]:
+              # iterate over all but the final step
+              # transform the data
+              X_transformed = step[1].transform(X_transformed)
+          # fit the last step
+          return self.steps[-1][1].predict(X_transformed)
+
+
+
+
+2 Or just fit_transform.
+
+
+
+312   |   Chapter 6: Algorithm Chains and Pipelines
+

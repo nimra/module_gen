@@ -1,0 +1,29 @@
+                                                                         Preface
+
+
+
+
+What Is Data Science?
+This is a book about doing data science with Python, which immediately begs the
+question: what is data science? It’s a surprisingly hard definition to nail down, espe‐
+cially given how ubiquitous the term has become. Vocal critics have variously dis‐
+missed the term as a superfluous label (after all, what science doesn’t involve data?) or
+a simple buzzword that only exists to salt résumés and catch the eye of overzealous
+tech recruiters.
+In my mind, these critiques miss something important. Data science, despite its hype-
+laden veneer, is perhaps the best label we have for the cross-disciplinary set of skills
+that are becoming increasingly important in many applications across industry and
+academia. This cross-disciplinary piece is key: in my mind, the best existing defini‐
+tion of data science is illustrated by Drew Conway’s Data Science Venn Diagram, first
+published on his blog in September 2010 (see Figure P-1).
+
+
+
+
+Figure P-1. Drew Conway’s Data Science Venn Diagram
+
+
+
+
+                                                                                       xi
+

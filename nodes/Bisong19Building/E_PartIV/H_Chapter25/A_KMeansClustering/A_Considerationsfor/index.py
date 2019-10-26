@@ -13,7 +13,7 @@ from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 blocks = [
     mbk("There’s really no way of telling the number of clusters in a dataset from the onset. The best way of selecting k is to try out different values of K to see what works best in creating distinct clusters."),
     mbk("Another strategy, which is widely employed in practice, is to compute the average distance of the points in the cluster to the cluster centroid for all clusters. This estimate is plotted on a graph as we progressively increase the value of K. We observe that as K increases, the distance of points from the centroid of its cluster gradually reduces, and the generated curve resembles the elbow of an arm. From practice, we choose the value of K just after the elbow as the best K value for that dataset. This method is called the elbow method for selecting K as is illustrated in Figure 25-3."),
-    ibk("Figure 25-3. The elbow method for choosing the best value of k"),
+    ibk(None, "Figure 25-3. The elbow method for choosing the best value of k"),
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

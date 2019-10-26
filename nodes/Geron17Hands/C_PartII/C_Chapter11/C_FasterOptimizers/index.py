@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Momentumoptimization.index import Momentumoptimization as A_Momentumoptimization
 from .B_NesterovAccelerated.index import NesterovAccelerated as B_NesterovAccelerated
@@ -15,6 +18,7 @@ from .E_AdamOptimization.index import AdamOptimization as E_AdamOptimization
 from .F_LearningRate.index import LearningRate as F_LearningRate
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                 Download from finelybook www.finelybook.com
 # network would learn good feature detectors for faces, so reusing its lower layers
 # would allow you to train a good face classifier using little training data.
@@ -108,26 +112,27 @@ from .F_LearningRate.index import LearningRate as F_LearningRate
 # 
 # 294    |   Chapter 11: Training Deep Neural Nets
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Faster Optimizers",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Faster Optimizers"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class FasterOptimizers(HierNode):
     def __init__(self):
         super().__init__("Faster Optimizers")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Momentumoptimization())
         self.add(B_NesterovAccelerated())
         self.add(C_AdaGrad())

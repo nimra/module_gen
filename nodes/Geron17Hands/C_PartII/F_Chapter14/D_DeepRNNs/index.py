@@ -4,14 +4,18 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Distributinga.index import Distributinga as A_Distributinga
 from .B_ApplyingDropout.index import ApplyingDropout as B_ApplyingDropout
 from .C_TheDifficulty.index import TheDifficulty as C_TheDifficulty
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                    Download from finelybook www.finelybook.com
 # The rest of the code is the same as earlier. This can provide a significant speed boost
 # since there is just one fully connected layer instead of one per time step.
@@ -88,26 +92,27 @@ from .C_TheDifficulty.index import TheDifficulty as C_TheDifficulty
 # 
 #                                                                           Deep RNNs   |   397
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Deep RNNs",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Deep RNNs"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class DeepRNNs(HierNode):
     def __init__(self):
         super().__init__("Deep RNNs")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Distributinga())
         self.add(B_ApplyingDropout())
         self.add(C_TheDifficulty())

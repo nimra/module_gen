@@ -12,7 +12,7 @@ from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blocks = [
     mbk("The one-vs.-all method for fitting an SVM to a multi-classification problem where the number of classes k is greater than 2 consists of fitting each k class against the remaining k – 1 classes. Suppose we have ten classes, each of the classes will be classified against the remaining nine classes. This example is illustrated with four classes in Figure 22-9."),
-    ibk("Figure 22-9. Given four classes in a dataset, we construct four classifiers, with each class fitted against the rest"),
+    ibk(None, "Figure 22-9. Given four classes in a dataset, we construct four classifiers, with each class fitted against the rest"),
     mbk("The classifiers are evaluated by comparing a test example to each fitted classifier. The classifier for which the margin of the hyperplane is the largest is chosen as the predicted classification target because the classifier margin size is indicative of high confidence of class membership."),
 ]
 

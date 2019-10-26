@@ -1,0 +1,79 @@
+For a real-world facial recognition task, in which the photos do not come precropped
+into nice grids, the only difference in the facial classification scheme is the feature
+selection: you would need to use a more sophisticated algorithm to find the faces, and
+extract features that are independent of the pixellation. For this kind of application,
+one good option is to make use of OpenCV, which among other things, includes pre‐
+trained implementations of state-of-the-art feature extraction tools for images in gen‐
+eral and faces in particular.
+
+Support Vector Machine Summary
+We have seen here a brief intuitive introduction to the principals behind support vec‐
+tor machines. These methods are a powerful classification method for a number of
+reasons:
+
+  • Their dependence on relatively few support vectors means that they are very
+    compact models, and take up very little memory.
+  • Once the model is trained, the prediction phase is very fast.
+  • Because they are affected only by points near the margin, they work well with
+    high-dimensional data—even data with more dimensions than samples, which is
+    a challenging regime for other algorithms.
+  • Their integration with kernel methods makes them very versatile, able to adapt to
+    many types of data.
+
+However, SVMs have several disadvantages as well:
+
+  • The scaling with the number of samples N is � N 3 at worst, or � N 2 for effi‐
+    cient implementations. For large numbers of training samples, this computa‐
+    tional cost can be prohibitive.
+  • The results are strongly dependent on a suitable choice for the softening parame‐
+    ter C. This must be carefully chosen via cross-validation, which can be expensive
+    as datasets grow in size.
+  • The results do not have a direct probabilistic interpretation. This can be estima‐
+    ted via an internal cross-validation (see the probability parameter of SVC), but
+    this extra estimation is costly.
+
+With those traits in mind, I generally only turn to SVMs once other simpler, faster,
+and less tuning-intensive methods have been shown to be insufficient for my needs.
+Nevertheless, if you have the CPU cycles to commit to training and cross-validating
+an SVM on your data, the method can lead to excellent results.
+
+
+
+
+420   |   Chapter 5: Machine Learning
+In-Depth: Decision Trees and Random Forests
+Previously we have looked in depth at a simple generative classifier (naive Bayes; see
+“In Depth: Naive Bayes Classification” on page 382) and a powerful discriminative
+classifier (support vector machines; see “In-Depth: Support Vector Machines” on
+page 405). Here we’ll take a look at motivating another powerful algorithm—a non‐
+parametric algorithm called random forests. Random forests are an example of an
+ensemble method, a method that relies on aggregating the results of an ensemble of
+simpler estimators. The somewhat surprising result with such ensemble methods is
+that the sum can be greater than the parts; that is, a majority vote among a number of
+estimators can end up being better than any of the individual estimators doing the
+voting! We will see examples of this in the following sections. We begin with the stan‐
+dard imports:
+    In[1]: %matplotlib inline
+           import numpy as np
+           import matplotlib.pyplot as plt
+           import seaborn as sns; sns.set()
+
+
+Motivating Random Forests: Decision Trees
+Random forests are an example of an ensemble learner built on decision trees. For this
+reason we’ll start by discussing decision trees themselves.
+Decision trees are extremely intuitive ways to classify or label objects: you simply ask
+a series of questions designed to zero in on the classification. For example, if you
+wanted to build a decision tree to classify an animal you come across while on a hike,
+you might construct the one shown in Figure 5-67.
+
+
+
+
+Figure 5-67. An example of a binary decision tree
+
+
+
+
+                                               In-Depth: Decision Trees and Random Forests   |   421
+

@@ -1,0 +1,30 @@
+Figure 5-34. The best-fit model determined via an automatic grid-search
+
+Summary
+In this section, we have begun to explore the concept of model validation and hyper‐
+parameter optimization, focusing on intuitive aspects of the bias–variance trade-off
+and how it comes into play when fitting models to data. In particular, we found that
+the use of a validation set or cross-validation approach is vital when tuning parame‐
+ters in order to avoid overfitting for more complex/flexible models.
+In later sections, we will discuss the details of particularly useful models, and
+throughout will talk about what tuning is available for these models and how these
+free parameters affect model complexity. Keep the lessons of this section in mind as
+you read on and learn about these machine learning approaches!
+
+Feature Engineering
+The previous sections outline the fundamental ideas of machine learning, but all of
+the examples assume that you have numerical data in a tidy, [n_samples, n_fea
+tures] format. In the real world, data rarely comes in such a form. With this in mind,
+one of the more important steps in using machine learning in practice is feature engi‐
+neering—that is, taking whatever information you have about your problem and
+turning it into numbers that you can use to build your feature matrix.
+In this section, we will cover a few common examples of feature engineering tasks:
+features for representing categorical data, features for representing text, and features
+for representing images. Additionally, we will discuss derived features for increasing
+model complexity and imputation of missing data. Often this process is known as vec‐
+torization, as it involves converting arbitrary data into well-behaved vectors.
+
+
+
+                                                                 Feature Engineering   |   375
+

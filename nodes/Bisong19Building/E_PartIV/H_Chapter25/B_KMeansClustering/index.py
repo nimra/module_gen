@@ -49,7 +49,7 @@ plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.7);
 plt.show()
     """, None),
     mbk("The code to plot the clustered labels and the cluster centers should be executed in the same notebook. The plot of clusters made by the K-means algorithm is shown in Figure 25-4."),
-    ibk("Figure 25-4. Plot of K-means clusters and their cluster centers"),
+    ibk(None, "Figure 25-4. Plot of K-means clusters and their cluster centers"),
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Installation.index import Installation as A_Installation
 from .B_Managingthe.index import Managingthe as B_Managingthe
@@ -14,6 +17,7 @@ from .D_ParallelExecution.index import ParallelExecution as D_ParallelExecution
 from .E_ControlDependencies.index import ControlDependencies as E_ControlDependencies
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                    Download from finelybook www.finelybook.com
 # TensorFlow’s support of distributed computing is one of its main highlights com‐
 # pared to other neural network frameworks. It gives you full control over how to split
@@ -53,26 +57,27 @@ from .E_ControlDependencies.index import ControlDependencies as E_ControlDepende
 # 
 # 314   |   Chapter 12: Distributing TensorFlow Across Devices and Servers
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Multiple Devices on a Single Machine",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Multiple Devices on a Single Machine"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class MultipleDevices(HierNode):
     def __init__(self):
         super().__init__("Multiple Devices on a Single Machine")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Installation())
         self.add(B_Managingthe())
         self.add(C_PlacingOperations())

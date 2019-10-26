@@ -1,0 +1,184 @@
+      Out[19]: subject           Bob           Guido             Sue
+               type               HR    Temp      HR      Temp    HR    Temp
+               year visit
+               2013 1           31.0    38.7       32.0   36.7   35.0   37.2
+                    2           44.0    37.7       50.0   35.0   29.0   36.7
+               2014 1           30.0    37.4       39.0   37.8   61.0   36.9
+                    2           47.0    37.8       48.0   37.3   51.0   36.5
+Here we see where the multi-indexing for both rows and columns can come in very
+handy. This is fundamentally four-dimensional data, where the dimensions are the
+subject, the measurement type, the year, and the visit number. With this in place we
+can, for example, index the top-level column by the person’s name and get a full Data
+Frame containing just that person’s information:
+      In[20]: health_data['Guido']
+      Out[20]: type                HR   Temp
+               year visit
+               2013 1           32.0    36.7
+                    2           50.0    35.0
+               2014 1           39.0    37.8
+                    2           48.0    37.3
+For complicated records containing multiple labeled measurements across multiple
+times for many subjects (people, countries, cities, etc.), use of hierarchical rows and
+columns can be extremely convenient!
+
+Indexing and Slicing a MultiIndex
+Indexing and slicing on a MultiIndex is designed to be intuitive, and it helps if you
+think about the indices as added dimensions. We’ll first look at indexing multiply
+indexed Series, and then multiply indexed DataFrames.
+
+Multiply indexed Series
+Consider the multiply indexed Series of state populations we saw earlier:
+      In[21]: pop
+      Out[21]: state        year
+               California   2000           33871648
+                            2010           37253956
+                New York    2000           18976457
+                             2010          19378102
+                Texas        2000          20851820
+                             2010          25145561
+                dtype: int64
+We can access single elements by indexing with multiple terms:
+      In[22]: pop['California', 2000]
+      Out[22]: 33871648
+
+
+134   | Chapter 3: Data Manipulation with Pandas
+The MultiIndex also supports partial indexing, or indexing just one of the levels in
+the index. The result is another Series, with the lower-level indices maintained:
+    In[23]: pop['California']
+    Out[23]: year
+             2000    33871648
+             2010    37253956
+             dtype: int64
+
+Partial slicing is available as well, as long as the MultiIndex is sorted (see discussion
+in “Sorted and unsorted indices” on page 137):
+    In[24]: pop.loc['California':'New York']
+    Out[24]: state       year
+             California  2000      33871648
+                         2010      37253956
+             New York    2000      18976457
+                         2010      19378102
+             dtype: int64
+With sorted indices, we can perform partial indexing on lower levels by passing an
+empty slice in the first index:
+    In[25]: pop[:, 2000]
+    Out[25]: state
+             California      33871648
+             New York        18976457
+             Texas           20851820
+             dtype: int64
+Other types of indexing and selection (discussed in “Data Indexing and Selection” on
+page 107) work as well; for example, selection based on Boolean masks:
+    In[26]: pop[pop > 22000000]
+    Out[26]: state          year
+             California     2000   33871648
+                            2010   37253956
+             Texas          2010   25145561
+             dtype: int64
+Selection based on fancy indexing also works:
+    In[27]: pop[['California', 'Texas']]
+    Out[27]: state       year
+             California  2000      33871648
+                         2010      37253956
+             Texas        2000     20851820
+                          2010     25145561
+             dtype: int64
+
+
+
+
+                                                                 Hierarchical Indexing   |   135
+Multiply indexed DataFrames
+A multiply indexed DataFrame behaves in a similar manner. Consider our toy medi‐
+cal DataFrame from before:
+      In[28]: health_data
+      Out[28]: subject             Bob           Guido          Sue
+               type                 HR    Temp      HR   Temp    HR   Temp
+               year visit
+               2013 1             31.0 38.7 32.0 36.7 35.0 37.2
+                    2             44.0 37.7 50.0 35.0 29.0 36.7
+               2014 1             30.0 37.4 39.0 37.8 61.0 36.9
+                    2             47.0 37.8 48.0 37.3 51.0 36.5
+
+Remember that columns are primary in a DataFrame, and the syntax used for multi‐
+ply indexed Series applies to the columns. For example, we can recover Guido’s heart
+rate data with a simple operation:
+      In[29]: health_data['Guido', 'HR']
+      Out[29]: year    visit
+               2013    1        32.0
+                       2        50.0
+                 2014 1         39.0
+                       2        48.0
+                 Name: (Guido, HR), dtype: float64
+
+Also, as with the single-index case, we can use the loc, iloc, and ix indexers intro‐
+duced in “Data Indexing and Selection” on page 107. For example:
+      In[30]: health_data.iloc[:2, :2]
+      Out[30]: subject             Bob
+               type                 HR    Temp
+               year visit
+               2013 1             31.0 38.7
+                    2             44.0 37.7
+These indexers provide an array-like view of the underlying two-dimensional data,
+but each individual index in loc or iloc can be passed a tuple of multiple indices. For
+example:
+      In[31]: health_data.loc[:, ('Bob', 'HR')]
+      Out[31]: year    visit
+               2013    1        31.0
+                       2        44.0
+                 2014 1         30.0
+                       2        47.0
+                 Name: (Bob, HR), dtype: float64
+Working with slices within these index tuples is not especially convenient; trying to
+create a slice within a tuple will lead to a syntax error:
+
+
+136   |   Chapter 3: Data Manipulation with Pandas
+    In[32]: health_data.loc[(:, 1), (:, 'HR')]
+      File "<ipython-input-32-8e3cc151e316>", line 1
+        health_data.loc[(:, 1), (:, 'HR')]
+                         ^
+    SyntaxError: invalid syntax
+You could get around this by building the desired slice explicitly using Python’s built-
+in slice() function, but a better way in this context is to use an IndexSlice object,
+which Pandas provides for precisely this situation. For example:
+    In[33]: idx = pd.IndexSlice
+            health_data.loc[idx[:, 1], idx[:, 'HR']]
+    Out[33]: subject           Bob Guido     Sue
+             type               HR    HR      HR
+             year visit
+             2013 1           31.0   32.0   35.0
+             2014 1           30.0   39.0   61.0
+
+There are so many ways to interact with data in multiply indexed Series and Data
+Frames, and as with many tools in this book the best way to become familiar with
+them is to try them out!
+
+Rearranging Multi-Indices
+One of the keys to working with multiply indexed data is knowing how to effectively
+transform the data. There are a number of operations that will preserve all the infor‐
+mation in the dataset, but rearrange it for the purposes of various computations. We
+saw a brief example of this in the stack() and unstack() methods, but there are
+many more ways to finely control the rearrangement of data between hierarchical
+indices and columns, and we’ll explore them here.
+
+Sorted and unsorted indices
+Earlier, we briefly mentioned a caveat, but we should emphasize it more here. Many of
+the MultiIndex slicing operations will fail if the index is not sorted. Let’s take a look at
+this here.
+We’ll start by creating some simple multiply indexed data where the indices are not
+lexographically sorted:
+    In[34]: index = pd.MultiIndex.from_product([['a', 'c', 'b'], [1, 2]])
+            data = pd.Series(np.random.rand(6), index=index)
+            data.index.names = ['char', 'int']
+            data
+    Out[34]: char   int
+             a      1         0.003001
+                    2         0.164974
+              c     1         0.741650
+
+
+
+                                                                    Hierarchical Indexing   |   137
+

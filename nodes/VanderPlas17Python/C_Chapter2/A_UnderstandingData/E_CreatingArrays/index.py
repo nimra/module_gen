@@ -1,0 +1,167 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+# Creating Arrays from Python Lists
+# First, we can use np.array to create arrays from Python lists:
+#     In[8]: # integer array:
+#            np.array([1, 4, 2, 5, 3])
+#     Out[8]: array([1, 4, 2, 5, 3])
+# Remember that unlike Python lists, NumPy is constrained to arrays that all contain
+# the same type. If types do not match, NumPy will upcast if possible (here, integers are
+# upcast to floating point):
+#     In[9]: np.array([3.14, 4, 2, 3])
+#     Out[9]: array([ 3.14,    4.    ,    2.    ,    3.   ])
+# 
+# If we want to explicitly set the data type of the resulting array, we can use the dtype
+# keyword:
+#     In[10]: np.array([1, 2, 3, 4], dtype='float32')
+#     Out[10]: array([ 1.,    2.,    3.,       4.], dtype=float32)
+# Finally, unlike Python lists, NumPy arrays can explicitly be multidimensional; here’s
+# one way of initializing a multidimensional array using a list of lists:
+#     In[11]: # nested lists result in multidimensional arrays
+#             np.array([range(i, i + 3) for i in [2, 4, 6]])
+#     Out[11]: array([[2, 3, 4],
+#                     [4, 5, 6],
+#                     [6, 7, 8]])
+# The inner lists are treated as rows of the resulting two-dimensional array.
+# 
+# Creating Arrays from Scratch
+# Especially for larger arrays, it is more efficient to create arrays from scratch using rou‐
+# tines built into NumPy. Here are several examples:
+#     In[12]: # Create a length-10 integer array filled with zeros
+#             np.zeros(10, dtype=int)
+#     Out[12]: array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+#     In[13]: # Create a 3x5 floating-point array filled with 1s
+#             np.ones((3, 5), dtype=float)
+#     Out[13]: array([[ 1.,    1.,       1.,   1.,    1.],
+#                     [ 1.,    1.,       1.,   1.,    1.],
+#                     [ 1.,    1.,       1.,   1.,    1.]])
+#     In[14]: # Create a 3x5 array filled with 3.14
+#             np.full((3, 5), 3.14)
+# 
+# 
+# 
+# 
+#                                                              Understanding Data Types in Python   |   39
+# 
+#      Out[14]: array([[ 3.14, 3.14, 3.14, 3.14, 3.14],
+#                      [ 3.14, 3.14, 3.14, 3.14, 3.14],
+#                      [ 3.14, 3.14, 3.14, 3.14, 3.14]])
+#      In[15]: # Create an array filled with a linear sequence
+#              # Starting at 0, ending at 20, stepping by 2
+#              # (this is similar to the built-in range() function)
+#              np.arange(0, 20, 2)
+#      Out[15]: array([ 0,          2,    4,    6,    8, 10, 12, 14, 16, 18])
+#      In[16]: # Create an array of five values evenly spaced between 0 and 1
+#              np.linspace(0, 1, 5)
+#      Out[16]: array([ 0.          ,    0.25,       0.5 ,   0.75,   1.   ])
+#      In[17]: # Create a 3x3 array of uniformly distributed
+#              # random values between 0 and 1
+#              np.random.random((3, 3))
+#      Out[17]: array([[ 0.99844933,                 0.52183819,     0.22421193],
+#                      [ 0.08007488,                 0.45429293,     0.20941444],
+#                      [ 0.14360941,                 0.96910973,     0.946117 ]])
+#      In[18]: # Create a 3x3 array of normally distributed random values
+#              # with mean 0 and standard deviation 1
+#              np.random.normal(0, 1, (3, 3))
+#      Out[18]: array([[ 1.51772646,                 0.39614948, -0.10634696],
+#                      [ 0.25671348,                 0.00732722, 0.37783601],
+#                      [ 0.68446945,                 0.15926039, -0.70744073]])
+#      In[19]: # Create a 3x3 array of random integers in the interval [0, 10)
+#              np.random.randint(0, 10, (3, 3))
+#      Out[19]: array([[2, 3, 4],
+#                      [5, 7, 8],
+#                      [0, 5, 0]])
+#      In[20]: # Create a 3x3 identity matrix
+#              np.eye(3)
+#      Out[20]: array([[ 1., 0., 0.],
+#                      [ 0., 1., 0.],
+#                      [ 0., 0., 1.]])
+#      In[21]: # Create an uninitialized array of three integers
+#              # The values will be whatever happens to already exist at that
+#              # memory location
+#              np.empty(3)
+#      Out[21]: array([ 1.,             1.,    1.])
+# 
+# 
+# 
+# 
+# 40   |   Chapter 2: Introduction to NumPy
+# 
+# NumPy Standard Data Types
+# NumPy arrays contain values of a single type, so it is important to have detailed
+# knowledge of those types and their limitations. Because NumPy is built in C, the
+# types will be familiar to users of C, Fortran, and other related languages.
+# The standard NumPy data types are listed in Table 2-1. Note that when constructing
+# an array, you can specify them using a string:
+#     np.zeros(10, dtype='int16')
+# Or using the associated NumPy object:
+#     np.zeros(10, dtype=np.int16)
+# 
+# Table 2-1. Standard NumPy data types
+# Data type      Description
+# bool_          Boolean (True or False) stored as a byte
+# int_           Default integer type (same as C long; normally either int64 or int32)
+# intc           Identical to C int (normally int32 or int64)
+# intp           Integer used for indexing (same as C ssize_t; normally either int32 or int64)
+# int8           Byte (–128 to 127)
+# int16          Integer (–32768 to 32767)
+# int32          Integer (–2147483648 to 2147483647)
+# int64          Integer (–9223372036854775808 to 9223372036854775807)
+# uint8          Unsigned integer (0 to 255)
+# uint16         Unsigned integer (0 to 65535)
+# uint32         Unsigned integer (0 to 4294967295)
+# uint64         Unsigned integer (0 to 18446744073709551615)
+# float_         Shorthand for float64
+# float16        Half-precision float: sign bit, 5 bits exponent, 10 bits mantissa
+# float32        Single-precision float: sign bit, 8 bits exponent, 23 bits mantissa
+# float64        Double-precision float: sign bit, 11 bits exponent, 52 bits mantissa
+# complex_       Shorthand for complex128
+# complex64      Complex number, represented by two 32-bit floats
+# complex128 Complex number, represented by two 64-bit floats
+# 
+# 
+# More advanced type specification is possible, such as specifying big or little endian
+# numbers; for more information, refer to the NumPy documentation. NumPy also
+# supports compound data types, which will be covered in “Structured Data: NumPy’s
+# Structured Arrays” on page 92.
+# 
+# 
+# 
+#                                                                                Understanding Data Types in Python   |   41
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Creating Arrays from Scratch",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class CreatingArrays(HierNode):
+    def __init__(self):
+        super().__init__("Creating Arrays from Scratch")
+        self.add(Content())
+
+# eof

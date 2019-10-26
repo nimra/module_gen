@@ -1,0 +1,130 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+from .A_CategoricalVariables.index import CategoricalVariables as A_CategoricalVariables
+from .B_BinningDiscretization.index import BinningDiscretization as B_BinningDiscretization
+from .C_Interactionsand.index import Interactionsand as C_Interactionsand
+from .D_UnivariateNonlinear.index import UnivariateNonlinear as D_UnivariateNonlinear
+from .E_AutomaticFeature.index import AutomaticFeature as E_AutomaticFeature
+from .F_UtilizingExpert.index import UtilizingExpert as F_UtilizingExpert
+from .G_Summaryand.index import Summaryand as G_Summaryand
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+#                                                                          CHAPTER 4
+#                                          Representing Data and
+#                                           Engineering Features
+# 
+# 
+# 
+# 
+# So far, we’ve assumed that our data comes in as a two-dimensional array of floating-
+# point numbers, where each column is a continuous feature that describes the data
+# points. For many applications, this is not how the data is collected. A particularly
+# common type of feature is the categorical features. Also known as discrete features,
+# these are usually not numeric. The distinction between categorical features and con‐
+# tinuous features is analogous to the distinction between classification and regression,
+# only on the input side rather than the output side. Examples of continuous features
+# that we have seen are pixel brightnesses and size measurements of plant flowers.
+# Examples of categorical features are the brand of a product, the color of a product, or
+# the department (books, clothing, hardware) it is sold in. These are all properties that
+# can describe a product, but they don’t vary in a continuous way. A product belongs
+# either in the clothing department or in the books department. There is no middle
+# ground between books and clothing, and no natural order for the different categories
+# (books is not greater or less than clothing, hardware is not between books and cloth‐
+# ing, etc.).
+# Regardless of the types of features your data consists of, how you represent them can
+# have an enormous effect on the performance of machine learning models. We saw in
+# Chapters 2 and 3 that scaling of the data is important. In other words, if you don’t
+# rescale your data (say, to unit variance), then it makes a difference whether you repre‐
+# sent a measurement in centimeters or inches. We also saw in Chapter 2 that it can be
+# helpful to augment your data with additional features, like adding interactions (prod‐
+# ucts) of features or more general polynomials.
+# The question of how to represent your data best for a particular application is known
+# as feature engineering, and it is one of the main tasks of data scientists and machine
+# 
+# 
+#                                                                                      211
+# 
+# learning practitioners trying to solve real-world problems. Representing your data in
+# the right way can have a bigger influence on the performance of a supervised model
+# than the exact parameters you choose.
+# In this chapter, we will first go over the important and very common case of categori‐
+# cal features, and then give some examples of helpful transformations for specific
+# combinations of features and models.
+# 
+# Categorical Variables
+# As an example, we will use the dataset of adult incomes in the United States, derived
+# from the 1994 census database. The task of the adult dataset is to predict whether a
+# worker has an income of over $50,000 or under $50,000. The features in this dataset
+# include the workers’ ages, how they are employed (self employed, private industry
+# employee, government employee, etc.), their education, their gender, their working
+# hours per week, occupation, and more. Table 4-1 shows the first few entries in the
+# dataset.
+# 
+# Table 4-1. The first few entries in the adult dataset
+#       age workclass           education     gender hours-per-week occupation         income
+# 0     39 State-gov            Bachelors     Male   40             Adm-clerical       <=50K
+# 1     50    Self-emp-not-inc Bachelors      Male     13            Exec-managerial   <=50K
+# 2     38    Private           HS-grad       Male     40            Handlers-cleaners <=50K
+# 3     53    Private           11th          Male     40            Handlers-cleaners <=50K
+# 4     28    Private           Bachelors     Female 40              Prof-specialty    <=50K
+# 5     37    Private           Masters       Female 40              Exec-managerial   <=50K
+# 6     49    Private           9th           Female 16              Other-service     <=50K
+# 7     52    Self-emp-not-inc HS-grad        Male     45            Exec-managerial   >50K
+# 8     31    Private           Masters       Female 50              Prof-specialty    >50K
+# 9     42    Private           Bachelors     Male     40            Exec-managerial   >50K
+# 10 37       Private           Some-college Male      80            Exec-managerial   >50K
+# 
+# The task is phrased as a classification task with the two classes being income <=50k
+# and >50k. It would also be possible to predict the exact income, and make this a
+# regression task. However, that would be much more difficult, and the 50K division is
+# interesting to understand on its own.
+# In this dataset, age and hours-per-week are continuous features, which we know
+# how to treat. The workclass, education, sex, and occupation features are categori‐
+# cal, however. All of them come from a fixed list of possible values, as opposed to a
+# range, and denote a qualitative property, as opposed to a quantity.
+# 
+# 
+# 
+# 212   |    Chapter 4: Representing Data and Engineering Features
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "Chapter 4. Representing Data and Engineering Features",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Chapter4(HierNode):
+    def __init__(self):
+        super().__init__("Chapter 4. Representing Data and Engineering Features")
+        self.add(Content(), "content")
+        self.add(A_CategoricalVariables())
+        self.add(B_BinningDiscretization())
+        self.add(C_Interactionsand())
+        self.add(D_UnivariateNonlinear())
+        self.add(E_AutomaticFeature())
+        self.add(F_UtilizingExpert())
+        self.add(G_Summaryand())
+
+# eof

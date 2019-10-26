@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Filters.index import Filters as A_Filters
 from .B_StackingMultiple.index import StackingMultiple as B_StackingMultiple
@@ -13,6 +16,7 @@ from .C_TensorFlowImplementation.index import TensorFlowImplementation as C_Tens
 from .D_MemoryRequirements.index import MemoryRequirements as D_MemoryRequirements
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                     Download from finelybook www.finelybook.com
 # and Patrick Haffner, which introduced the famous LeNet-5 architecture, widely used
 # to recognize handwritten check numbers. This architecture has some building blocks
@@ -118,26 +122,27 @@ from .D_MemoryRequirements.index import MemoryRequirements as D_MemoryRequiremen
 # 
 #                                                                      Convolutional Layer   |   357
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Convolutional Layer",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Convolutional Layer"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class ConvolutionalLayer(HierNode):
     def __init__(self):
         super().__init__("Convolutional Layer")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Filters())
         self.add(B_StackingMultiple())
         self.add(C_TensorFlowImplementation())

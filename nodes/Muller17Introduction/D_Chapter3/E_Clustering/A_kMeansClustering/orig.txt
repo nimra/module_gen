@@ -1,0 +1,444 @@
+The result of t-SNE is quite remarkable. All the classes are quite clearly separated.
+The ones and nines are somewhat split up, but most of the classes form a single dense
+group. Keep in mind that this method has no knowledge of the class labels: it is com‐
+pletely unsupervised. Still, it can find a representation of the data in two dimensions
+that clearly separates the classes, based solely on how close points are in the original
+space.
+The t-SNE algorithm has some tuning parameters, though it often works well with
+the default settings. You can try playing with perplexity and early_exaggeration,
+but the effects are usually minor.
+
+Clustering
+As we described earlier, clustering is the task of partitioning the dataset into groups,
+called clusters. The goal is to split up the data in such a way that points within a single
+cluster are very similar and points in different clusters are different. Similarly to clas‐
+sification algorithms, clustering algorithms assign (or predict) a number to each data
+point, indicating which cluster a particular point belongs to.
+
+k-Means Clustering
+k-means clustering is one of the simplest and most commonly used clustering algo‐
+rithms. It tries to find cluster centers that are representative of certain regions of the
+data. The algorithm alternates between two steps: assigning each data point to the
+closest cluster center, and then setting each cluster center as the mean of the data
+points that are assigned to it. The algorithm is finished when the assignment of
+instances to clusters no longer changes. The following example (Figure 3-23) illus‐
+trates the algorithm on a synthetic dataset:
+In[47]:
+      mglearn.plots.plot_kmeans_algorithm()
+
+
+
+
+168   | Chapter 3: Unsupervised Learning and Preprocessing
+Figure 3-23. Input data and three steps of the k-means algorithm
+
+Cluster centers are shown as triangles, while data points are shown as circles. Colors
+indicate cluster membership. We specified that we are looking for three clusters, so
+the algorithm was initialized by declaring three data points randomly as cluster cen‐
+ters (see “Initialization”). Then the iterative algorithm starts. First, each data point is
+assigned to the cluster center it is closest to (see “Assign Points (1)”). Next, the cluster
+centers are updated to be the mean of the assigned points (see “Recompute Centers
+(1)”). Then the process is repeated two more times. After the third iteration, the
+assignment of points to cluster centers remained unchanged, so the algorithm stops.
+Given new data points, k-means will assign each to the closest cluster center. The next
+example (Figure 3-24) shows the boundaries of the cluster centers that were learned
+in Figure 3-23:
+In[48]:
+    mglearn.plots.plot_kmeans_boundaries()
+
+
+
+
+                                                                            Clustering   |   169
+Figure 3-24. Cluster centers and cluster boundaries found by the k-means algorithm
+
+Applying k-means with scikit-learn is quite straightforward. Here, we apply it to
+the synthetic data that we used for the preceding plots. We instantiate the KMeans
+class, and set the number of clusters we are looking for.3 Then we call the fit method
+with the data:
+In[49]:
+      from sklearn.datasets import make_blobs
+      from sklearn.cluster import KMeans
+
+      # generate synthetic two-dimensional data
+      X, y = make_blobs(random_state=1)
+
+      # build the clustering model
+      kmeans = KMeans(n_clusters=3)
+      kmeans.fit(X)
+
+During the algorithm, each training data point in X is assigned a cluster label. You can
+find these labels in the kmeans.labels_ attribute:
+
+
+
+3 If you don’t provide n_clusters, it is set to 8 by default. There is no particular reason why you should use this
+  value.
+
+
+
+170   |    Chapter 3: Unsupervised Learning and Preprocessing
+In[50]:
+    print("Cluster memberships:\n{}".format(kmeans.labels_))
+
+Out[50]:
+    Cluster memberships:
+    [1 2 2 2 0 0 0 2 1 1 2 2 0 1 0 0 0 1 2 2 0 2 0 1 2 0 0 1 1 0 1 1 0 1 2 0 2
+     2 2 0 0 2 1 2 2 0 1 1 1 1 2 0 0 0 1 0 2 2 1 1 2 0 0 2 2 0 1 0 1 2 2 2 0 1
+     1 2 0 0 1 2 1 2 2 0 1 1 1 1 2 1 0 1 1 2 2 0 0 1 0 1]
+As we asked for three clusters, the clusters are numbered 0 to 2.
+You can also assign cluster labels to new points, using the predict method. Each new
+point is assigned to the closest cluster center when predicting, but the existing model
+is not changed. Running predict on the training set returns the same result as
+labels_:
+In[51]:
+    print(kmeans.predict(X))
+
+Out[51]:
+    [1 2 2 2 0 0 0 2 1 1 2 2 0 1 0 0 0 1 2 2 0 2 0 1 2 0 0 1 1 0 1 1 0 1 2 0 2
+     2 2 0 0 2 1 2 2 0 1 1 1 1 2 0 0 0 1 0 2 2 1 1 2 0 0 2 2 0 1 0 1 2 2 2 0 1
+     1 2 0 0 1 2 1 2 2 0 1 1 1 1 2 1 0 1 1 2 2 0 0 1 0 1]
+You can see that clustering is somewhat similar to classification, in that each item gets
+a label. However, there is no ground truth, and consequently the labels themselves
+have no a priori meaning. Let’s go back to the example of clustering face images that
+we discussed before. It might be that the cluster 3 found by the algorithm contains
+only faces of your friend Bela. You can only know that after you look at the pictures,
+though, and the number 3 is arbitrary. The only information the algorithm gives you
+is that all faces labeled as 3 are similar.
+For the clustering we just computed on the two-dimensional toy dataset, that means
+that we should not assign any significance to the fact that one group was labeled 0
+and another one was labeled 1. Running the algorithm again might result in a differ‐
+ent numbering of clusters because of the random nature of the initialization.
+Here is a plot of this data again (Figure 3-25). The cluster centers are stored in the
+cluster_centers_ attribute, and we plot them as triangles:
+In[52]:
+    mglearn.discrete_scatter(X[:, 0], X[:, 1], kmeans.labels_, markers='o')
+    mglearn.discrete_scatter(
+        kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], [0, 1, 2],
+        markers='^', markeredgewidth=2)
+
+
+
+
+                                                                         Clustering   |   171
+Figure 3-25. Cluster assignments and cluster centers found by k-means with three
+clusters
+
+We can also use more or fewer cluster centers (Figure 3-26):
+In[53]:
+      fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+      # using two cluster centers:
+      kmeans = KMeans(n_clusters=2)
+      kmeans.fit(X)
+      assignments = kmeans.labels_
+
+      mglearn.discrete_scatter(X[:, 0], X[:, 1], assignments, ax=axes[0])
+
+      # using five cluster centers:
+      kmeans = KMeans(n_clusters=5)
+      kmeans.fit(X)
+      assignments = kmeans.labels_
+
+      mglearn.discrete_scatter(X[:, 0], X[:, 1], assignments, ax=axes[1])
+
+
+
+
+172   |   Chapter 3: Unsupervised Learning and Preprocessing
+Figure 3-26. Cluster assignments found by k-means using two clusters (left) and five
+clusters (right)
+
+Failure cases of k-means
+Even if you know the “right” number of clusters for a given dataset, k-means might
+not always be able to recover them. Each cluster is defined solely by its center, which
+means that each cluster is a convex shape. As a result of this, k-means can only cap‐
+ture relatively simple shapes. k-means also assumes that all clusters have the same
+“diameter” in some sense; it always draws the boundary between clusters to be exactly
+in the middle between the cluster centers. That can sometimes lead to surprising
+results, as shown in Figure 3-27:
+In[54]:
+    X_varied, y_varied = make_blobs(n_samples=200,
+                                    cluster_std=[1.0, 2.5, 0.5],
+                                    random_state=170)
+    y_pred = KMeans(n_clusters=3, random_state=0).fit_predict(X_varied)
+
+    mglearn.discrete_scatter(X_varied[:, 0], X_varied[:, 1], y_pred)
+    plt.legend(["cluster 0", "cluster 1", "cluster 2"], loc='best')
+    plt.xlabel("Feature 0")
+    plt.ylabel("Feature 1")
+
+
+
+
+                                                                         Clustering   |   173
+Figure 3-27. Cluster assignments found by k-means when clusters have different
+densities
+
+One might have expected the dense region in the lower left to be the first cluster, the
+dense region in the upper right to be the second, and the less dense region in the cen‐
+ter to be the third. Instead, both cluster 0 and cluster 1 have some points that are far
+away from all the other points in these clusters that “reach” toward the center.
+k-means also assumes that all directions are equally important for each cluster. The
+following plot (Figure 3-28) shows a two-dimensional dataset where there are three
+clearly separated parts in the data. However, these groups are stretched toward the
+diagonal. As k-means only considers the distance to the nearest cluster center, it can’t
+handle this kind of data:
+In[55]:
+      # generate some random cluster data
+      X, y = make_blobs(random_state=170, n_samples=600)
+      rng = np.random.RandomState(74)
+
+      # transform the data to be stretched
+      transformation = rng.normal(size=(2, 2))
+      X = np.dot(X, transformation)
+
+
+
+
+174   |   Chapter 3: Unsupervised Learning and Preprocessing
+    # cluster the data into three clusters
+    kmeans = KMeans(n_clusters=3)
+    kmeans.fit(X)
+    y_pred = kmeans.predict(X)
+
+    # plot the cluster assignments and cluster centers
+    plt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=mglearn.cm3)
+    plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1],
+                marker='^', c=[0, 1, 2], s=100, linewidth=2, cmap=mglearn.cm3)
+    plt.xlabel("Feature 0")
+    plt.ylabel("Feature 1")
+
+
+
+
+Figure 3-28. k-means fails to identify nonspherical clusters
+
+k-means also performs poorly if the clusters have more complex shapes, like the
+two_moons data we encountered in Chapter 2 (see Figure 3-29):
+In[56]:
+    # generate synthetic two_moons data (with less noise this time)
+    from sklearn.datasets import make_moons
+    X, y = make_moons(n_samples=200, noise=0.05, random_state=0)
+
+    # cluster the data into two clusters
+    kmeans = KMeans(n_clusters=2)
+    kmeans.fit(X)
+    y_pred = kmeans.predict(X)
+
+
+
+                                                                      Clustering   |   175
+      # plot the cluster assignments and cluster centers
+      plt.scatter(X[:, 0], X[:, 1], c=y_pred, cmap=mglearn.cm2, s=60)
+      plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1],
+                  marker='^', c=[mglearn.cm2(0), mglearn.cm2(1)], s=100, linewidth=2)
+      plt.xlabel("Feature 0")
+      plt.ylabel("Feature 1")
+
+
+
+
+Figure 3-29. k-means fails to identify clusters with complex shapes
+
+Here, we would hope that the clustering algorithm can discover the two half-moon
+shapes. However, this is not possible using the k-means algorithm.
+
+Vector quantization, or seeing k-means as decomposition
+Even though k-means is a clustering algorithm, there are interesting parallels between
+k-means and the decomposition methods like PCA and NMF that we discussed ear‐
+lier. You might remember that PCA tries to find directions of maximum variance in
+the data, while NMF tries to find additive components, which often correspond to
+“extremes” or “parts” of the data (see Figure 3-13). Both methods tried to express the
+data points as a sum over some components. k-means, on the other hand, tries to rep‐
+resent each data point using a cluster center. You can think of that as each point being
+represented using only a single component, which is given by the cluster center. This
+view of k-means as a decomposition method, where each point is represented using a
+single component, is called vector quantization.
+
+
+
+176   |   Chapter 3: Unsupervised Learning and Preprocessing
+Let’s do a side-by-side comparison of PCA, NMF, and k-means, showing the compo‐
+nents extracted (Figure 3-30), as well as reconstructions of faces from the test set
+using 100 components (Figure 3-31). For k-means, the reconstruction is the closest
+cluster center found on the training set:
+In[57]:
+   X_train, X_test, y_train, y_test = train_test_split(
+       X_people, y_people, stratify=y_people, random_state=0)
+   nmf = NMF(n_components=100, random_state=0)
+   nmf.fit(X_train)
+   pca = PCA(n_components=100, random_state=0)
+   pca.fit(X_train)
+   kmeans = KMeans(n_clusters=100, random_state=0)
+   kmeans.fit(X_train)
+
+   X_reconstructed_pca = pca.inverse_transform(pca.transform(X_test))
+   X_reconstructed_kmeans = kmeans.cluster_centers_[kmeans.predict(X_test)]
+   X_reconstructed_nmf = np.dot(nmf.transform(X_test), nmf.components_)
+
+In[58]:
+   fig, axes = plt.subplots(3, 5, figsize=(8, 8),
+                            subplot_kw={'xticks': (), 'yticks': ()})
+   fig.suptitle("Extracted Components")
+   for ax, comp_kmeans, comp_pca, comp_nmf in zip(
+           axes.T, kmeans.cluster_centers_, pca.components_, nmf.components_):
+       ax[0].imshow(comp_kmeans.reshape(image_shape))
+       ax[1].imshow(comp_pca.reshape(image_shape), cmap='viridis')
+       ax[2].imshow(comp_nmf.reshape(image_shape))
+
+   axes[0, 0].set_ylabel("kmeans")
+   axes[1, 0].set_ylabel("pca")
+   axes[2, 0].set_ylabel("nmf")
+
+   fig, axes = plt.subplots(4, 5, subplot_kw={'xticks': (), 'yticks': ()},
+                            figsize=(8, 8))
+   fig.suptitle("Reconstructions")
+   for ax, orig, rec_kmeans, rec_pca, rec_nmf in zip(
+           axes.T, X_test, X_reconstructed_kmeans, X_reconstructed_pca,
+           X_reconstructed_nmf):
+
+       ax[0].imshow(orig.reshape(image_shape))
+       ax[1].imshow(rec_kmeans.reshape(image_shape))
+       ax[2].imshow(rec_pca.reshape(image_shape))
+       ax[3].imshow(rec_nmf.reshape(image_shape))
+
+   axes[0,   0].set_ylabel("original")
+   axes[1,   0].set_ylabel("kmeans")
+   axes[2,   0].set_ylabel("pca")
+   axes[3,   0].set_ylabel("nmf")
+
+
+
+
+                                                                     Clustering   |   177
+Figure 3-30. Comparing k-means cluster centers to components found by PCA and NMF
+
+
+
+
+178   |   Chapter 3: Unsupervised Learning and Preprocessing
+Figure 3-31. Comparing image reconstructions using k-means, PCA, and NMF with 100
+components (or cluster centers)—k-means uses only a single cluster center per image
+
+An interesting aspect of vector quantization using k-means is that we can use many
+more clusters than input dimensions to encode our data. Let’s go back to the
+two_moons data. Using PCA or NMF, there is nothing much we can do to this data, as
+it lives in only two dimensions. Reducing it to one dimension with PCA or NMF
+would completely destroy the structure of the data. But we can find a more expressive
+representation with k-means, by using more cluster centers (see Figure 3-32):
+
+
+
+
+                                                                      Clustering   |   179
+In[59]:
+      X, y = make_moons(n_samples=200, noise=0.05, random_state=0)
+
+      kmeans = KMeans(n_clusters=10, random_state=0)
+      kmeans.fit(X)
+      y_pred = kmeans.predict(X)
+
+      plt.scatter(X[:, 0], X[:, 1], c=y_pred, s=60, cmap='Paired')
+      plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=60,
+                  marker='^', c=range(kmeans.n_clusters), linewidth=2, cmap='Paired')
+      plt.xlabel("Feature 0")
+      plt.ylabel("Feature 1")
+      print("Cluster memberships:\n{}".format(y_pred))
+
+Out[59]:
+      Cluster memberships:
+      [9 2 5 4 2 7 9 6 9 6        1   0   2   6   1 9   3   0   3   1   7   6   8   6   8   5   2   7   5   8   9   8   6   5   3   7   0
+       9 4 5 0 1 3 5 2 8 9        1   5   6   1   0 7   4   6   3   3   6   3   8   0   4   2   9   6   4   8   2   8   4   0   4   0   5
+       6 4 5 9 3 0 7 8 0 7        5   8   9   8   0 7   3   9   7   1   7   2   2   0   4   5   6   7   8   9   4   5   4   1   2   3   1
+       8 8 4 9 2 3 7 0 9 9        1   5   8   5   1 9   5   6   7   9   1   4   0   6   2   6   4   7   9   5   5   3   8   1   9   5   6
+       3 5 0 2 9 3 0 8 6 0        3   3   5   6   3 2   0   2   3   0   2   6   3   4   4   1   5   6   7   1   1   3   2   4   7   2   7
+       3 8 6 4 1 4 3 9 9 5        1   7   5   8   2]
+
+
+
+
+Figure 3-32. Using many k-means clusters to cover the variation in a complex dataset
+
+
+
+
+180   |   Chapter 3: Unsupervised Learning and Preprocessing
+We used 10 cluster centers, which means each point is now assigned a number
+between 0 and 9. We can see this as the data being represented using 10 components
+(that is, we have 10 new features), with all features being 0, apart from the one that
+represents the cluster center the point is assigned to. Using this 10-dimensional repre‐
+sentation, it would now be possible to separate the two half-moon shapes using a lin‐
+ear model, which would not have been possible using the original two features. It is
+also possible to get an even more expressive representation of the data by using the
+distances to each of the cluster centers as features. This can be accomplished using
+the transform method of kmeans:
+In[60]:
+     distance_features = kmeans.transform(X)
+     print("Distance feature shape: {}".format(distance_features.shape))
+     print("Distance features:\n{}".format(distance_features))
+
+Out[60]:
+     Distance    feature shape: (200, 10)
+     Distance    features:
+     [[ 0.922     1.466 1.14 ..., 1.166 1.039 0.233]
+      [ 1.142     2.517 0.12 ..., 0.707 2.204 0.983]
+      [ 0.788     0.774 1.749 ..., 1.971 0.716 0.944]
+      ...,
+      [ 0.446      1.106 1.49 ..., 1.791 1.032 0.812]
+      [ 1.39       0.798 1.981 ..., 1.978 0.239 1.058]
+      [ 1.149      2.454 0.045 ..., 0.572 2.113 0.882]]
+k-means is a very popular algorithm for clustering, not only because it is relatively
+easy to understand and implement, but also because it runs relatively quickly. k-
+means scales easily to large datasets, and scikit-learn even includes a more scalable
+variant in the MiniBatchKMeans class, which can handle very large datasets.
+One of the drawbacks of k-means is that it relies on a random initialization, which
+means the outcome of the algorithm depends on a random seed. By default, scikit-
+learn runs the algorithm 10 times with 10 different random initializations, and
+returns the best result.4 Further downsides of k-means are the relatively restrictive
+assumptions made on the shape of clusters, and the requirement to specify the num‐
+ber of clusters you are looking for (which might not be known in a real-world
+application).
+Next, we will look at two more clustering algorithms that improve upon these proper‐
+ties in some ways.
+
+
+
+
+4 In this case, “best” means that the sum of variances of the clusters is small.
+
+
+
+                                                                                   Clustering   |   181
+Agglomerative Clustering
+Agglomerative clustering refers to a collection of clustering algorithms that all build
+upon the same principles: the algorithm starts by declaring each point its own cluster,
+and then merges the two most similar clusters until some stopping criterion is satis‐
+fied. The stopping criterion implemented in scikit-learn is the number of clusters,
+so similar clusters are merged until only the specified number of clusters are left.
+There are several linkage criteria that specify how exactly the “most similar cluster” is
+measured. This measure is always defined between two existing clusters.
+The following three choices are implemented in scikit-learn:
+ward
+      The default choice, ward picks the two clusters to merge such that the variance
+      within all clusters increases the least. This often leads to clusters that are rela‐
+      tively equally sized.
+average
+    average linkage merges the two clusters that have the smallest average distance
+      between all their points.
+complete
+    complete linkage (also known as maximum linkage) merges the two clusters that
+      have the smallest maximum distance between their points.
+ward works on most datasets, and we will use it in our examples. If the clusters have
+very dissimilar numbers of members (if one is much bigger than all the others, for
+example), average or complete might work better.
+The following plot (Figure 3-33) illustrates the progression of agglomerative cluster‐
+ing on a two-dimensional dataset, looking for three clusters:
+In[61]:
+      mglearn.plots.plot_agglomerative_algorithm()
+
+
+
+
+182    | Chapter 3: Unsupervised Learning and Preprocessing
+

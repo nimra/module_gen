@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_RecurrentNeurons.index import RecurrentNeurons as A_RecurrentNeurons
 from .B_BasicRNNs.index import BasicRNNs as B_BasicRNNs
@@ -17,6 +20,7 @@ from .G_NaturalLanguage.index import NaturalLanguage as G_NaturalLanguage
 from .H_Exercises.index import Exercises as H_Exercises
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
 #                  Download from finelybook www.finelybook.com
 # 
 # 
@@ -90,26 +94,27 @@ from .H_Exercises.index import Exercises as H_Exercises
 # 
 # 380   |   Chapter 14: Recurrent Neural Networks
 # 
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Chapter 14. Recurrent Neural Networks",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Chapter 14. Recurrent Neural Networks"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter14(HierNode):
     def __init__(self):
         super().__init__("Chapter 14. Recurrent Neural Networks")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_RecurrentNeurons())
         self.add(B_BasicRNNs())
         self.add(C_TrainingRNNs())

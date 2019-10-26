@@ -13,7 +13,7 @@ from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 blocks = [
     mbk("In machine learning, the focus of linear regression differs slightly from traditional statistics. In statistics, the goal of a regression model is to understand the relationships between the features and targets by interpreting p-values, whereas in machine learning, the goal of the linear regression model is to predict the targets given new samples."),
     mbk("Figure 19-4 shows a regression model with a line of best fit that optimizes the squared difference between the data features and the targets. This difference is also called the residuals (shown as the purple vertical lines in Figure 19-4). What we care about in a linear regression model is to minimize the error between the predicted labels and the actual labels in the dataset."),
-    ibk("Figure 19-4. Linear regression model showing residuals"),
+    ibk(None, "Figure 19-4. Linear regression model showing residuals"),
     mbk("If all the points in Figure 19-4 entirely fall on the predicted regression line, then the error will be 0. In interpreting the regression model, we want the error measure to be as low as possible."),
     mbk("However, our emphasis is to obtain a low error measure when we evaluate our model on the test dataset. Recall that the test of learning is when a model can generalize to examples that it was not exposed to during training."),
 ]

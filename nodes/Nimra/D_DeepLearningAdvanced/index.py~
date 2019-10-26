@@ -1,0 +1,15 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.nodes.Nimra.ModuleNode import ModuleNode
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class DeepLearningAdvanced(ModuleNode):
+    def __init__(self):
+        super().__init__("DeepLearningAdvanced")
+        # self.add(MultilayerPerceptron())
+        # self.add(TrainingNNsPart1())
+        # self.add(TrainingNNsPart2())
+        # self.add(OptimizationRegularization())
+
+# eof

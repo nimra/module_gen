@@ -1,0 +1,84 @@
+Segmenting customers into groups with similar preferences
+    Given a set of customer records, you might want to identify which customers are
+    similar, and whether there are groups of customers with similar preferences. For
+    a shopping site, these might be “parents,” “bookworms,” or “gamers.” Because you
+    don’t know in advance what these groups might be, or even how many there are,
+    you have no known outputs.
+Detecting abnormal access patterns to a website
+    To identify abuse or bugs, it is often helpful to find access patterns that are differ‐
+    ent from the norm. Each abnormal pattern might be very different, and you
+    might not have any recorded instances of abnormal behavior. Because in this
+    example you only observe traffic, and you don’t know what constitutes normal
+    and abnormal behavior, this is an unsupervised problem.
+For both supervised and unsupervised learning tasks, it is important to have a repre‐
+sentation of your input data that a computer can understand. Often it is helpful to
+think of your data as a table. Each data point that you want to reason about (each
+email, each customer, each transaction) is a row, and each property that describes that
+data point (say, the age of a customer or the amount or location of a transaction) is a
+column. You might describe users by their age, their gender, when they created an
+account, and how often they have bought from your online shop. You might describe
+the image of a tumor by the grayscale values of each pixel, or maybe by using the size,
+shape, and color of the tumor.
+Each entity or row here is known as a sample (or data point) in machine learning,
+while the columns—the properties that describe these entities—are called features.
+Later in this book we will go into more detail on the topic of building a good repre‐
+sentation of your data, which is called feature extraction or feature engineering. You
+should keep in mind, however, that no machine learning algorithm will be able to
+make a prediction on data for which it has no information. For example, if the only
+feature that you have for a patient is their last name, no algorithm will be able to pre‐
+dict their gender. This information is simply not contained in your data. If you add
+another feature that contains the patient’s first name, you will have much better luck,
+as it is often possible to tell the gender by a person’s first name.
+
+Knowing Your Task and Knowing Your Data
+Quite possibly the most important part in the machine learning process is under‐
+standing the data you are working with and how it relates to the task you want to
+solve. It will not be effective to randomly choose an algorithm and throw your data at
+it. It is necessary to understand what is going on in your dataset before you begin
+building a model. Each algorithm is different in terms of what kind of data and what
+problem setting it works best for. While you are building a machine learning solution,
+you should answer, or at least keep in mind, the following questions:
+
+
+4   |   Chapter 1: Introduction
+  • What question(s) am I trying to answer? Do I think the data collected can answer
+    that question?
+  • What is the best way to phrase my question(s) as a machine learning problem?
+  • Have I collected enough data to represent the problem I want to solve?
+  • What features of the data did I extract, and will these enable the right
+    predictions?
+  • How will I measure success in my application?
+  • How will the machine learning solution interact with other parts of my research
+    or business product?
+
+In a larger context, the algorithms and methods in machine learning are only one
+part of a greater process to solve a particular problem, and it is good to keep the big
+picture in mind at all times. Many people spend a lot of time building complex
+machine learning solutions, only to find out they don’t solve the right problem.
+When going deep into the technical aspects of machine learning (as we will in this
+book), it is easy to lose sight of the ultimate goals. While we will not discuss the ques‐
+tions listed here in detail, we still encourage you to keep in mind all the assumptions
+that you might be making, explicitly or implicitly, when you start building machine
+learning models.
+
+Why Python?
+Python has become the lingua franca for many data science applications. It combines
+the power of general-purpose programming languages with the ease of use of
+domain-specific scripting languages like MATLAB or R. Python has libraries for data
+loading, visualization, statistics, natural language processing, image processing, and
+more. This vast toolbox provides data scientists with a large array of general- and
+special-purpose functionality. One of the main advantages of using Python is the abil‐
+ity to interact directly with the code, using a terminal or other tools like the Jupyter
+Notebook, which we’ll look at shortly. Machine learning and data analysis are funda‐
+mentally iterative processes, in which the data drives the analysis. It is essential for
+these processes to have tools that allow quick iteration and easy interaction.
+As a general-purpose programming language, Python also allows for the creation of
+complex graphical user interfaces (GUIs) and web services, and for integration into
+existing systems.
+
+scikit-learn
+scikit-learn is an open source project, meaning that it is free to use and distribute,
+and anyone can easily obtain the source code to see what is going on behind the
+
+                                                                          Why Python?   |   5
+

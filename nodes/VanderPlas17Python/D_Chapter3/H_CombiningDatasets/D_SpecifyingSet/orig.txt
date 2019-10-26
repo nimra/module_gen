@@ -1,0 +1,94 @@
+      df1a.join(df2a)
+                           group    hire_date
+      employee
+      Bob           Accounting             2008
+      Jake         Engineering             2012
+      Lisa         Engineering             2004
+      Sue                   HR             2014
+
+If you’d like to mix indices and columns, you can combine left_index with right_on
+or left_on with right_index to get the desired behavior:
+      In[12]:
+      print(df1a); print(df3);
+      print(pd.merge(df1a, df3, left_index=True, right_on='name'))
+      df1a                                 df3
+                           group
+      employee                             name salary
+      Bob           Accounting         0    Bob  70000
+      Jake         Engineering         1   Jake  80000
+      Lisa         Engineering         2   Lisa 120000
+      Sue                   HR         3    Sue  90000
+
+      pd.merge(df1a, df3, left_index=True, right_on='name')
+                group name salary
+      0   Accounting   Bob   70000
+      1 Engineering Jake     80000
+      2 Engineering Lisa 120000
+      3           HR   Sue   90000
+All of these options also work with multiple indices and/or multiple columns; the
+interface for this behavior is very intuitive. For more information on this, see the
+“Merge, Join, and Concatenate” section of the Pandas documentation.
+
+Specifying Set Arithmetic for Joins
+In all the preceding examples we have glossed over one important consideration in
+performing a join: the type of set arithmetic used in the join. This comes up when a
+value appears in one key column but not the other. Consider this example:
+      In[13]: df6 = pd.DataFrame({'name': ['Peter', 'Paul', 'Mary'],
+                                  'food': ['fish', 'beans', 'bread']},
+                                 columns=['name', 'food'])
+              df7 = pd.DataFrame({'name': ['Mary', 'Joseph'],
+                                  'drink': ['wine', 'beer']},
+                                 columns=['name', 'drink'])
+              print(df6); print(df7); print(pd.merge(df6, df7))
+
+
+
+
+152   |   Chapter 3: Data Manipulation with Pandas
+    df6                      df7                  pd.merge(df6, df7)
+       name         food             name drink       name   food drink
+    0 Peter         fish     0       Mary wine    0   Mary bread     wine
+    1  Paul        beans     1     Joseph beer
+    2  Mary        bread
+Here we have merged two datasets that have only a single “name” entry in common:
+Mary. By default, the result contains the intersection of the two sets of inputs; this is
+what is known as an inner join. We can specify this explicitly using the how keyword,
+which defaults to 'inner':
+    In[14]: pd.merge(df6, df7, how='inner')
+    Out[14]:        name    food drink
+               0    Mary   bread wine
+
+Other options for the how keyword are 'outer', 'left', and 'right'. An outer join
+returns a join over the union of the input columns, and fills in all missing values with
+NAs:
+    In[15]: print(df6); print(df7); print(pd.merge(df6, df7, how='outer'))
+    df6                      df7                   pd.merge(df6, df7, how='outer')
+            name  food               name drink         name   food drink
+    0     Peter  fish        0       Mary wine     0   Peter   fish   NaN
+    1      Paul beans        1     Joseph beer     1    Paul beans    NaN
+    2      Mary bread                              2    Mary bread wine
+                                                   3 Joseph     NaN beer
+The left join and right join return join over the left entries and right entries, respec‐
+tively. For example:
+    In[16]: print(df6); print(df7); print(pd.merge(df6, df7, how='left'))
+    df6                      df7                   pd.merge(df6, df7, how='left')
+        name  food                   name drink         name   food drink
+    0 Peter fish             0       Mary wine     0   Peter   fish   NaN
+    1  Paul beans            1     Joseph beer     1    Paul beans    NaN
+    2  Mary bread                                  2    Mary bread wine
+
+The output rows now correspond to the entries in the left input. Using how='right'
+works in a similar manner.
+All of these options can be applied straightforwardly to any of the preceding join
+types.
+
+Overlapping Column Names: The suffixes Keyword
+Finally, you may end up in a case where your two input DataFrames have conflicting
+column names. Consider this example:
+    In[17]: df8 = pd.DataFrame({'name': ['Bob', 'Jake', 'Lisa', 'Sue'],
+                                'rank': [1, 2, 3, 4]})
+
+
+
+                                                            Combining Datasets: Merge and Join   |   153
+

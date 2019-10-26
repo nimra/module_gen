@@ -4,8 +4,11 @@
 from modules.node.HierNode import HierNode
 from modules.node.LeafNode import LeafNode
 from modules.node.Stage import Stage
-from modules.node.block.CodeBlock import CodeBlock
-from modules.node.block.MarkdownBlock import MarkdownBlock
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 
 from .A_Trainingand.index import Trainingand as A_Trainingand
 from .B_MakingPredictions.index import MakingPredictions as B_MakingPredictions
@@ -19,66 +22,31 @@ from .I_Instability.index import Instability as I_Instability
 from .J_Exercises.index import Exercises as J_Exercises
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#                  Download from finelybook www.finelybook.com
-# 
-# 
-#                                                                         CHAPTER 6
-#                                                           Decision Trees
-# 
-# 
-# 
-# 
-# Like SVMs, Decision Trees are versatile Machine Learning algorithms that can per‐
-# form both classification and regression tasks, and even multioutput tasks. They are
-# very powerful algorithms, capable of fitting complex datasets. For example, in Chap‐
-# ter 2 you trained a DecisionTreeRegressor model on the California housing dataset,
-# fitting it perfectly (actually overfitting it).
-# Decision Trees are also the fundamental components of Random Forests (see Chap‐
-# ter 7), which are among the most powerful Machine Learning algorithms available
-# today.
-# In this chapter we will start by discussing how to train, visualize, and make predic‐
-# tions with Decision Trees. Then we will go through the CART training algorithm
-# used by Scikit-Learn, and we will discuss how to regularize trees and use them for
-# regression tasks. Finally, we will discuss some of the limitations of Decision Trees.
-# 
-# Training and Visualizing a Decision Tree
-# To understand Decision Trees, let’s just build one and take a look at how it makes pre‐
-# dictions. The following code trains a DecisionTreeClassifier on the iris dataset
-# (see Chapter 4):
-#     from sklearn.datasets import load_iris
-#     from sklearn.tree import DecisionTreeClassifier
-# 
-#     iris = load_iris()
-#     X = iris.data[:, 2:] # petal length and width
-#     y = iris.target
-# 
-#     tree_clf = DecisionTreeClassifier(max_depth=2)
-#     tree_clf.fit(X, y)
-# 
-# 
-# 
-#                                                                                     167
-# 
+blocks = [
+    "Like SVMs, Decision Trees are versatile Machine Learning algorithms that can perform both classification and regression tasks, and even multioutput tasks. They are very powerful algorithms, capable of fitting complex datasets. For example, in Chapter 2 you trained a DecisionTreeRegressor model on the California housing dataset, fitting it perfectly (actually overfitting it).",
+    "Decision Trees are also the fundamental components of Random Forests (see Chapter 7), which are among the most powerful Machine Learning algorithms available today.",
+    "In this chapter we will start by discussing how to train, visualize, and make predictions with Decision Trees. Then we will go through the CART training algorithm used by Scikit-Learn, and we will discuss how to regularize trees and use them for regression tasks. Finally, we will discuss some of the limitations of Decision Trees.",
+]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Content(LeafNode):
     def __init__(self):
         super().__init__(
             "Chapter 6. Decision Trees",
-            # Stage.CROP_TEXT,
-            # Stage.CODE_BLOCKS,
-            # Stage.MARKDOWN_BLOCKS,
-            # Stage.FIGURES,
-            # Stage.EXERCISES,
-            # Stage.CUSTOMIZED,
+            Stage.REMOVE_EXTRANEOUS,
+            Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
         )
-        self.add(MarkdownBlock("# Chapter 6. Decision Trees"))
+        [self.add(a) for a in blocks]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Chapter6(HierNode):
     def __init__(self):
         super().__init__("Chapter 6. Decision Trees")
-        self.add(Content())
+        self.add(Content(), "content")
         self.add(A_Trainingand())
         self.add(B_MakingPredictions())
         self.add(C_EstimatingClass())

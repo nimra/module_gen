@@ -1,0 +1,137 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from modules.node.HierNode import HierNode
+from modules.node.LeafNode import LeafNode
+from modules.node.Stage import Stage
+from modules.node.block.CodeBlock import CodeBlock as cbk
+from modules.node.block.HierBlock import HierBlock as hbk
+from modules.node.block.ImageBlock import ImageBlock as ibk
+from modules.node.block.ListBlock import ListBlock as lbk
+from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
+
+from .A_BayesianClassification.index import BayesianClassification as A_BayesianClassification
+from .B_GaussianNaive.index import GaussianNaive as B_GaussianNaive
+from .C_MultinomialNaive.index import MultinomialNaive as C_MultinomialNaive
+from .D_Whento.index import Whento as D_Whento
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+blocks = [
+#  1. Impute missing values using the mean
+#  2. Transform features to quadratic
+#  3. Fit a linear regression
+# 
+# To streamline this type of processing pipeline, Scikit-Learn provides a pipeline object,
+# which can be used as follows:
+#       In[17]: from sklearn.pipeline import make_pipeline
+# 
+#                model = make_pipeline(Imputer(strategy='mean'),
+#                                      PolynomialFeatures(degree=2),
+#                                      LinearRegression())
+# This pipeline looks and acts like a standard Scikit-Learn object, and will apply all the
+# specified steps to any input data.
+#       In[18]: model.fit(X, y) # X with missing values, from above
+#               print(y)
+#               print(model.predict(X))
+#       [14 16 -1 8 -5]
+#       [ 14. 16. -1.         8.   -5.]
+# All the steps of the model are applied automatically. Notice that for the simplicity of
+# this demonstration, we’ve applied the model to the data it was trained on; this is why
+# it was able to perfectly predict the result (refer back to “Hyperparameters and Model
+# Validation” on page 359 for further discussion of this).
+# For some examples of Scikit-Learn pipelines in action, see the following section on
+# naive Bayes classification as well as “In Depth: Linear Regression” on page 390 and
+# “In-Depth: Support Vector Machines” on page 405.
+# 
+# In Depth: Naive Bayes Classification
+# The previous four sections have given a general overview of the concepts of machine
+# learning. In this section and the ones that follow, we will be taking a closer look at
+# several specific algorithms for supervised and unsupervised learning, starting here
+# with naive Bayes classification.
+# Naive Bayes models are a group of extremely fast and simple classification algorithms
+# that are often suitable for very high-dimensional datasets. Because they are so fast
+# and have so few tunable parameters, they end up being very useful as a quick-and-
+# dirty baseline for a classification problem. This section will focus on an intuitive
+# explanation of how naive Bayes classifiers work, followed by a couple examples of
+# them in action on some datasets.
+# 
+# 
+# 
+# 
+# 382   | Chapter 5: Machine Learning
+# 
+# Bayesian Classification
+# Naive Bayes classifiers are built on Bayesian classification methods. These rely on
+# Bayes’s theorem, which is an equation describing the relationship of conditional
+# probabilities of statistical quantities. In Bayesian classification, we’re interested in
+# finding the probability of a label given some observed features, which we can write as
+# P L features . Bayes’s theorem tells us how to express this in terms of quantities we
+# can compute more directly:
+# 
+#                           P features L P L
+#    PL     features =          P features
+# 
+# 
+# If we are trying to decide between two labels—let’s call them L1 and L2—then one way
+# to make this decision is to compute the ratio of the posterior probabilities for each
+# label:
+# 
+#    P L1   features       P features   L1 P L1
+#                      =
+#    P L1   features       P features   L2 P L2
+# 
+# 
+# All we need now is some model by which we can compute P features Li for each
+# label. Such a model is called a generative model because it specifies the hypothetical
+# random process that generates the data. Specifying this generative model for each
+# label is the main piece of the training of such a Bayesian classifier. The general ver‐
+# sion of such a training step is a very difficult task, but we can make it simpler through
+# the use of some simplifying assumptions about the form of this model.
+# This is where the “naive” in “naive Bayes” comes in: if we make very naive assump‐
+# tions about the generative model for each label, we can find a rough approximation of
+# the generative model for each class, and then proceed with the Bayesian classification.
+# Different types of naive Bayes classifiers rest on different naive assumptions about the
+# data, and we will examine a few of these in the following sections. We begin with the
+# standard imports:
+#     In[1]: %matplotlib inline
+#            import numpy as np
+#            import matplotlib.pyplot as plt
+#            import seaborn as sns; sns.set()
+# 
+# 
+# Gaussian Naive Bayes
+# Perhaps the easiest naive Bayes classifier to understand is Gaussian naive Bayes. In
+# this classifier, the assumption is that data from each label is drawn from a simple Gaus‐
+# sian distribution. Imagine that you have the following data (Figure 5-38):
+# 
+# 
+# 
+#                                                        In Depth: Naive Bayes Classification |   383
+# 
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class Content(LeafNode):
+    def __init__(self):
+        super().__init__(
+            "In Depth: Naive Bayes Classification",
+            # Stage.REMOVE_EXTRANEOUS,
+            # Stage.ORIG_BLOCKS,
+            # Stage.CUSTOM_BLOCKS,
+            # Stage.ORIG_FIGURES,
+            # Stage.CUSTOM_FIGURES,
+            # Stage.CUSTOM_EXERCISES,
+        )
+        [self.add(a) for a in blocks]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class InDepth(HierNode):
+    def __init__(self):
+        super().__init__("In Depth: Naive Bayes Classification")
+        self.add(Content())
+        self.add(A_BayesianClassification())
+        self.add(B_GaussianNaive())
+        self.add(C_MultinomialNaive())
+        self.add(D_Whento())
+
+# eof

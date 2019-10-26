@@ -1,0 +1,35 @@
+# Lawrence McAfee
+
+# ~~~~~~~~ import ~~~~~~~~
+from lm.common.util.PrintAligner import PrintAligner as pa
+from lm.common.util.Types import Types
+
+from modules.node.HierNode import HierNode
+
+from .ChapterNode import ChapterNode
+# from .MetaChapterNode import MetaChapterNode
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ModuleNode(HierNode):
+    def add(self, child):
+        return super().add(Types.assertType(child, [
+            # MetaChapterNode,
+            ChapterNode,
+        ]))
+    def liftChapters(self):
+        # [a.liftChapters() for a in self.children]
+        new_node = ModuleNode(self.title)
+        for child in self.children:
+            [new_node.add(a) for a in child.liftChapters()]
+        # if self.title == "Machine Learning":
+        #     (
+        #         pa()
+        #         .addx("old node", self)
+        #         .addx("new_node", new_node)
+        #         .ppprint()
+        #     )
+        return [new_node]
+    # def toNbf(self, top_dirname, sub_prefix_index):
+    #     Utils.todo("Dot.")
+
+# eof

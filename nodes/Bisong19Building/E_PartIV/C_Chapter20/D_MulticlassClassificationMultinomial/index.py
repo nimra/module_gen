@@ -13,7 +13,7 @@ from modules.node.block.MarkdownBlock import MarkdownBlock as mbk
 blocks = [
     mbk("In multi-class or multinomial logistic regression, the labels of the dataset contain more than 2 classes. The multinomial logistic regression setup (i.e., the cost function and optimization procedure) is structurally similar to logistic regression; the only difference is that the output of logistic regression is 2 classes, while multinomial has greater than 2 classes (see Figure 20-6)."),
     mbk("In Figure 20-6, the multi-class logistic regression builds a one-vs.-rest classifier to construct decision boundaries for the different class memberships."),
-    ibk("Figure 20-6. An illustration of multinomial regression"),
+    ibk(None, "Figure 20-6. An illustration of multinomial regression"),
     mbk("At this point, we introduce a critical function in machine learning called the softmax function. The softmax function is used to compute the probability that an instance belongs to one of the K classes when K > 2. We will see the softmax function show up again when we discuss (artificial) neural networks."),
     mbk("In order to build a classification model with k classes, the multinomial logistic model is formally defined as"),
     mbk("$$ \\hat{y} = \\theta_0^k + \\theta_1^k x_1 + \\theta_2^k x_2 + ... + \\theta_n^k x_n $$"),
